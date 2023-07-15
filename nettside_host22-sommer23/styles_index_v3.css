@@ -1,0 +1,526 @@
+
+/* fonter */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@font-face {
+  font-family: 'PABLO';
+  src: url(assets/fonts/PABLO.ttf);
+}
+
+
+@font-face {
+  font-family: "ThunderBlack_woff2";
+  src: url(assets/fonts/Thunder-BlackLC.woff2);
+}
+
+@font-face {
+  font-family: "ThunderBlack_otf";
+  src: url(assets/fonts/Thunder-BlackLC.otf);
+}
+
+
+@font-face {
+    font-family: "BergenMono-Bold";
+    src: url(assets/fonts/BergenMono-Bold.otf);
+}
+
+@font-face {
+  font-family: "Newake";
+  src: url(assets/fonts/Newake-Font-Demo.otf);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Hoved */
+
+body {
+    background-color: rgb(14, 13, 13);
+    font-size: 24px;
+    margin: 0;
+    padding: 0;
+
+    font-family: "BergenMono-Bold", sans-serif;
+}
+
+
+.box_hero {
+
+
+  text-align: center;
+  
+  
+ /* woff2 for pc, otf for mobile */
+  font-family: "ThunderBlack_otf", sans-serif;
+  
+
+  color: #473BF0;
+  padding: 0px;
+  margin: 0px;
+
+}
+
+
+.box_brød {
+  
+  color: rgb(255, 215, 141);
+
+
+}
+
+#aar {
+  color: #473BF0;
+}
+
+
+
+
+canvas {
+  position: absolute;
+
+  left: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Buttons */
+
+.button{
+  
+  padding: 0;
+  background-color: #473BF0;
+  overflow: hidden;
+
+  font-family: "Newake", Helvetica, sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+
+}
+
+.button:hover {
+  background: #303068;
+}
+
+.button:active {
+  background: #e21ce5;
+}
+
+.button__text {
+  display:inline-block;
+  align-items: center;  
+  color: #e21ce5;
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /* Extra small devices (phones, 600px and down) */
+ @media only screen and (max-width: 600px) {
+
+  body {
+    padding-bottom: 100px;
+}
+
+  .box_hero {
+  margin-top: 350px;
+  margin-left: 40px;
+  margin-right: 40px;
+  font-size: clamp(3rem, 12.5vw, 10rem);
+  }
+
+  .box_brød {
+
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-right: 40px;
+    font-size: 2.5rem;
+  }
+
+
+
+  /* knapper */
+
+  .alle_buttons {
+    
+   
+    align-items: center;
+    margin: 0px 40px 0px 40px;
+  }
+
+  .button {
+
+
+    font-size: 1.4em;
+    border-radius:10px;
+    height: 70px;
+    width: 100%;
+    margin-top: 10px;
+    
+    
+    /*margin: 30px 40px 0px 40px;  topp, høyre, bunn, venstre */
+    
+  }
+
+
+.button__text{
+  padding: 0px 0px;
+  transform: translateY(0%);
+}
+
+
+/* 3D */
+
+canvas {
+
+  zoom: 70%;
+  top: 650px;
+  transform: translateX(-50%)translateY(-50%)
+}
+
+
+@media screen and (max-width: 382px) {
+
+  canvas {
+
+    zoom: 65%;
+    top: 700px;
+    transform: translateX(-50%)translateY(-50%)
+  }
+
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+
+
+
+@media only screen and (min-width: 601px) {
+
+  body {
+    padding-bottom: 100px;
+}
+
+
+
+
+  .box_hero {
+  margin-top: 150px;
+  margin-left: 40px;
+  margin-right: 40px;
+  font-size: clamp(6rem, 17.5vw, 12.5rem);
+  max-height: 700px;
+
+  }
+
+  .box_brød {
+
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-right: 40px;
+    font-size: 3rem;
+  }
+
+
+
+
+
+
+  /* knapper */
+
+
+  .alle_buttons {
+    
+    align-items: center;
+    margin: 0px 40px 0px 40px;
+  }
+
+  .button {
+
+
+    font-size: 2.8em;
+    border-radius:10px;
+    height: 140px;
+    width: 100%;
+    margin-top: 20px;
+    
+    
+    /*margin: 30px 40px 0px 40px;  topp, høyre, bunn, venstre */
+    
+  }
+
+
+.button__text{
+  padding: 0px 0px;
+  transform: translateY(0%);
+}
+
+
+/* 3D */
+
+canvas {
+
+  zoom: 55%;
+  top: 400px;
+  transform: translateX(-50%);
+}
+
+
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Medium devices (landscape tablets, 768px and up) */
+
+@media only screen and (min-width: 768px) and (orientation: landscape) {
+
+  body {
+    padding-bottom: 100px;
+}
+
+  .box_hero {
+  margin-top: 150px;
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 120px;
+  font-size: clamp(4.3rem, 7.5vw, 4.5rem);
+  max-height: 250px;
+
+  }
+
+  .box_brød {
+
+    margin-top: 10px;
+    margin-left: 100px;
+    margin-right: 100px;
+    font-size: 1.5rem;
+  }
+
+
+
+
+
+
+  /* knapper */
+
+
+  .alle_buttons {
+    
+    display: flex;
+  
+    margin: 0px 40px 0px 40px;
+  }
+
+  .button {
+
+    font-size: 2rem;
+    border-radius:10px;
+    height: 40px;
+    
+   margin: 30px 80px 0px 80px; /* topp, høyre, bunn, venstre */
+    
+  }
+
+
+.button__text{
+  padding: 0px 48px;
+  transform: translateY(0%);
+}
+
+
+
+
+/* 3D */
+
+canvas {
+
+  zoom: 50%;
+  top: -5%;
+  transform: translateX(-50%);
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+
+@media only screen and (min-width: 1200px) {
+  
+  body {
+    padding-bottom: 100px;
+}
+
+  .box_hero {
+  margin-top: 400px;
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 300px;
+  font-size: clamp(5rem, 7.5vw, 10rem);
+
+
+  }
+  
+
+
+
+
+
+  .box_brød {
+
+    margin-left: 20%;
+    margin-right: 20%;
+    font-size: 1.5rem;
+  }
+
+
+
+
+
+
+  /* knapper */
+
+
+  .alle_buttons {
+    
+    display: flex;
+
+    margin: 0px 40px 0px 40px;
+  }
+
+  .button {
+
+    font-size: 2rem;
+    border-radius:10px;
+    height: 40px;
+    
+   margin: 30px 80px 0px 80px; /* topp, høyre, bunn, venstre */
+    
+  }
+
+
+.button__text{
+  padding: 0px 48px;
+  transform: translateY(0%);
+}
+
+
+
+
+/* 3D */
+
+canvas {
+
+  zoom: 35%;
+  top: 2.5%;
+  transform: translateX(-50%);
+}
+
+@media screen and (max-width: 1700px) {
+  .box_hero{
+  margin-bottom: 100px;
+}
+
+canvas {
+
+  zoom: 50%;
+  top: 0%;
+  transform: translateX(-50%);
+}
+
+
+
+}
+
+
+}
