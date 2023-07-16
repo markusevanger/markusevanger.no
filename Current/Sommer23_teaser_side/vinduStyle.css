@@ -1,0 +1,74 @@
+
+#vindu {
+    position: relative;
+    z-index: 10;
+}   
+
+
+.vinduDiv {
+    position: absolute;
+    left: 50%;
+    top:40%;
+    transform: translate(-46%, -50%);
+}
+
+
+
+.vinduInnhold {
+    position: absolute;
+    top: 55%;
+
+    padding:0;
+    margin:0;
+    
+}
+
+.gjerde {
+    animation: forgrunn 2.5s linear infinite;
+}
+
+
+.trer {
+    top: 0;
+    position: absolute;
+    animation: bakgrunn linear infinite 10s;
+}
+
+#fly {
+    position: absolute;
+    top:-100%;
+
+    animation: fly linear infinite 20s;
+    scale:0.5;
+}
+
+@keyframes forgrunn {
+
+    from{
+        transform: translateX(100%);
+    }
+    to{
+        transform: translateX(0%);
+    }
+}
+
+@keyframes bakgrunn {
+    from {
+        transform: translateY(-200%);
+        transform: translateX(150%);
+    }
+
+    to {
+        transform: translateY(-200%);
+        transform: translateX(0%);
+    }
+}
+
+@keyframes fly {
+    from {
+        transform: translateX(1000%);
+    }
+    to {
+        transform: translateX(0%);
+    }
+}

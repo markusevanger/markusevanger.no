@@ -5,10 +5,12 @@
 }
 
 body {
-    background-color: #FFFDF5;
-    margin: 0;
-    padding: 0;
-
+    width:100vw;
+    height:100vh;
+    background-color:#FFFDF5;
+    position: relative;
+    marrgin:0;
+    padding:0;
 }
 
 .textbox {
@@ -23,7 +25,7 @@ body {
     position: absolute;
     text-align: center; 
 
-    top:45%;
+    top:65%;
     left:50%;
     transform: translate(-50%, -50%);
 }
