@@ -9,25 +9,19 @@ body {
     height:100vh;
     background-color:#FFFDF5;
     position: relative;
-    marrgin:0;
+    margin:0;
     padding:0;
 }
 
 .textbox {
-
-    position: relative;
-    height: 100vh;
-    width: 100vw;
-
+    background-color: red;
 }
 
 .text {
-    position: absolute;
     text-align: center; 
 
-    top:65%;
-    left:50%;
-    transform: translate(-50%, -50%);
+
+
 }
 
 .hero {

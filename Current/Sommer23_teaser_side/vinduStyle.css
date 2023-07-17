@@ -1,15 +1,21 @@
 
 #vindu {
-    position: relative;
+    position: absolute;
     z-index: 10;
+    outline:auto;
+
 }   
 
 
 .vinduDiv {
-    position: absolute;
-    left: 50%;
-    top:40%;
-    transform: translate(-46%, -50%);
+    position: relative;
+    outline:auto;
+    white-space: nowrap;
+
+    width: fit-content;
+
+    background-color: aqua;
+
 }
 
 
@@ -25,6 +31,7 @@
 
 .gjerde {
     animation: forgrunn 2.5s linear infinite;
+    outline: auto;
 }
 
 
@@ -32,6 +39,7 @@
     top: 0;
     position: absolute;
     animation: bakgrunn linear infinite 10s;
+    outline:auto
 }
 
 #fly {
@@ -40,6 +48,8 @@
 
     animation: fly linear infinite 20s;
     scale:0.5;
+
+    outline:auto;
 }
 
 @keyframes forgrunn {

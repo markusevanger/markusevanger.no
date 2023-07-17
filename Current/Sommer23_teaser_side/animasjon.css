@@ -1,0 +1,33 @@
+
+
+@keyframes vanlig0-100 {
+    from{
+        transform: translateX(0%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes fly {
+    from{
+        transform: translateX(-1000px);
+    }
+    to {
+        transform: translateX(-2000px);
+    }
+}
+
+@keyframes vinduBump {
+
+    0% {
+        transform: translate(0px, 0px);
+    }
+    50% {
+        transform: translate(-1px, -2.5px);
+    }
+    100% {
+        transform: translate(0px);
+    }
+    
+}
