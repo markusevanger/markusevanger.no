@@ -1,0 +1,35 @@
+@font-face {
+    font-family: maragsa;
+    src: url(assets/fonts/Maragsâ-Display.woff2);
+}
+
+body {
+
+    background-color:var(--bakgrunn-farge);
+}
+
+:root{
+    --brod-font-storrelse: 16px;
+
+    --main-farge: #ff2929;
+    --main-highlight: #ff0000;
+    --sekundaer-farge: #8F1717;
+    --sekudnaer-highlight: #b62525;
+    --bakgrunn-farge: #FFFDF5;
+}
+
+.hero {
+    margin:0;
+    padding: 0;
+
+    font-family: maragsa, serif;
+    color: var(--main-farge);
+    font-size: 75px;
+}
+
+.brod {
+    font-family: 'Fira Mono', monospace;
+    font-size: var(--brod-font-storrelse);
+    color: var(--sekundaer-farge);
+    
+}

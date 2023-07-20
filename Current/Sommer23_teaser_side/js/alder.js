@@ -1,4 +1,4 @@
-const bursdag = new Date("August 28 2003 18:00");
+const bursdag = new Date("August 28 2003 17:30");
 
 function getSeconds(){
 
