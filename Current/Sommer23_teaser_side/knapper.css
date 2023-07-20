@@ -1,20 +1,22 @@
 /* Button Formatering */
 
 
-.knappDiv {
-    display: flex;
-    justify-content: center;
-    flex-wrap:wrap;
 
-}
 
 .knappDiv button {
     margin-right: 20px;
-    padding: 10px;
+
+    padding-left: 20px;
+    padding-right:20px;
+
     border-radius: 50px;
     width:150px;
     margin-top: 10px;
     border:0;
+
+    width: fit-content;
+    min-width: 80px;
+    height: 40px;
 
     background-color: transparent;
     border:var(--main-farge) 1px solid;
@@ -31,6 +33,7 @@
     background-color:var(--sekundaer-farge);
     border:var(--sekundaer-farge) 1px solid;
     color: var(--bakgrunn-farge);
+    transform: scale(1.1);
 }
 
 .knappDiv button:active{

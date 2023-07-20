@@ -31,5 +31,11 @@ body {
     font-family: 'Fira Mono', monospace;
     font-size: var(--brod-font-storrelse);
     color: var(--sekundaer-farge);
+
+    line-height: 30px;
     
+}
+
+#logoroed:hover{
+    animation: spinn 1s;
 }

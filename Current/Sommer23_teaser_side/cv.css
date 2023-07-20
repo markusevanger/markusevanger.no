@@ -3,6 +3,8 @@ body {
     padding-top: 0px;
     padding:0px;
     margin:0;
+
+    position: relative;
     
 }
 
@@ -20,7 +22,7 @@ body {
 .innholdDiv{
 
     margin-top: 50px;
-    padding:50px;
+    margin-bottom:50px;
 
     display: flex;
     justify-content:space-between;
@@ -33,8 +35,8 @@ body {
 
 .kategori {
     flex: 1;
-    width: 30vw;
-    margin:20px;
+    width: 25vw;
+
 
 
     word-wrap:break-word;
@@ -43,7 +45,19 @@ body {
     border-radius: 33pt;
 
     padding:20px;
+
+    transition: all .05s ease-in-out;
 }
+
+.kategori:hover {
+    outline: var(--main-farge) 4px solid;
+}
+
+#egenskaper {
+    margin-left: 20px;
+    margin-right: 20px  ;
+}
+
 
 /* Button Formatering */
 .knappDiv {
@@ -60,11 +74,32 @@ body {
 .mellomtittel {
     font-family: maragsa;
     color: var(--main-farge);
+    font-size: 36px;
 }
 
 #innledning {
-    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
+
+#markus {
+    border-radius: 100px 100px 33px 33px;
+    height: 347px;
+    width: 206px;
+    margin-bottom: 20px;
+    object-fit:cover;
+    transition: all .1s ease-in-out;
+}
+
+#markus:hover {
+    transform: scale(1.025);
+    outline: var(--main-farge) 4px solid;
+}
+
+
+
 
 .hero {
 }
@@ -73,50 +108,36 @@ body {
     margin-top: 10px;
 }
 
-#footer {
-    padding:20px;
-    margin: 0;
-    position: fixed;
-    display: flex;
-
-    justify-content: space-between;
-    
-    bottom:0;
-    height: fit-content;
-    width: 90vw;
-    margin-bottom: 10px;
-
-    animation: footerpopup 1.5s
-    
-}
-
-@keyframes footerpopup {
-    0% {opacity: 0; transform: translateY(100px);}
-    50% {opacity: 0; transform: translateY(100px);}
-    100% {opacity: 100%; transform: translateY(0px);}
-    
-}
-
-#Epost {
-    margin:auto;
-}
-
-#logoroed{
-    height:76px;
-    fill: var(--main-farge);
-}
-
-#copyright {
+#kontakt {
     text-align: center;
-    font-family: 'Fira Mono', monospace;
-    font-size: var(--brod-font-storrelse);
-    color: var(--sekundaer-farge);
-    
 }
 
 
 
-@media (max-width: 800px) {
+#bunn {
+    position: relative;
+    
+    .knappDiv{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+#logoroed {
+    width:100px;
+}
+
+
+#bunnFyll {
+    height: 100px;
+    width: 100%;
+}
+
+
+
+@media (max-width: 1000px) {
     .innholdDiv{
         flex-direction: column;
         align-items: center;
@@ -125,12 +146,22 @@ body {
     }
     .kategori {
         width: 80vw;
+        margin:0;
+        margin-bottom: 20px;
     }
 
     #footer {
         position: relative;
         flex-direction: column;
         align-items: center;
-        
+
+    }
+
+    .knappDiv {
+        font-size: 76px;
+        display: flex;
+        justify-content: left;
+        flex-wrap:wrap;
+    
     }
 }
