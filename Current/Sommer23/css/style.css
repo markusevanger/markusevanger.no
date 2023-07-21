@@ -54,6 +54,7 @@
 .trer {
 
     animation: vanlig0-100 5s linear infinite;
+    fill: var(--sekundaer-highlight);
 
 }
 
@@ -62,6 +63,7 @@
     bottom:200px;
     position: absolute;
     animation: fly 20s linear infinite;
+    fill: var(--sekundaer-farge);
 }
 
 #vindu {

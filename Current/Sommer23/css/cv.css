@@ -37,8 +37,6 @@ body {
     flex: 1;
     width: 25vw;
 
-
-
     word-wrap:break-word;
 
     outline: var(--main-farge) 1px solid;
@@ -130,10 +128,7 @@ body {
 }
 
 
-#bunnFyll {
-    height: 100px;
-    width: 100%;
-}
+
 
 
 

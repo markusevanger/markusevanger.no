@@ -1,11 +1,16 @@
 @font-face {
     font-family: maragsa;
-    src: url(assets/fonts/Maragsâ-Display.woff2);
+    src: url(../assets/fonts/Maragsâ-Display.woff2);
 }
 
 body {
-
     background-color:var(--bakgrunn-farge);
+}
+
+#bunnFyll {
+    position: relative;
+    height: 100px;
+    width: 100%;
 }
 
 :root{
@@ -14,7 +19,7 @@ body {
     --main-farge: #ff2929;
     --main-highlight: #ff0000;
     --sekundaer-farge: #8F1717;
-    --sekudnaer-highlight: #b62525;
+    --sekundaer-highlight: #b62525;
     --bakgrunn-farge: #FFFDF5;
 }
 
