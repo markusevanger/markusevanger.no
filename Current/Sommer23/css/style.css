@@ -90,9 +90,11 @@
     color:var(--main-farge);
 }
 
-.bunn{
+#bunn{
     display: flex;
-    justify-content: right;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
     margin-top: 50px;
 }
 
@@ -104,9 +106,12 @@
 
 }
 
-#logoroed:hover{
-    animation: spinn 1s;
+#twitterlink{
+    font-size: 12px;
 }
+
+
+
 
 /* Button Formatering */
 
@@ -114,6 +119,7 @@
     display: flex;
     justify-content: center;
     flex-wrap:wrap;
-
 }
+
+
 

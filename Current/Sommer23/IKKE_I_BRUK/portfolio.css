@@ -1,10 +1,14 @@
 #portfolioContainer {
-    margin-top: 150px;
+    margin-top: 100px;
     width: 100%;
+
+    animation: dukkOpp 1s linear;
 }
 
 #innhold_portfolio{
     height: fit-content;
+    padding-left: 100px;
+    padding-right: 100px;
     display: flex;
     flex-wrap: wrap; 
     justify-content: center;
@@ -34,7 +38,7 @@
 }
 
 .ikke_i_bruk{
-    outline: var(--main-farge) 1px dashed;
+    outline: var(--main-farge) 3px dotted;
     cursor: not-allowed;
 }
 .ikke_i_bruk:focus-visible{
@@ -64,7 +68,9 @@
 }
 
 .brod {
+    text-align: center;
     margin:0;
+    padding: 0;
 }
 
 
@@ -78,9 +84,6 @@
 
 }
 
-#portfolioTittelContainer{
-    animation: dukkOpp 1s linear;
-}
 
 #skillelinje{
     border-top: var(--main-farge) 3px solid;
