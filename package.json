@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@smakss/react-scroll-direction": "^1.0.4",
+    "fs": "^0.0.1-security"
+  }
+}
