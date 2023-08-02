@@ -46,6 +46,10 @@ body {
     
 }
 
+#logoroed {
+    width:100px;
+}
+
 #logoroed:hover{
     animation: spinn 1s;
 }
