@@ -115,12 +115,14 @@ body {
 #bunn {
     position: relative;
     
-    .knappDiv{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
+
+}
+
+#bunnLogoogKnapp{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #logoroed {
