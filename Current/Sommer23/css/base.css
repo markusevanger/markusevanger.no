@@ -1,11 +1,11 @@
 @font-face {
     font-family: maragsa_woff2;
-    src: url(../assets/fonts/Maragsâ-Display.woff2);
+    src: url(../assets/fonts/Maragsa-Display.woff2);
 }
 
 @font-face {
     font-family: maragsa_otf;
-    src: url(../assets/fonts/Maragsâ-Display.otf);
+    src: url(../assets/fonts/Maragsa-Display.otf);
 }
 
 body {
@@ -38,6 +38,7 @@ body {
 }
 
 .brod {
+    font-display: auto;
     font-family: 'Fira Mono', monospace;
     font-size: var(--brod-font-storrelse);
     color: var(--sekundaer-farge);
