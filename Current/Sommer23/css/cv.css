@@ -70,7 +70,7 @@ body {
 
 /* Tekst formatering  */
 .mellomtittel {
-    font-family: maragsa;
+    font-family: maragsa_woff2, maragsa_otf;
     color: var(--main-farge);
     font-size: 36px;
 }
@@ -96,12 +96,6 @@ body {
     outline: var(--main-farge) 4px solid;
 }
 
-
-
-
-.hero {
-}
-
 .brod {
     margin-top: 10px;
 }
@@ -118,7 +112,7 @@ body {
 
 }
 
-#bunnLogoogKnapp{
+#knappOgLogo{
     display: flex;
     flex-direction: column;
     justify-content: center;
