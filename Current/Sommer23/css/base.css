@@ -1,6 +1,11 @@
 @font-face {
-    font-family: maragsa;
-    src: url(../assets/fonts/Maragsâ-Display.woff2);
+    font-family: maragsa_woff2;
+    src: url(../assets/fonts/Maragsâ-Display.woff2);
+}
+
+@font-face {
+    font-family: maragsa_otf;
+    src: url(../assets/fonts/Maragsâ-Display.otf);
 }
 
 body {
@@ -27,7 +32,7 @@ body {
     margin:0;
     padding: 0;
 
-    font-family: maragsa, serif;
+    font-family: maragsa_woff2, maragsa_otf;
     color: var(--main-farge);
     font-size: 75px;
 }

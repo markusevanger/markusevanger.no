@@ -103,7 +103,10 @@
     height: 76px;
     margin-right:20px;
    
+}
 
+#logoDiv{
+    height: max-content;
 }
 
 #twitterlink{
