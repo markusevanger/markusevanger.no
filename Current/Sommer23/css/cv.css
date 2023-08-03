@@ -20,7 +20,7 @@
     margin-bottom:50px;
 
     display: flex;
-    justify-content:space-between;
+    justify-content:center;
 
     flex-wrap: wrap;
     flex-direction: row;
@@ -31,6 +31,7 @@
 .kategori {
     flex: 1;
     width: 25vw;
+    max-width: 650px;
 
     word-wrap:break-word;
 
@@ -128,6 +129,11 @@
         
         
     }
+
+    #egenskaper{
+        margin:0;
+        margin-bottom: 20px;
+    }
     .kategori {
         width: 80vw;
         margin:0;
@@ -136,9 +142,7 @@
         margin-right: 0;
     }
 
-    #egenskaper{
-        margin:0;
-    }
+
 
     #footer {
         position: relative;
