@@ -8,6 +8,7 @@
 }
 
 .vinduAnimasjon{
+    overflow-x:hidden;
     position: relative;
     display: flex;
     justify-content: center;

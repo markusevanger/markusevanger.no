@@ -8,8 +8,18 @@
     src: url(../assets/fonts/Maragsa-Display.otf);
 }
 
+html, body {
+    overflow-x: hidden;
+}
+
 body {
     background-color:var(--bakgrunn-farge);
+    padding-top: 0px;
+    padding:0px;
+    margin:0;
+
+    position: relative;
+    
 }
 
 #bunnFyll {
