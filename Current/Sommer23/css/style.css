@@ -32,6 +32,7 @@
 
 .gjerde {
     animation: vanlig0-100 1s linear infinite;
+    fill: var(--main-farge);
 }
 
 #gjerde1{
@@ -69,6 +70,13 @@
 
 #vindu {
     animation: vinduBump 0.5s ease-in infinite;
+}
+
+#vinduBakgrunn{
+    fill:var(--bakgrunn-farge);
+}
+#vinduStroke{
+    stroke: var(--main-farge);
 }
 
 

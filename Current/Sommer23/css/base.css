@@ -59,8 +59,9 @@ body {
 
 #logoroed {
     width:100px;
+    fill:var(--main-farge);
 }
 
 #logoroed:hover{
-    animation: spinn 1s;
+    animation: spinn 1.1s infinite;
 }
