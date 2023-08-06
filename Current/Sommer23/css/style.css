@@ -97,6 +97,7 @@
 
 #aar{
     color:var(--main-farge);
+    font-family: "Fira Mono", mono;
 }
 
 #bunn{

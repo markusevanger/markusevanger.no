@@ -49,7 +49,7 @@ body {
 
 .brod {
     font-display: auto;
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Fira Sans', sans-serif;
     font-size: var(--brod-font-storrelse);
     color: var(--sekundaer-farge);
 
@@ -63,5 +63,5 @@ body {
 }
 
 #logoroed:hover{
-    animation: spinn 1.1s infinite;
+    animation: spinn 1.1s;
 }
