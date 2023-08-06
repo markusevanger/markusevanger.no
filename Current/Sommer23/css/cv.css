@@ -134,22 +134,15 @@
     font-size: 12px;
 }
 
-@media (max-width: 1400px) {
-    .skill{
-        flex-direction: column;
-    }
-}
-
-
 
 
 
 
 @media (max-width: 1000px) {
+    
     .innholdDiv{
         flex-direction: column;
         align-items: center;
-        
         
     }
 
@@ -180,5 +173,14 @@
         justify-content: left;
         flex-wrap:wrap;
     
+    }
+}
+
+@media (max-width: 390px)  {
+    .partekst{
+        flex-direction: column;
+    }
+    .tekstboxEgenskaper{
+        align-items: center;
     }
 }
