@@ -10,4 +10,9 @@ export const Brukere = {
       "emoji" : "👑"
     },
 
+    "erlendjoa": {
+      "bilde": "https://cdn.discordapp.com/attachments/1022518239030431744/1145021728586727475/bobatyun-taehyun.gif",
+      "emoji" : "🥇"
+    },
+
   }
