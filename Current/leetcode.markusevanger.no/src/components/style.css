@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap');
+
+@font-face {
+    font-family: maragsa_woff2;
+    src: url(assets/fonts/Maragsa-Display.woff2);
+}
+
+@font-face {
+    font-family: maragsa_otf;
+    src: url(assets/fonts/Maragsa-Display.otf);
+}
+
+:root{
+    --brod-font-storrelse: 16px;
+
+    --main-farge: #ff2929;
+    --main-highlight: #ff0000;
+    --sekundaer-farge: #8F1717;
+    --sekundaer-highlight: #b62525;
+    --bakgrunn-farge: #FFFDF5;
+
+    
+
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+
+li {
+    list-style-type: none;
+    max-width: 800px;
+}
+
+ul {
+    outline: var(--main-farge) 1px solid; 
+    padding: 30px;
+    margin:20px;
+    border-radius: 33px;
+}
+
+
+body {
+    background-color: var(--bakgrunn-farge);
+}
+
+.toppDiv {
+    padding: 20px;
+}
+
+.leaderboard {
+    text-align: center;
+    color: var(--main-farge);
+    font-family: "maragsa_woff2", "maragsa_otf", serif;
+    font-size: 50px;
+}
+
+.tekstinnhold {
+    color:#8F1717;
+    font-size: 16px;
+    text-align: center;
+    font-family: "Fira Sans", sans-serif;
+    max-width: 800px;
+}
+
+.pakke{
+    display: flex;
+    align-items: center;
+    
+}
+
+.plass{
+    flex: 1;
+    max-width: 20px;
+    min-width: 20px;
+    max-height: 20px;    
+
+    padding: 0;
+    margin: 0;
+
+    margin-right: 10px;
+}
+
+
+.profil {
+    display: flex;
+    flex-direction: row;
+    outline: var(--main-farge) 1px solid;
+    border-radius: 33px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    max-width: 800px;
+
+    height: 100px;
+    width: 80vw;
+
+    flex: 5;
+    
+}
+
+
+#profile {
+    max-width: 800px;
+}
+
+
+.scoreDiv{
+    flex: 1;
+    font-size: 1em;
+
+    min-width: 100px;
+    max-width: 100px;
+
+    background-color: var(--main-farge);
+    color: var(--bakgrunn-farge);
+    border-radius: 33px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: "Fira Mono", sans-serif;
+    
+}
+
+
+.infoDiv {
+    display: flex;
+    flex: 3;
+}
+
+
+.profilBilde{
+    border-radius: 33px;
+    margin-right: 10px;
+    min-width: 100px;
+    max-width: 100px;
+
+    object-fit: fill;
+    flex: 1;
+}
+
+.info {
+    flex: 3;
+    margin-top: 10px;
+    text-overflow: clip;
+    font-size: 1rem;
+
+
+}
+
+.navn {
+    margin: 0;
+}
+
+.emoji {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.loesteProblemerMellomtittel{
+    text-align: right;
+}
+
+#logoroed {
+    width:100px;
+    fill:var(--main-farge);
+}
+
+#logoroed:hover{
+    animation: spinn 1.1s;
+    
+}
+
+@keyframes spinn {
+    0% {transform: rotate(0deg);}
+    60% { transform: rotate(369deg);}
+    80% { transform: rotate(355deg);}
+    100% {transform: rotate(360deg);}
+    
+}
+
+
+/* LOADING CSS: */
+
+.innlasting {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 33px;
+    padding: 20px;
+    outline: var(--main-farge) 1px solid;
+    
+}
+
+.lasteText {
+    font-family: "Fira Sans", sans-serif;
+    font-size: large;
+}
+
+.lasteBilde {
+    width: 200px;
+    height: 200px;
+    border-radius: 33px;
+    animation: infinite ease-in-out spinn 2s;
+}
+
+@media only screen and (max-width:480px){
+    ul {
+        outline: none;
+        padding: 0px;
+        margin: 0px;
+    }
+}
+
+
+
+
+

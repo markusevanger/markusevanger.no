@@ -3,10 +3,10 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 
 
 
-const kopierEpost = async () => {
+const kopierEpost = async (midTekst) => {
     navigator.clipboard.writeText(EPOST);
     tidligereText = document.getElementById("Epost").innerText
-    document.getElementById("Epost").innerText = "Kopiert! 📋";
+    document.getElementById("Epost").innerText = midTekst// "";
     console.log("<3");
 
     await delay(2000);
