@@ -13,11 +13,12 @@ export default function Profiles({navn, score, plass, oppgaveKalender}) {
 
 function item(navn, score, plass, oppgaveKalender){
 
-    const forrigeLost = oppgaveKalender && Object.keys(oppgaveKalender)[0];
+    const forrigeLost = oppgaveKalender && Object.keys(oppgaveKalender)[Object.keys(oppgaveKalender).length - 1];
+    console.log(forrigeLost);
     let forrigeOppgaveTid="| Har aldri løst en oppgave 😳";
     if (forrigeLost != null){
         const dato = new Date(forrigeLost * 1000);
-        forrigeOppgaveTid = "| Forrige dato løst oppgave: " + dato.getDate()+ "." + dato.getMonth() + "." + dato.getFullYear();
+        forrigeOppgaveTid = "| Forrige dato løst oppgave: " + dato.getDate()+ "." + dato.getMonth()+1 + "." + dato.getFullYear();
         
     }
 

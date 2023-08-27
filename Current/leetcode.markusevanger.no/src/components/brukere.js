@@ -15,4 +15,14 @@ export const Brukere = {
       "emoji" : "🥇"
     },
 
+    "zFlamepvpz": {
+      "bilde": "https://media.tenor.com/apns_8-5xl8AAAAd/huh-verne.gif",
+      "emoji": "👻"
+    },
+
+    "bsian": {
+      "bilde": "https://cdn.discordapp.com/attachments/1011549038853754911/1145339307855446066/dobert.png",
+      "emoji": "👲"
+    }
+
   }
