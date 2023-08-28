@@ -23,6 +23,11 @@ export const Brukere = {
     "bsian": {
       "bilde": "https://cdn.discordapp.com/attachments/1011549038853754911/1145339307855446066/dobert.png",
       "emoji": "👲"
-    }
+    },
+
+    "handernoah": {
+      "bilde": "https://cdn.discordapp.com/attachments/832899170573615104/1145706250366091345/noah_profilbilde_leetcode_crop.gif",
+      "emoji": "🍉"
+    },
 
   }
