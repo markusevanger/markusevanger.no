@@ -30,4 +30,14 @@ export const Brukere = {
       "emoji": "🍉"
     },
 
+    "Mariisno": {
+      "bilde": "https://cdn.discordapp.com/attachments/1032561544069906462/1146040044595974164/20230719_230015.jpg",
+      "emoji": "🍉"
+    },
+
+    "dangosnail": {
+      "bilde": "https://cdn.discordapp.com/attachments/1013738125706657844/1146040292290609162/IMG_3870.gif",
+      "emoji": "🔱"
+    },
+
   }
