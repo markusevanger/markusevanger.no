@@ -1,5 +1,5 @@
 import React from 'react'
-import { Brukere } from './brukere'
+import { Brukere } from './brukere.js'
 
 
 

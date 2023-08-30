@@ -1,7 +1,7 @@
 export const Brukere = { 
 
     "KnutHoltet": {
-      "bilde": "https://media.tenor.com/BdOHYc9fC9EAAAAd/watermelon.gif",
+      "bilde": "https://media.discordapp.net/attachments/288000110355283968/1141984885670678629/4x.gif",
       "emoji" : "🍞"
     },
 
@@ -28,6 +28,16 @@ export const Brukere = {
     "handernoah": {
       "bilde": "https://cdn.discordapp.com/attachments/832899170573615104/1145706250366091345/noah_profilbilde_leetcode_crop.gif",
       "emoji": "🍉"
+    },
+
+    "Mariisno": {
+      "bilde": "https://cdn.discordapp.com/attachments/1032561544069906462/1146040044595974164/20230719_230015.jpg",
+      "emoji": "🍉"
+    },
+
+    "dangosnail": {
+      "bilde": "https://cdn.discordapp.com/attachments/1013738125706657844/1146040292290609162/IMG_3870.gif",
+      "emoji": "🔱"
     },
 
   }
