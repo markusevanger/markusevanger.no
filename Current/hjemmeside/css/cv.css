@@ -55,12 +55,21 @@
 
 /* Button Formatering */
 .knappDiv {
-    margin-left:20px;
-    margin-top: 20px;
-    display: flex;
-    justify-content: left;
+    justify-content: center;
     flex-wrap:wrap;
 
+}
+
+#tilbake{
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 20px;
 }
 
 

@@ -12,6 +12,10 @@ html, body {
     overflow-x: hidden;
 }
 
+a {
+    color: var(--main-farge);
+}
+
 body {
     background-color:var(--bakgrunn-farge);
     padding-top: 0px;
@@ -64,4 +68,11 @@ body {
 
 #logoroed:hover{
     animation: spinn 1.1s;
+}
+
+#spraakDiv{
+    text-align: right;
+}
+#spraak{
+    font-size: var(--brod-font-storrelse)
 }

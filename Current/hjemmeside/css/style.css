@@ -26,9 +26,6 @@
     
 }
 
-.forgrunn {
-
-}
 
 .gjerde {
     animation: vanlig0-100 1s linear infinite;
@@ -41,8 +38,6 @@
 
 }
 
-#gjerde2{
-}
 
 .bakgrunn{
 
@@ -89,10 +84,6 @@
 }
 
 
-
-
-
-
 /* Text Formatering */
 
 #aar{
@@ -117,15 +108,6 @@
 #twitterlink{
     font-size: 12px;
 }
-
-#spraakDiv{
-    text-align: right;
-    margin: 20px;
-}
-#spraak{
-    font-size: 12px;
-}
-
 
 
 /* Button Formatering */
