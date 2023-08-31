@@ -18,7 +18,7 @@ function item(navn, score, plass, oppgaveKalender){
     let forrigeOppgaveTid="| Har aldri løst en oppgave 😳";
     if (forrigeLost != null){
         const dato = new Date(forrigeLost * 1000);
-        forrigeOppgaveTid = "| Forrige dato løst oppgave: " + dato.getDate()+ "." + (dato.getMonth()+1) + "." + dato.getFullYear();
+        forrigeOppgaveTid = "| Sist aktiv: " + dato.getDate()+ "." + (dato.getMonth()+1) + "." + dato.getFullYear();
         
     }
 
