@@ -38,7 +38,7 @@
     outline: var(--main-farge) 1px solid;
     border-radius: 33pt;
 
-    padding:20px;
+    padding:25px;
 
     transition: all .05s ease-in-out;
 }
@@ -141,6 +141,12 @@
 
 #reftekst{
     font-size: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+ul {
+    padding-left: 20px;
 }
 
 .hovedListe {
