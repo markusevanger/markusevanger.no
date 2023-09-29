@@ -107,20 +107,20 @@
 
 #kontakt {
     text-align: center;
+    width: fit-content;
 }
 
 
 
 #bunn {
     position: relative;
-}
-
-#knappOgLogo{
     display: flex;
     flex-direction: column;
+
     justify-content: center;
     align-items: center;
 }
+
 
 #logoroed {
     width:100px;
@@ -151,6 +151,10 @@ ul {
 
 .hovedListe {
     list-style-type: none;
+}
+
+#Epost{
+    margin: 0;
 }
 
 
