@@ -88,6 +88,9 @@
 }
 
 #markus {
+    background-image: url(../assets/bilder/markus1.jpeg);
+    background-position: center;
+    background-size: cover;
     border-radius: 100px 100px 33px 33px;
     height: 347px;
     width: 206px;
