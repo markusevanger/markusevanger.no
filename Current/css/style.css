@@ -114,7 +114,20 @@
     font-size: 12px;
 }
 
+.brod {
+    position: relative;
+}
 
+#bachelor {
+    color: var(--sekundaer-farge);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+#bachelor:hover{
+    color: var(--main-farge);
+    
+}
 /* Button Formatering */
 
 .knappDiv {
