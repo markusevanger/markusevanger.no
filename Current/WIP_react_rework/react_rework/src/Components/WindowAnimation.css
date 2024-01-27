@@ -1,0 +1,71 @@
+
+
+.trainWindow{
+
+    --height: 347px;
+    --width: 206px;
+
+    position: relative;
+    border: var(--main) solid 9px;
+    height: var(--height);
+    width: var(--width);
+
+    box-sizing: border-box;
+    overflow: show;
+
+    border-radius: 100px 100px 33px 33px;
+}
+
+.scenery {
+    border-radius: inherit;
+    background-color: aquamarine;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+
+}
+
+
+
+.foregroundDiv {
+    position: absolute;
+    display: flex;
+    
+}
+
+.foregroundItem {
+    animation: rightToLeft 3s linear infinite;
+}
+
+
+
+
+.middlegroundDiv {
+    position: absolute;
+    display: flex;
+    
+}
+
+.middlegroundItem {
+    animation: rightToLeft 3s linear infinite;
+    margin-left: 50px;
+}
+
+
+
+.background {
+    /* TODO */
+}
+
+
+
+/*================================ ANIMATIONS ===============================*/
+
+@keyframes rightToLeft {
+    from{
+        transform: translateX(0%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
