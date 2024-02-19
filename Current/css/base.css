@@ -42,6 +42,27 @@ body {
     --bakgrunn-farge: #FFFDF5;
 }
 
+/* Style tab fokusering */
+button:focus:not(:focus-visible), 
+a:focus:not(:focus-visible), 
+input:focus:not(:focus-visible), 
+textarea:focus:not(:focus-visible), 
+select:focus:not(:focus-visible), 
+div[tabindex]:focus:not(:focus-visible) {
+  outline: none;
+}
+
+button:focus-visible, 
+a:focus-visible, 
+input:focus-visible, 
+textarea:focus-visible, 
+select:focus-visible, 
+div[tabindex]:focus-visible {
+  outline: 2px solid var(--main-farge);
+  outline-offset: 3px;   
+  border-radius: 4px;
+}
+
 .hero {
     margin:0;
     padding: 0;
@@ -64,10 +85,6 @@ body {
 #logoroed {
     width:100px;
     fill:var(--main-farge);
-}
-
-#logoroed:hover{
-    animation: spinn 1.1s;
 }
 
 #spraakDiv{

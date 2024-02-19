@@ -98,7 +98,7 @@
 
 #bunn{
     display: flex;
-    justify-content: center;
+    align-items: center;
     flex-direction: column;
     text-align: center;
     margin-top: 50px;
@@ -110,8 +110,20 @@
     height: max-content;
 }
 
-#twitterlink{
-    font-size: 12px;
+#socialMediaButtons{
+    display: flex;
+    flex-direction: row;
+}
+
+.socialMediaButton{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    margin: 10px;
+
+}
+.socialMediaButton svg{
+    fill: var(--main-farge)
 }
 
 .brod {

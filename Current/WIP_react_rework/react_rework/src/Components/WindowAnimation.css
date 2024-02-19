@@ -11,7 +11,7 @@
     width: var(--width);
 
     box-sizing: border-box;
-    overflow: show;
+    overflow: hidden;
 
     border-radius: 100px 100px 33px 33px;
 }
@@ -41,14 +41,13 @@
 
 
 .middlegroundDiv {
-    position: absolute;
-    display: flex;
+    animation: rightToLeft 3s linear infinite;
+
     
 }
 
 .middlegroundItem {
-    animation: rightToLeft 3s linear infinite;
-    margin-left: 50px;
+
 }
 
 
@@ -63,9 +62,9 @@
 
 @keyframes rightToLeft {
     from{
-        transform: translateX(0%);
+        transform: translateX(calc(var(--width) + 20px));
     }
     to {
-        transform: translateX(-100%);
+        transform: translateX(calc(var(--width) * -1 - 30px));  /*  */
     }
 }
