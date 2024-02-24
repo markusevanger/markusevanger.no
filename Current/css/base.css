@@ -85,6 +85,10 @@ div[tabindex]:focus-visible {
 #logoroed {
     width:100px;
     fill:var(--main-farge);
+    animation: spinn 0.9s;
+}
+#logoroed:hover {
+    animation: spinn infinite .9s;
 }
 
 #spraakDiv{
