@@ -23,37 +23,48 @@
     display: flex;
     align-items: flex-end;
 
+    
+
 }
 
 
 
 .foregroundDiv {
-    position: absolute;
+    
     display: flex;
+    position: absolute;
+    
     
 }
 
 .foregroundItem {
-    animation: rightToLeft 3s linear infinite;
+    animation: rightToLeft 1s linear infinite;
 }
 
 
 
 
 .middlegroundDiv {
-    animation: rightToLeft 3s linear infinite;
-
     
+    display: flex;
+    position: absolute;
+
 }
 
 .middlegroundItem {
-
+    animation: rightToLeft 2s linear infinite;
 }
 
 
 
-.background {
-    /* TODO */
+.backgroundDiv {
+    display: flex;
+    position: absolute;
+    margin-bottom: 200px;
+}
+
+.backgroundItem {
+    animation: rightToLeft 10s linear infinite;
 }
 
 
@@ -62,9 +73,9 @@
 
 @keyframes rightToLeft {
     from{
-        transform: translateX(calc(var(--width) + 20px));
+        transform: translateX(0%);
     }
     to {
-        transform: translateX(calc(var(--width) * -1 - 30px));  /*  */
+        transform: translateX(-100%);  /*  */
     }
 }

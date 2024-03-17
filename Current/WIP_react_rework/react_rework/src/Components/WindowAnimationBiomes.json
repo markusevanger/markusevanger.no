@@ -1,0 +1,13 @@
+
+
+{
+    "biomes" : [
+        {
+            "default" : {
+                "foreground" : "src/assets/svg/v1/FenceLong.svg",
+                "middleground" : "src/assets/svg/v1/TreePair.svg",
+                "background" : "src/assets/svg/v1/Fly med trail.svg"
+            }
+        }
+    ]
+}
