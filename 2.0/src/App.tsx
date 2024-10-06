@@ -31,11 +31,11 @@ function App() {
   return (
     <div className="h-screen w-full flex flex-col gap-8 justify-center items-center">
 
-      <div className="flex flex-col items-center w-[350px]">
-        <div>
-          <img src="markus.jpg" className="rounded-"></img>
-        </div>
-        <h1 className="font-bold mt-4">{t("hero.title")}</h1>
+      <div className="flex flex-col gap-2 items-center w-[350px]">
+
+        <img src="markus2.webp" className="shadow-xl w-[206px] h-[347px] rounded-b-[33px] rounded-t-[100px] object-cover hover:scale-105 hover:outline outline-4 transition-all" ></img>
+
+        <h1 className="mt-4 text-xl font-semibold">{t("hero.title")}</h1>
         <p className="text-center">
           {t("hero.description_1")} <span className="font-mono">{age}</span> {t("hero.description_2")}
         </p>
