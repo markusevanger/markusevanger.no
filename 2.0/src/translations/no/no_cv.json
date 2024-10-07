@@ -1,48 +1,53 @@
 {
-
-    "back" : "Tilbake",
-    "readMore" : "Les Mer",
-
-    "projects" : {
-        "title" : "Prosjekter og Egenskaper",
-        "1" : {
-            "title" : "Webapp for oversikt over avisproduksjon",
-            "period" : "Sommeren 2024",
-            "description" : "Produserte webapp i React, Node, MongoDB, Express for min tidligere sommerjobb. Laget på eget initativ basert på behovet til bedriften.",
+    "back": "Tilbake",
+    "readMore": "Les Mer",
+    "projects": {
+        "title": "Prosjekter",
+        "1": {
+            "title": "Webapp for oversikt over avisproduksjon",
+            "period": "Sommeren 2024",
+            "description": "Produserte webapp i React, Node, MongoDB, Express for min tidligere sommerjobb. Laget på eget initativ basert på behovet til bedriften.",
             "GitHub": "GitHub",
-            "demo" : "Demo"
-        }
-    },
-
-
-    "education" : {
-        "title" : "🎓 Utdanning",
-        "university" : {
-            "title" : "Bachelor i Informatikk: Design, Bruk og Interaksjon",
-            "subtitle" : "Institutt For Informatikk / Universitet i Oslo",
-            "description" : "Studerer design og interaksjon mellom mennesker og teknologi.",
-            "period" : "Aug. 2022 - jun. 2025",
-            "appProject" : "App-prosjekt",
-            "designProject" : "Design-prosjekt"
+            "demo": "Demo"
+        },
+        "2": {
+            "title": "Android Apputvikling i Kotlin og Jetpack Compose",
+            "name": "IN2000 Prosjekt ved Universitet i Oslo",
+            "description": "Designet og utviklet en karakter A android app sammen med 5 andre studenter. Her ble vi godt kjent i app utviklingmed Kotlin og Jetpack compose. Vi arbeidet også etter scrum og kanban praksiser så mye vi kunne. Har selv drevet flere intervjuer med vetrinærer som datainnsamling til intervju prosessen. Hovedoppgaven min ble programmering og UX/UI.",
+            "period": "Februar - mai 2024."
         },
 
-        "highschool" : {
-            "title" : "Medier og Kommunikasjon",
-            "subtitle" : "Hetland Videregående Skole i Stavanger",
-            "description" : "Fikk mulighet til å utforske flere sider av medieproduksjon. Vant markedsføringskonkuranser med Whats Brewing og Stavanger Aftenblad",
-            "period" : "Aug. 2022 - jun. 2025"
+        "3": {
+            "title": "Webdemo i React og Node for klimastartup",
+            "name": "Clear Karbon Exchange",
+            "description": "Arbeidet med en startup for å produsere en demo av en karbonkreditt plattform. Webappen er laget i React med en NodeJS backend og MongoDB database, som tillater et login-system og posting av listinger. Fokus på backend",
+            "period": "Mars - mai 2024."
         }
     },
-
-    "work" : {
-        "title" : "👨🏻‍💻 Arbeidserfaring",
-        "1" : {
-            "title" : "Nettsideutvikling og produksjon av flere sørlands aviser ",
-            "name" : "Polaris Media Sør",
-            "description" : "Arbeidet som mediegrafiker, med sideproduksjon i Adobe InDesign, samt ansvar for produksjon av lokalaviser som Grimstad Adressetidene. Involverte tett samarbeid med redaktører, markedføring og annonseproduksjon. Automatiserte og produserte nettsider for teamet",
-            "period" : "Sommerene 2022, 2023 og 2024."
+    "education": {
+        "title": "🎓 Utdanning",
+        "university": {
+            "title": "Bachelor i Informatikk: Design, Bruk og Interaksjon",
+            "subtitle": "Institutt For Informatikk / Universitet i Oslo",
+            "description": "Studerer design og interaksjon mellom mennesker og teknologi.",
+            "period": "Aug. 2022 - jun. 2025",
+            "appProject": "App-prosjekt",
+            "designProject": "Design-prosjekt"
+        },
+        "highschool": {
+            "title": "Medier og Kommunikasjon",
+            "subtitle": "Hetland Videregående Skole i Stavanger",
+            "description": "Fikk mulighet til å utforske flere sider av medieproduksjon. Vant markedsføringskonkuranser med Whats Brewing og Stavanger Aftenblad",
+            "period": "Aug. 2022 - jun. 2025"
+        }
+    },
+    "work": {
+        "title": "👨🏻‍💻 Arbeidserfaring",
+        "1": {
+            "title": "Nettsideutvikling og produksjon av flere sørlands aviser ",
+            "name": "Polaris Media Sør",
+            "description": "Arbeidet som mediegrafiker, med sideproduksjon i Adobe InDesign, med ansvar for produksjon av lokalaviser som Grimstad Adressetidene. Involverte tett samarbeid med redaktører, markedføring og annonseproduksjon. Automatiserte og produserte nettsider for teamet",
+            "period": "Sommerene 2022, 2023 og 2024."
         }
     }
-
-
 }
