@@ -1,19 +1,16 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { animate, motion } from "framer-motion"
+import { motion } from "framer-motion"
 
 import { Wing } from "./assets/wing.tsx"
 import { Cloud_1 } from "./assets/Cloud_1.tsx"
 import { Cloud_2 } from "./assets/Cloud_2.tsx"
 import ExternalLinkButton from "./componets/Button.tsx";
-import { Mail } from "lucide-react";
-
 
 function App() {
 
   const [t] = useTranslation("main") // used for language
-  const redColor = "red-600"
 
   const [age, setAge] = useState<string>("0.00000000"); // Store the age as a string to keep consistent formatting
   useEffect(() => {
