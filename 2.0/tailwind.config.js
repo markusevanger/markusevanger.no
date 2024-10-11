@@ -9,6 +9,10 @@ export default {
       colors: {
         "markusRed" : "#dc2626",
         "markusRedSecondary" : "#991b1b"
+      },
+
+      fontFamily: {
+
       }
     },
 

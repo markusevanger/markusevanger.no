@@ -15,12 +15,12 @@ export default function CV() {
 
     return (
 
-        <div className="px-10 min-h-screen flex flex-col items-center w-full">
+        <div className="pt-10 pb-72 min-h-screen flex flex-col items-center w-full">
 
 
 
 
-            <div className="h-screen max-w-[1200px] flex flex-col gap-5">
+            <div className="max-w-[1200px] flex flex-col gap-5">
 
 
                 <Link to="/" className="w-fit">
@@ -122,8 +122,6 @@ export default function CV() {
                     </div>
                 </div>
             </div>
-
-            <div className="w-full h-[100px]"></div>
         </div>
 
     )
