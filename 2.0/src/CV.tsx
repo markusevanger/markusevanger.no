@@ -1,7 +1,6 @@
 
 import { ChevronLeft, ExternalLink, FileText, FlaskConical, GithubIcon, TreePine } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import ExternalLinkButton from "./componets/Button";
 
 
@@ -15,7 +14,7 @@ export default function CV() {
 
     return (
 
-        <div className="pt-10 pb-72 min-h-screen flex flex-col items-center w-full">
+        <div className="px-10 pt-10 pb-72 min-h-screen flex flex-col items-center w-full">
 
 
 
@@ -23,11 +22,12 @@ export default function CV() {
             <div className="max-w-[1200px] flex flex-col gap-5">
 
 
-                <Link to="/" className="w-fit">
-                    <ExternalLinkButton>
+                <div className="w-28">
+                    <ExternalLinkButton to="/">
                         <ChevronLeft />  {t("back")}
                     </ExternalLinkButton>
-                </Link>
+                </div>
+
 
                 <div className="flex justify-center">
                     <img className="w-[206px] h-[347px] rounded-b-[33px] rounded-t-[100px] object-cover hover:scale-105 hover:outline outline-markusRed outline-8 transition-all" src="markus1.jpeg"></img>
