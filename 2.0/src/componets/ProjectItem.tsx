@@ -8,7 +8,7 @@ export default function ProjectItem(props: { index: number, snapPointIndexes: Se
             style={{
                 scrollSnapAlign: props.snapPointIndexes.has(props.index) ? "start" : ""
             }}>
-            <div className=" aspect-video rounded-2xl outline shadow-md hover:shadow-xl transition-all overflow-hidden">
+            <div className=" aspect-video rounded-2xl outline outline-markusRed shadow-md hover:shadow-xl transition-all overflow-hidden">
                 <img className=" object-fill w-full h-full" src={props.imageUrl}></img>
             </div>
 
