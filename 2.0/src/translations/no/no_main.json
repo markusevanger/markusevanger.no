@@ -11,6 +11,7 @@
         "1" : {
             "title" : "Polaris Sideoversikt",
             "subtitle" : "For Polaris Media Sør (Sommer 2024)",
+            "imgAlt" : "Bilde av Polaris sideoversikt landingsside",
             "description" :"Tok selv initativ til å oppgradere bedriftens koordinerings program fra et delt Excel ark til en MongoDB, ExpressJS, React og NodeJS basert webapp. Frontenden er bygd ved å hjelp av Tailwind, Shadcn og Typescript",
             "buttons": {
                 "demo" : "Demo",
@@ -22,6 +23,7 @@
             "title" : "Demo for Karbon kjøp-og salg plattform",
             "subtitle" : "For klimastartup, Clear Karbon Exchange (Vår 2024)",
             "description" :"Utviklet prototype for tjenesten i React, med en MongoDB/NodeJS/ExpressJS backend. Målet var å lage en demo av tjenesten til å presentere til mulige investorer. Jobbet tett med en annen intern og hadde daglige stand-up møter.",
+            "imgAlt" : "Bilde av landingsside for klimademo",
             "buttons": {
                 "demo" : "Demo",
                 "github": "Kode"
@@ -32,6 +34,7 @@
             "title" : "Android app utvikling",
             "subtitle" : "For IN2000",
             "description" :"Designet og utviklet en karakter A android app sammen med 5 andre studenter. Ble godt kjent i app utvikling med Kotlin og Jetpack compose. Vi arbeidet også etter scrum og kanban praksiser så mye vi kunne. Drev flere intervjuer med vetrinærer som datainnsamling til intervju prosessen. Hovedoppgaven min ble programmering og UX/UI.",
+            "imgAlt" : "Bilde av landingsside for app",
             "buttons": {
                 "website" : "Nettside",
                 "github": "Kode",

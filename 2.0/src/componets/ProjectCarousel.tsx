@@ -42,6 +42,7 @@ export default function ProjectCarousel() {
                         subtitle={t("projects.1.subtitle")}
                         body={t("projects.1.description")}
                         imageUrl="projectImages/polaris.webp"
+                        imageAlt={"projects.1.imageAlt "}
                     >
                         <ExternalLinkButton openInExternalBrowser={true} to="https://github.com/markusevanger/polaris-sideoversikt"><GithubIcon /> {t("projects.1.buttons.github")}  </ExternalLinkButton>
                         <ExternalLinkButton type="primary" openInExternalBrowser={true} to="https://sidesjekk.markusevanger.no/"><FlaskConical /> {t("projects.1.buttons.demo")} </ExternalLinkButton>
@@ -55,6 +56,7 @@ export default function ProjectCarousel() {
                         title={t("projects.3.title")}
                         subtitle={t("projects.3.subtitle")}
                         body={t("projects.3.description")}
+                        imageAlt={"projects.3.imageAlt "}
                         imageUrl="projectImages/pawcast.webp"
                     >
                         <ExternalLinkButton openInExternalBrowser={true} to="https://github.com/markusevanger/polaris-sideoversikt"><FileText /> {t("projects.3.buttons.report")}  </ExternalLinkButton>
@@ -70,6 +72,7 @@ export default function ProjectCarousel() {
                         title={t("projects.2.title")}
                         subtitle={t("projects.2.subtitle")}
                         body={t("projects.2.description")}
+                        imageAlt={"projects.2.imageAlt "}
                         imageUrl="projectImages/karbon.webp"
                     >
                         <ExternalLinkButton openInExternalBrowser={true} to="https://github.com/markusevanger/polaris-sideoversikt"><GithubIcon /> {t("projects.2.buttons.github")}  </ExternalLinkButton>

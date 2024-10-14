@@ -15,12 +15,7 @@ export default function CV() {
     return (
 
         <div className="px-10 pt-10 pb-72 min-h-screen flex flex-col items-center w-full">
-
-
-
-
             <div className="max-w-[1200px] flex flex-col gap-5">
-
 
                 <div className="w-28">
                     <ExternalLinkButton to="/">
@@ -30,7 +25,7 @@ export default function CV() {
 
 
                 <div className="flex justify-center">
-                    <img className="w-[206px] h-[347px] rounded-b-[33px] rounded-t-[100px] object-cover hover:scale-105 hover:outline outline-markusRed outline-8 transition-all" src="markus1.jpeg"></img>
+                    <img alt={t("markusImgAlt")} className="w-[206px] h-[347px] rounded-b-[33px] rounded-t-[100px] object-cover hover:scale-105 hover:outline outline-markusRed outline-8 transition-all" src="markus1.jpeg"></img>
                 </div>
 
 
