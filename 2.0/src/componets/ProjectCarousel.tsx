@@ -18,7 +18,8 @@ export default function ProjectCarousel() {
         const updateCarousel = () => {
             if (carouselAutoRun) {
                 console.log(`Sliding to next slide: ${activePageIndex}`)
-            };
+                goTo((activePageIndex + 1) % snapPointIndexes.size)
+            } else { console.log("skipped carousel")};
             const updateFrequency = setInterval(updateCarousel, 2000);
             return () => clearInterval(updateFrequency);
         }
@@ -30,9 +31,9 @@ export default function ProjectCarousel() {
 
         <>
             <div className="flex items-center gap-2" onMouseEnter={() => setCarouselAutoRun(false)} onMouseLeave={() => setCarouselAutoRun(true)}>
-                <button tabIndex={0} className={`transition-all hover:opacity-100 hover:text-markusRed focus:text-markusRed focus:opacity-100  ${hasPrevPage ? "opacity-40 hover:opacity-100" : "invisible"}`} onClick={() => prev()}><ChevronLeftCircle /></button>
+                <button tabIndex={0} className={`transition-all hover:text-markusRed focus:text-markusRed  ${hasPrevPage ? "opacity-40 hover:opacity-100" : "opacity-0  hover:opacity-0"} -ml-8`} onClick={() => prev()}><ChevronLeftCircle /></button>
 
-                <ul className="flex scrollbar-none scroll-smooth overflow-x-auto snap-x snap-mandatory gap-10" ref={scrollRef}>
+                <ul className="flex flex-1 scrollbar-none scroll-smooth overflow-x-auto snap-x snap-mandatory gap-10" ref={scrollRef}>
                     <ProjectItem
                         index={1}
                         key={1}
@@ -51,19 +52,6 @@ export default function ProjectCarousel() {
                         key={2}
                         snapPointIndexes={snapPointIndexes}
                         index={2}
-                        title={t("projects.2.title")}
-                        subtitle={t("projects.2.subtitle")}
-                        body={t("projects.2.description")}
-                        imageUrl="projectImages/karbon.webp"
-                    >
-                        <ExternalLinkButton openInExternalBrowser={true} to="https://github.com/markusevanger/polaris-sideoversikt"><GithubIcon /> {t("projects.2.buttons.github")}  </ExternalLinkButton>
-                        <ExternalLinkButton type="primary" openInExternalBrowser={true} to="https://sidesjekk.markusevanger.no/"><FlaskConical /> {t("projects.2.buttons.demo")} </ExternalLinkButton>
-                    </ProjectItem>
-
-                    <ProjectItem
-                        key={3}
-                        snapPointIndexes={snapPointIndexes}
-                        index={3}
                         title={t("projects.3.title")}
                         subtitle={t("projects.3.subtitle")}
                         body={t("projects.3.description")}
@@ -74,8 +62,23 @@ export default function ProjectCarousel() {
                         <ExternalLinkButton type="primary" openInExternalBrowser={true} to="https://sidesjekk.markusevanger.no/"><ExternalLink /> {t("projects.3.buttons.website")} </ExternalLinkButton>
 
                     </ProjectItem>
+
+                    <ProjectItem
+                        key={3}
+                        snapPointIndexes={snapPointIndexes}
+                        index={3}
+                        title={t("projects.2.title")}
+                        subtitle={t("projects.2.subtitle")}
+                        body={t("projects.2.description")}
+                        imageUrl="projectImages/karbon.webp"
+                    >
+                        <ExternalLinkButton openInExternalBrowser={true} to="https://github.com/markusevanger/polaris-sideoversikt"><GithubIcon /> {t("projects.2.buttons.github")}  </ExternalLinkButton>
+                        <ExternalLinkButton type="primary" openInExternalBrowser={true} to="https://sidesjekk.markusevanger.no/"><FlaskConical /> {t("projects.2.buttons.demo")} </ExternalLinkButton>
+                    </ProjectItem>
+
+
                 </ul>
-                <button tabIndex={1} className={`transition-all  hover:text-markusRed focus:text-markusRed focus:opacity-100  ${hasNextPage ? "opacity-40 hover:opacity-100" : "opacity-0  hover:opacity-0"}`} onClick={() => next()}><ChevronRightCircle /></button>
+                <button tabIndex={1} className={`transition-all  hover:text-markusRed focus:text-markusRed focus:opacity-100  ${hasNextPage ? "opacity-40 hover:opacity-100" : "opacity-0  hover:opacity-0"} -mr-8`} onClick={() => next()}><ChevronRightCircle /></button>
             </div>
 
             <div className="flex gap-1 justify-center mt-4">

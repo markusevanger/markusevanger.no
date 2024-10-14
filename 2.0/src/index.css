@@ -5,3 +5,12 @@ html {
 };
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    @font-face {
+      font-family: 'Mogi';
+      font-style: normal;
+      font-display: swap;
+      src: url(/fonts/LCMogi-VF.ttf) format('truetype');
+    }
+  }
