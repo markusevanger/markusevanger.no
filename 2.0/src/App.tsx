@@ -113,8 +113,6 @@ function App() {
           <motion.div whileHover={{
             rotateZ: 360,
             transition: { duration: 1 },
-            repeatCount: 
-
           }}
             whileTap={{ scale: 0.9 }} className="w-fit">
             <svg className="fill-markusRed h-10" viewBox="0 0 64 57" xmlns="http://www.w3.org/2000/svg">
