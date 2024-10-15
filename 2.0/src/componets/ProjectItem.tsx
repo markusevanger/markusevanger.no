@@ -1,6 +1,6 @@
 
 
-export default function ProjectItem(props: { index: number, snapPointIndexes: Set<number>, title: string, subtitle: string, body: string, imageUrl: string, children?: React.ReactNode }) {
+export default function ProjectItem(props: { index: number, snapPointIndexes: Set<number>, imageAlt : string,  title: string, subtitle: string, body: string, imageUrl: string, children?: React.ReactNode }) {
     return (
         <li
 
