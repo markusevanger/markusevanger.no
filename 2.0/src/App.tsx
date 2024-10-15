@@ -80,16 +80,16 @@ function App() {
         <section id="portfolio" className="w-full  flex-col justify-center mt-28">
 
           <div>
-            <h2 className="font-bold font-[Mogi] text-markusRed text-3xl mb-2">Det fresheste</h2>
+            <h2 className="font-bold font-[Mogi] text-markusRed text-3xl mb-2">Det beste</h2>
             <ProjectCarousel></ProjectCarousel>
           </div>
 
           <div className="rounded-lg mt-8 p-2">
             <h2 className="text-2xl font-[Mogi] text-markusRed">Andre prosjekter</h2>
 
-            <div className="flex flex-col gap-3 mt-3">
-              <ProjectItemSmall title="Nuovo" desc="Grafisk Design" link=""></ProjectItemSmall>
-              <ProjectItemSmall title="Nuovo" desc="Grafisk Design" link=""></ProjectItemSmall>
+            <div className="flex flex-col gap-4 mt-3">
+              <ProjectItemSmall title="Nuovo" desc="Grafisk Design" link="#1"></ProjectItemSmall>
+              <ProjectItemSmall title="Nuovo" desc="Grafisk Design" link="#2"></ProjectItemSmall>
               <ProjectItemSmall title="Nuovo" desc="Grafisk Design" link=""></ProjectItemSmall>
               <ProjectItemSmall title="Nuovo" desc="Grafisk Design" link=""></ProjectItemSmall>
               <ProjectItemSmall title="Nuovo" desc="Grafisk Design" link=""></ProjectItemSmall>
