@@ -53,7 +53,7 @@ function App() {
   }
 
   return (
-    <div className="pb-10 px-3 pt-44 w-full overflow-x-hidden flex items-center flex-col ">
+    <div className="pb-10 px-3 pt-28 w-full overflow-x-hidden flex items-center flex-col ">
       <div className="flex flex-col gap-2 items-center w-full max-w-[610px]">
 
 
@@ -108,7 +108,7 @@ function App() {
           </div>
         </section>
 
-        <section className="mt-24 gap-4 text-center flex flex-col items-center">
+        <section className="mt-24 gap-2 text-center flex flex-col items-center">
 
           <p>Kontakt meg på <span onClick={copyMail} className="cursor-pointer underline"> mail</span>, eller hvor det passer deg</p>
           <p>Bygget av Markus {"<3"}</p>

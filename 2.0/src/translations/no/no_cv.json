@@ -26,11 +26,19 @@
         }
     },
     "education": {
-        "title": "🎓 Utdanning",
+        "title": "Utdanning",
+        "exchange": {
+            "title": "Utveksling i Seoul, Sør-Korea",
+            "subtitle": "Korea University",
+            "description": "På utveksling i Seoul og studerer informasjonssikkerhet, kultur og markedsføring",
+            "period": "Høsten 2024",
+            "appProject": "App-prosjekt",
+            "designProject": "Design-prosjekt"
+        },
         "university": {
             "title": "Bachelor i Informatikk: Design, Bruk og Interaksjon",
             "subtitle": "Institutt For Informatikk / Universitet i Oslo",
-            "description": "Studerer design og interaksjon mellom mennesker og teknologi.",
+            "description": "Studerer design og interaksjon mellom mennesker og teknologi ved Universitet i Oslo",
             "period": "Aug. 2022 - jun. 2025",
             "appProject": "App-prosjekt",
             "designProject": "Design-prosjekt"
@@ -43,12 +51,18 @@
         }
     },
     "work": {
-        "title": "👨🏻‍💻 Arbeidserfaring",
+        "title": "Arbeidserfaring",
         "1": {
             "title": "Nettsideutvikling og produksjon av flere sørlands aviser ",
             "name": "Polaris Media Sør",
             "description": "Arbeidet som mediegrafiker, med sideproduksjon i Adobe InDesign, med ansvar for produksjon av lokalaviser som Grimstad Adressetidene. Involverte tett samarbeid med redaktører, markedføring og annonseproduksjon. Automatiserte og produserte nettsider for teamet",
             "period": "Sommerene 2022, 2023 og 2024."
+        },
+        "2": {
+            "title": "Fullstack Internship ved Klima startup",
+            "name": "Clear Karbon Exchange",
+            "description": "Arbeidet som mediegrafiker, med sideproduksjon i Adobe InDesign, med ansvar for produksjon av lokalaviser som Grimstad Adressetidene. Involverte tett samarbeid med redaktører, markedføring og annonseproduksjon. Automatiserte og produserte nettsider for teamet",
+            "period": "Våren 2024."
         }
     }
 }

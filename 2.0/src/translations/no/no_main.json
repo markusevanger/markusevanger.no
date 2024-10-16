@@ -62,12 +62,12 @@
         {
             "title": "Leetcode Leaderboard",
             "type": "React",
-            "link": "https://leetcode.markusevanger.no"
+            "link": "https://github.com/markusevanger/leetcode.markusevanger.no"
         },
         {
             "title": "Rutertabell Bakgrunn",
             "type": "React",
-            "link": "https://bakgrunn.markusevanger.no"
+            "link": "https://github.com/markusevanger/bakgrunn.markusevanger.no"
         }
     ]
 }
