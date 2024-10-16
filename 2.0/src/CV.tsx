@@ -46,11 +46,11 @@ export default function CV() {
             <div className="max-w-[1200px] flex flex-col gap-5">
 
                 <div className="flex justify-between">
-                    <Link className="button" to="/">
+                    <Link className="button w-fit py-1 h-fit mb-10 text-sm" to="/">
                         <ChevronLeft />  {t("back")}
                     </Link>
 
-                    <button className="button" onClick={() => toggleLang()}>
+                    <button className="button w-fit py-1 h-fit mb-10 text-sm" onClick={() => toggleLang()}>
                         <Languages></Languages>
                         {i18next.language === "en" ? "Norsk" : "English"}
                     </button>

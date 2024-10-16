@@ -59,7 +59,7 @@ function App() {
   return (
     <div className="pb-10 px-5 pt-10 w-full overflow-x-hidden flex items-center flex-col ">
       <div className="w-full flex justify-end">
-        <button className="button" onClick={() => toggleLang()}>
+        <button className="button w-fit h-fit mb-10" onClick={() => toggleLang()}>
           <Languages></Languages>
           {i18next.language === "en" ? "Norsk" : "English"}
         </button>
