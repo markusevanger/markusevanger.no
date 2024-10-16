@@ -1,9 +1,7 @@
 
 import { ChevronLeft, ExternalLink, FileText, FlaskConical, GithubIcon, Text, TreePine } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import ExternalLinkButton from "./componets/Button";
 import { Link } from "react-router-dom";
-import ProjectItem from "./componets/ProjectItem";
 import ProjectItemSmall from "./componets/ProjectItemSmall";
 
 
