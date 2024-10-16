@@ -1,0 +1,214 @@
+{
+    "back": "Tilbake",
+    "readMore": "Les Mer",
+    "markusImgAlt": "Bilde av Markus",
+    "projects": {
+        "code": "Kode",
+        "demo": "Demo",
+        
+        "title": "Prosjekter",
+        "1": {
+            "title": "Webapp for oversikt over avisproduksjon",
+            "period": "Sommeren 2024",
+            "description": "Produserte webapp i React, Node, MongoDB, Express for min tidligere sommerjobb. Laget på eget initativ basert på behovet til bedriften."
+        },
+        "2": {
+            "title": "Android Apputvikling i Kotlin og Jetpack Compose",
+            "name": "IN2000 Prosjekt ved Universitet i Oslo",
+            "description": "Designet og utviklet en karakter A android app sammen med 5 andre studenter. Her ble vi godt kjent i app utviklingmed Kotlin og Jetpack compose. Vi arbeidet også etter scrum og kanban praksiser så mye vi kunne. Har selv drevet flere intervjuer med vetrinærer som datainnsamling til intervju prosessen. Hovedoppgaven min ble programmering og UX/UI.",
+            "period": "Februar - mai 2024.",
+            "website" : "Pawcast",
+            "report" : "Prosessrapport"
+        },
+        "3": {
+            "title": "Webdemo i React og Node for klimastartup",
+            "name": "Clear Karbon Exchange",
+            "description": "Arbeidet med en startup for å produsere en demo av en karbonkreditt plattform. Webappen er laget i React med en NodeJS backend og MongoDB database, som tillater et login-system og posting av listinger. Fokus på backend",
+            "period": "Mars - mai 2024."
+        }
+    },
+    "education": {
+        "title": "Utdanning",
+        "exchange": {
+            "title": "Utveksling i Seoul, Sør-Korea",
+            "subtitle": "Korea University",
+            "description": "På utveksling i Seoul og studerer informasjonssikkerhet, kultur og markedsføring",
+            "period": "Høsten 2024",
+            "appProject": "App-prosjekt",
+            "designProject": "Design-prosjekt"
+        },
+        "university": {
+            "title": "Bachelor i Informatikk: Design, Bruk og Interaksjon",
+            "subtitle": "Institutt For Informatikk / Universitet i Oslo",
+            "description": "Studerer design og interaksjon mellom mennesker og teknologi ved Universitet i Oslo",
+            "period": "Aug. 2022 - jun. 2025",
+            "appProject": "App-prosjekt",
+            "designProject": "Design-prosjekt"
+        },
+        "highschool": {
+            "title": "Medier og Kommunikasjon",
+            "subtitle": "Hetland Videregående Skole i Stavanger",
+            "description": "Fikk mulighet til å utforske flere sider av medieproduksjon. Vant markedsføringskonkuranser med Whats Brewing og Stavanger Aftenblad",
+            "period": "Aug. 2022 - jun. 2025"
+        }
+    },
+    "work": {
+        "title": "Arbeidserfaring",
+        "cert" : "Attest",
+        "1": {
+            "title": "Nettsideutvikling og produksjon av flere sørlands aviser ",
+            "name": "Polaris Media Sør",
+            "description": "Arbeidet som mediegrafiker, med sideproduksjon i Adobe InDesign, med ansvar for produksjon av lokalaviser som Grimstad Adressetidene. Involverte tett samarbeid med redaktører, markedføring og annonseproduksjon. Automatiserte og produserte nettsider for teamet",
+            "period": "Sommerene 2022, 2023 og 2024."
+        },
+        "2": {
+            "title": "Fullstack Internship ved Klima startup",
+            "name": "Clear Karbon Exchange",
+            "description": "Arbeidet som mediegrafiker, med sideproduksjon i Adobe InDesign, med ansvar for produksjon av lokalaviser som Grimstad Adressetidene. Involverte tett samarbeid med redaktører, markedføring og annonseproduksjon. Automatiserte og produserte nettsider for teamet",
+            "period": "Våren 2024."
+        }
+    },
+    "abilities": {
+        "title": "Egenskaper",
+        "dev": {
+            "title": "Utvikling",
+            "list": [
+                {
+                    "title": "React",
+                    "link": "https://github.com/markusevanger?tab=repositories&q=react&type=&language=&sort="
+                },
+                {
+                    "title": "Javascript",
+                    "link": "https://github.com/markusevanger?tab=repositories&q=&type=&language=javascript&sort="
+                },
+                {
+                    "title": "TypeScript",
+                    "link": "https://github.com/markusevanger?tab=repositories&q=&type=&language=javascript&sort="
+                },
+                {
+                    "title": "Java",
+                    "link": "https://github.com/markusevanger?tab=repositories&q=&type=&language=java&sort="
+                },
+                {
+                    "title": "Python",
+                    "link": "https://github.com/markusevanger?tab=repositories&q=&type=&language=python&sort="
+                },
+                {
+                    "title": "Kotlin",
+                    "link": "https://github.com/markusevanger?tab=repositories&q=&type=&language=kotlin&sort="
+                },
+                {
+                    "title": "Git & Github",
+                    "link": "https://github.com/markusevanger"
+                },
+                {
+                    "title": "Tailwind",
+                    "link": ""
+                },
+                {
+                    "title": "Shadcn",
+                    "link": ""
+                },
+                {
+                    "title": "Bootstrap & MaterialUI",
+                    "link": ""
+                },
+                {
+                    "title": "HTML, CSS",
+                    "link": ""
+                },
+                {
+                    "title": "MongoDB",
+                    "link": ""
+                },
+                {
+                    "title": "Wordpress",
+                    "link": ""
+                },
+                {
+                    "title": "NodeJS",
+                    "link": ""
+                },
+                {
+                    "title": "Jetpack Compose",
+                    "link": ""
+                }
+            ]
+        },
+        "host": {
+            "title": "Hosting",
+            "list": [
+                {
+                    "title": "Cloudflare",
+                    "link": ""
+                },
+                {
+                    "title": "Docker",
+                    "link": ""
+                },
+                {
+                    "title": "Nginx",
+                    "link": ""
+                },
+                {
+                    "title": "Oracle Cloud",
+                    "link": ""
+                },
+                {
+                    "title": "Coolify",
+                    "link": ""
+                },
+                {
+                    "title": "Linux / Ubuntu server",
+                    "link": ""
+                },
+                {
+                    "title": "Egen server hjemme :)",
+                    "link": ""
+                }
+            ]
+        },
+        "creative": {
+            "title": "Kreativt",
+            "list": [
+                {
+                    "title": "Premiere Pro",
+                    "link": ""
+                },
+                {
+                    "title": "Photoshop",
+                    "link": ""
+                },
+                {
+                    "title": "Illustrator",
+                    "link": ""
+                },
+                {
+                    "title": "After Effects",
+                    "link": ""
+                },
+                {
+                    "title": "Lightroom",
+                    "link": ""
+                },
+                {
+                    "title": "Blender",
+                    "link": ""
+                },
+                {
+                    "title": "Figma",
+                    "link": ""
+                },
+                {
+                    "title": "Fotografi",
+                    "link": ""
+                }
+            ]
+        }
+    },
+    "bottom" : {
+        "contactMe" : "Kontakt meg på mail: ",
+        "madeBy" : "Laget av Markus<3",
+        "copied" : "Kopiert! 💖"
+    }
+}
