@@ -1,16 +1,17 @@
 {
+    "cv" : "CV",
     "hero": {
-        "titleEmoji": "👋",
         "title": "Heisann!",
         "description_1": "Jeg er en",
         "description_2": "år gammel designer og utvikler på tredje året av design-bacheloren min ved UiO. Akkurat nå er jeg på utveksling ved Korea University i Seoul! 🌏"
     },
     "projects": {
+        "title" : "Portefølje",
         "1": {
             "title": "Polaris Sideoversikt",
             "subtitle": "For Polaris Media Sør (Sommer 2024)",
             "imgAlt": "Bilde av Polaris sideoversikt landingsside",
-            "description": "Tok selv initativ til å oppgradere bedriftens koordinerings program fra et delt Excel ark til en MongoDB, ExpressJS, React og NodeJS basert webapp. Frontenden er bygd ved å hjelp av Tailwind, Shadcn og Typescript",
+            "description": "Tok selv initativ til å oppgradere bedriftens koordinerings program fra et delt Excel ark til en MongoDB, ExpressJS, React og NodeJS basert webapp. Frontenden er bygget ved å hjelp av Tailwind, Shadcn og Typescript",
             "buttons": {
                 "demo": "Demo",
                 "github": "Kode og prosess"
@@ -36,7 +37,8 @@
                 "github": "Kode",
                 "report": "Prosessrapport"
             }
-        }
+        },
+        "forMore" : "For mer, sjekk ut"
     },
     "smallProjects": [
         {
@@ -69,5 +71,11 @@
             "type": "React",
             "link": "https://github.com/markusevanger/bakgrunn.markusevanger.no"
         }
-    ]
+    ],
+
+    "bottom" : {
+        "contactMe" : "Kontakt meg på mail: ",
+        "madeBy" : "Laget av Markus<3",
+        "copied" : "Kopiert! 💖"
+    }
 }

@@ -17,10 +17,8 @@ export default function ProjectCarousel() {
     useEffect(() => {
         const updateCarousel = () => {
             if (carouselAutoRun) {
-                
                 goTo((activePageIndex + 1) % snapPointIndexes.size)
-                console.log(`Sliding to next slide: ${(activePageIndex + 1) % snapPointIndexes.size}`)
-            } else { console.log("skipped carousel") };
+            }
 
         }
         const updateFrequency = setInterval(updateCarousel, 5000);
@@ -61,9 +59,9 @@ export default function ProjectCarousel() {
                         imageAlt={"projects.3.imageAlt "}
                         imageUrl="projectImages/pawcast.webp"
                     >
-                        <ExternalLinkButton openInExternalBrowser={true} to="https://github.com/markusevanger/polaris-sideoversikt"><FileText /> {t("projects.3.buttons.report")}  </ExternalLinkButton>
-                        <ExternalLinkButton openInExternalBrowser={true} to="https://github.com/markusevanger/polaris-sideoversikt"><GithubIcon /> {t("projects.3.buttons.github")}  </ExternalLinkButton>
-                        <ExternalLinkButton type="primary" openInExternalBrowser={true} to="https://sidesjekk.markusevanger.no/"><ExternalLink /> {t("projects.3.buttons.website")} </ExternalLinkButton>
+                        <ExternalLinkButton openInExternalBrowser={true} to="https://pawcast.markusevanger.no/assets/prosjektrapport-B536DxSL.pdf"><FileText /> {t("projects.3.buttons.report")}  </ExternalLinkButton>
+                        <ExternalLinkButton openInExternalBrowser={true} to="https://github.com/markusevanger/pawcast"><GithubIcon /> {t("projects.3.buttons.github")}  </ExternalLinkButton>
+                        <ExternalLinkButton type="primary" openInExternalBrowser={true} to="https://pawcast.markusevanger.no/"><ExternalLink /> {t("projects.3.buttons.website")} </ExternalLinkButton>
 
                     </ProjectItem>
 

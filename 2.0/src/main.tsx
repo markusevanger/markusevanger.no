@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+import { StrictMode, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
@@ -18,6 +18,9 @@ import en_cv from './translations/en/en_cv.json'
 import i18next from "i18next";
 import { I18nextProvider } from "react-i18next";
 
+import Backend from 'i18next-http-backend';
+import LanguageDetector from 'i18next-browser-languagedetector';
+
 
 const router = createBrowserRouter([
   {
@@ -30,14 +33,17 @@ const router = createBrowserRouter([
   }
 ]);
 
-i18next.init({
+i18next.use(LanguageDetector)
+.use(Backend).init({
   interpolation: { escapeValue: true },
-  lng: "no",
+  fallbackLng: "no",
   resources: {
     en: { main: en_main, cv: en_cv },
     no: { main: no_main, cv: no_cv }
   }
 })
+
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
