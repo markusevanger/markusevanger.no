@@ -31,6 +31,14 @@ function App() {
   }, []);
 
 
+  interface SmallProject {
+    title: string;
+    type: string;
+    link: string;
+  }
+  const smallProjects = t('smallProjects', { returnObjects: true }) as SmallProject[]
+
+
 
   // useEffect for autoScroll
   const [emailCopiedBadge, setEmailCopiedBadge] = useState(false)
@@ -45,7 +53,7 @@ function App() {
   }
 
   return (
-    <div className="py-10 px-3 w-full overflow-x-hidden flex items-center flex-col ">
+    <div className="pb-10 px-3 pt-44 w-full overflow-x-hidden flex items-center flex-col ">
       <div className="flex flex-col gap-2 items-center w-full max-w-[610px]">
 
 
@@ -63,10 +71,6 @@ function App() {
             <ExternalLinkButton to="cv" type="default">
               CV
             </ExternalLinkButton>
-
-            <a href="#portfolio">
-              Portefølje
-            </a>
           </div>
           {
 
@@ -80,7 +84,9 @@ function App() {
         <section id="portfolio" className="w-full  flex-col justify-center mt-28">
 
           <div>
-            <h2 className="font-bold font-[Mogi] text-markusRed text-3xl mb-2">Det beste</h2>
+            <h2 className="font-bold font-[Mogi] text-markusRed text-3xl mb-2">
+              Portefølje
+            </h2>
             <ProjectCarousel></ProjectCarousel>
           </div>
 
@@ -88,10 +94,11 @@ function App() {
             <h2 className="text-2xl font-[Mogi] text-markusRed">Andre prosjekter</h2>
 
             <ul className="flex flex-col gap-3 mt-3">
-              <ProjectItemSmall title="Nuovo" desc="Grafisk Design og 3D" link=""></ProjectItemSmall>
-              <ProjectItemSmall title="Stavanger Move" desc="Grafisk Design og 3D" link=""></ProjectItemSmall>
-              <ProjectItemSmall title="Leetcode Leaderboard" desc="React" link=""></ProjectItemSmall>
-              <ProjectItemSmall title="Live Bakgrunn" desc="React" link=""></ProjectItemSmall>
+
+              {Array.from({ length: smallProjects.length }, (_, index) =>
+                <ProjectItemSmall key={index} title={t(`smallProjects.${index}.title`)} desc={t(`smallProjects.${index}.type`)} link={t(`smallProjects.${index}.link`)}></ProjectItemSmall>
+              )}
+
             </ul>
 
             <p className="flex gap-3 items-center mt-3">

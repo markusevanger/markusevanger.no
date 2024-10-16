@@ -17,13 +17,15 @@ export default function ProjectCarousel() {
     useEffect(() => {
         const updateCarousel = () => {
             if (carouselAutoRun) {
-                console.log(`Sliding to next slide: ${activePageIndex}`)
+                
                 goTo((activePageIndex + 1) % snapPointIndexes.size)
-            } else { console.log("skipped carousel")};
-            const updateFrequency = setInterval(updateCarousel, 2000);
-            return () => clearInterval(updateFrequency);
+                console.log(`Sliding to next slide: ${(activePageIndex + 1) % snapPointIndexes.size}`)
+            } else { console.log("skipped carousel") };
+
         }
-    }, [activePageIndex, snapPointIndexes, carouselAutoRun]); // Dependencies: effect reruns when activePageIndex or snapPointIndexes change
+        const updateFrequency = setInterval(updateCarousel, 5000);
+        return () => clearInterval(updateFrequency);
+    }, [activePageIndex, carouselAutoRun, snapPointIndexes.size]); // Dependencies: effect reruns when activePageIndex or snapPointIndexes change
 
 
 
