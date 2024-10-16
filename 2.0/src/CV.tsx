@@ -66,8 +66,6 @@ export default function CV() {
                 <div className="">
                     <h2 className="text-2xl mb-4 font-bold">{t("projects.title")}</h2>
                     <ul>
-
-
                         <li>
                             <div className="mt-4">
                                 <p className="text-lg"> {t("projects.2.title")} </p>
@@ -81,7 +79,7 @@ export default function CV() {
                                 </div>
                             </div>
                         </li>
-                        <li>
+                        <li className="mt-16"> 
                             <div className="flex flex-col">
                                 <p className="text-lg "> {t("projects.1.title")} </p>
                                 <p className="text-sm"> {t("projects.1.description")} </p>
@@ -94,10 +92,8 @@ export default function CV() {
                             </div>
                         </li>
 
-
-
                         <li>
-                            <div className="mt-4">
+                            <div className="mt-16">
                                 <p className="text-lg"> {t("projects.3.title")} </p>
                                 <p className="text-sm"> {t("projects.3.description")} </p>
                                 <p className="text-sm italic"> {t("projects.3.period")} </p>
