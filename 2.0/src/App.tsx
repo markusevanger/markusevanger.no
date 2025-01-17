@@ -6,7 +6,6 @@ import ProjectItemSmall from "./componets/ProjectItemSmall.tsx";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import i18next from "i18next";
-import { Languages } from "lucide-react";
 
 function App() {
 
