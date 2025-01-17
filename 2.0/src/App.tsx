@@ -58,18 +58,7 @@ function App() {
 
   return (
     <div className="pb-10 px-5 pt-10 w-full overflow-x-hidden flex items-center flex-col ">
-      <div className="w-full flex justify-end">
-        <button className="button w-fit h-fit mb-10" onClick={() => toggleLang()}>
-          <Languages></Languages>
-          {i18next.language === "en" ? "Norsk" : "English"}
-        </button>
-      </div>
-
       <div className="flex flex-col gap-2 items-center w-full max-w-[610px]">
-
-
-
-
         <WindowAnimation></WindowAnimation>
 
         <h1 className="mt-4 mb-1 transition-all text-markusRed text-4xl font-[Mogi]"> {t("hero.title")}</h1>
@@ -126,6 +115,11 @@ function App() {
 
           <p>{t("bottom.contactMe")} <span onClick={copyMail} className="cursor-pointer underline"> markusevanger@gmail.com</span></p>
           <p>{t("bottom.madeBy")}</p>
+          <div className="">
+            <a className="w-fit h-fit mb-10 underline hover:markusRed cursor-pointer" onClick={() => toggleLang()}>
+              {i18next.language === "en" ? "Bytt til Norsk" : "Swap to English"}
+            </a>
+          </div>
 
           <motion.div
             whileTap={{ scale: 0.7 }} className="w-fit">

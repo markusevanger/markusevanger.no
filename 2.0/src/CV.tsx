@@ -49,11 +49,6 @@ export default function CV() {
                     <Link className="button w-fit py-1 h-fit mb-10 text-sm" to="/">
                         <ChevronLeft />  {t("back")}
                     </Link>
-
-                    <button className="button w-fit py-1 h-fit mb-10 text-sm" onClick={() => toggleLang()}>
-                        <Languages></Languages>
-                        {i18next.language === "en" ? "Norsk" : "English"}
-                    </button>
                 </div>
 
 
@@ -79,7 +74,7 @@ export default function CV() {
                                 </div>
                             </div>
                         </li>
-                        <li className="mt-16"> 
+                        <li className="mt-16">
                             <div className="flex flex-col">
                                 <p className="text-lg "> {t("projects.1.title")} </p>
                                 <p className="text-sm"> {t("projects.1.description")} </p>
@@ -211,6 +206,11 @@ export default function CV() {
 
                     <p>{t("bottom.contactMe")} <span onClick={copyMail} className="cursor-pointer underline"> markusevanger@gmail.com</span></p>
                     <p>{t("bottom.madeBy")}</p>
+                    <div className="">
+                        <a className="w-fit h-fit mb-10 underline hover:markusRed cursor-pointer" onClick={() => toggleLang()}>
+                            {i18next.language === "en" ? "Bytt til Norsk" : "Swap to English"}
+                        </a>
+                    </div>
 
                     <motion.div
                         whileTap={{ scale: 0.7 }} className="w-fit">
