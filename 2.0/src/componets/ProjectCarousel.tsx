@@ -75,8 +75,8 @@ export default function ProjectCarousel() {
                         imageAlt={"projects.2.imageAlt "}
                         imageUrl="projectImages/karbon.webp"
                     >
-                        <ExternalLinkButton openInExternalBrowser={true} to="https://github.com/markusevanger/polaris-sideoversikt"><GithubIcon /> {t("projects.2.buttons.github")}  </ExternalLinkButton>
-                        <ExternalLinkButton type="primary" openInExternalBrowser={true} to="https://sidesjekk.markusevanger.no/"><FlaskConical /> {t("projects.2.buttons.demo")} </ExternalLinkButton>
+                        <ExternalLinkButton openInExternalBrowser={true} to="https://github.com/markusevanger/clearkarbonexchange_demo/"><GithubIcon /> {t("projects.2.buttons.github")}  </ExternalLinkButton>
+                        <ExternalLinkButton type="primary" openInExternalBrowser={true} to="https://greenbay-demo.vercel.app/"><FlaskConical /> {t("projects.2.buttons.demo")} </ExternalLinkButton>
                     </ProjectItem>
 
 
