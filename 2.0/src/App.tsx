@@ -40,7 +40,7 @@ function App() {
     type: string;
     link: string;
   }
-  const smallProjects = t('smallProjects', { returnObjects: true }) as SmallProject[]
+  const smallProjects = t('smallProjects.list', { returnObjects: true }) as SmallProject[]
 
 
 
@@ -86,12 +86,12 @@ function App() {
           </div>
 
           <div className="rounded-lg mt-8 p-2">
-            <h2 className="text-2xl font-[Mogi] text-markusRed">Andre prosjekter</h2>
+            <h2 className="text-2xl font-[Mogi] text-markusRed">{t("smallProjects.title")}</h2>
 
             <ul className="flex flex-col gap-3 mt-3">
 
               {Array.from({ length: smallProjects.length }, (_, index) =>
-                <ProjectItemSmall key={index} title={t(`smallProjects.${index}.title`)} desc={t(`smallProjects.${index}.type`)} link={t(`smallProjects.${index}.link`)}></ProjectItemSmall>
+                <ProjectItemSmall key={index} title={t(`smallProjects.list.${index}.title`)} desc={t(`smallProjects.list.${index}.type`)} link={t(`smallProjects.list.${index}.link`)}></ProjectItemSmall>
               )}
 
             </ul>
