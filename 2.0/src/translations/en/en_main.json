@@ -4,7 +4,9 @@
         "titleEmoji": "👋",
         "title": "Hello!",
         "description_1": "I am a",
-        "description_2": "year-old designer and developer in my third year of a design bachelor's degree at UiO. Back from exchange at Korea University in Seoul! 🌏"
+        "description_2": "year-old designer and developer for Oslo based ",
+        "description_3" : "I am in my third year of a design bachelor's degree at UiO. Back from exchange at Korea University in Seoul! 🌏",
+        "workplace" : "Kult Byrå"
     },
     "projects": {
         "title": "Portfolio",
@@ -74,11 +76,12 @@
                 "type": "React",
                 "link": "https://github.com/markusevanger/bakgrunn.markusevanger.no"
             }
-        ],
-        "bottom": {
-            "contactMe": "Contact me via email: ",
-            "madeBy": "Made by Markus<3",
-            "copied": "Copied! 💖"
-        }
+        ]
+    },
+    "bottom": {
+        "contactMe": "",
+        "madeBy": "Made by Markus<3",
+        "copied": "Copied! 💖",
+        "clickToCopy" : "📋 Click to copy"
     }
 }

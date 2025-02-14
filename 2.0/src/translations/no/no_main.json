@@ -3,7 +3,9 @@
     "hero": {
         "title": "Heisann!",
         "description_1": "Jeg er en",
-        "description_2": "år gammel designer og utvikler på tredje året av design-bacheloren min ved UiO. Nå tilbake etter utveksling ved Korea University i Seoul! 🌏"
+        "description_2": "år gammel designer og utvikler for",
+        "description_3" : "på tredje året av design-bacheloren min ved UiO. Nå tilbake etter utveksling ved Korea University i Seoul! 🌏",
+        "workplace" : "Kult Byrå"
     },
     "projects": {
         "title": "Portefølje",
@@ -41,7 +43,7 @@
         "forMore": "For mer, sjekk ut"
     },
     "smallProjects": {
-        "title" : "Andre Prosjekter",
+        "title": "Andre Prosjekter",
         "list": [
             {
                 "title": "Nuovo",
@@ -75,10 +77,10 @@
             }
         ]
     },
-
     "bottom": {
         "contactMe": "Kontakt meg på mail: ",
         "madeBy": "Laget av Markus<3",
-        "copied": "Kopiert! 💖"
+        "copied": "Kopiert! 💖",
+        "clickToCopy": "📋 Klikk for å kopiere"
     }
 }
