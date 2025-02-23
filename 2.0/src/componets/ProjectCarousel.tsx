@@ -4,11 +4,13 @@ import ProjectItem from "./ProjectItem";
 import { useTranslation } from "react-i18next";
 import { useSnapCarousel } from "react-snap-carousel";
 import { ChevronLeftCircle, ChevronRightCircle, ExternalLink, FileText, FlaskConical, GithubIcon } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
 
 
 
 export default function ProjectCarousel() {
 
+    const shouldReduceMotion = useReducedMotion()
 
     const [t] = useTranslation("main") // used for language
     const { scrollRef, snapPointIndexes, prev, next, goTo, activePageIndex, hasNextPage, hasPrevPage } = useSnapCarousel();
@@ -16,7 +18,7 @@ export default function ProjectCarousel() {
 
     useEffect(() => {
         const updateCarousel = () => {
-            if (carouselAutoRun) {
+            if (carouselAutoRun && !shouldReduceMotion) {
                 goTo((activePageIndex + 1) % snapPointIndexes.size)
             }
 
