@@ -33,7 +33,7 @@ export default function ProjectCarousel() {
 
         <>
             <div className="flex items-center gap-2" onMouseEnter={() => setCarouselAutoRun(false)} onMouseLeave={() => setCarouselAutoRun(true)}>
-                <button tabIndex={0} className={`transition-all hover:text-markusRed focus:text-markusRed  ${hasPrevPage ? "opacity-40 hover:opacity-100" : "opacity-0 active:opacity-0 hover:opacity-0"} -ml-8`} onClick={() => prev()}><ChevronLeftCircle /></button>
+                <button tabIndex={0} className={`transition-all hover:text-markusRed focus:text-markusRed  ${hasPrevPage ? "opacity-40 hover:opacity-100" : "invisible cursor-default"} -ml-8`} onClick={() => prev()}><ChevronLeftCircle /></button>
 
                 <ul className="flex flex-1 scrollbar-none scroll-smooth overflow-x-auto snap-x snap-mandatory gap-10" ref={scrollRef}>
                     <ProjectItem
@@ -83,7 +83,7 @@ export default function ProjectCarousel() {
 
 
                 </ul>
-                <button tabIndex={1} className={`transition-all  hover:text-markusRed focus:text-markusRed focus:opacity-100  ${hasNextPage ? "opacity-40 hover:opacity-100" : "opacity-0 active:opacity-0 hover:opacity-0"} -mr-8`} onClick={() => next()}><ChevronRightCircle /></button>
+                <button tabIndex={1} className={`transition-all  hover:text-markusRed focus:text-markusRed focus:opacity-100  ${hasNextPage ? "opacity-40 hover:opacity-100" : "invisible cursor-default"} -mr-8`} onClick={() => next()}><ChevronRightCircle /></button>
             </div>
 
             <div className="flex gap-1 justify-center mt-4">

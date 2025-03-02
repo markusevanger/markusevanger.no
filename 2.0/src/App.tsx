@@ -6,7 +6,7 @@ import ProjectItemSmall from "./componets/ProjectItemSmall.tsx";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import i18next from "i18next";
-import { MailIcon } from "lucide-react";
+import { ClipboardIcon, MailIcon } from "lucide-react";
 
 function App() {
 
@@ -81,7 +81,7 @@ function App() {
 
         <section id="portfolio" className="w-full  flex-col justify-center mt-28">
 
-          <div>
+          <div className="px-2">
             <h2 className="font-bold font-[Mogi] text-markusRed text-3xl mb-2">
               {t("projects.title")}
             </h2>
@@ -121,13 +121,22 @@ function App() {
           }
 
 
-          <p className="flex gap-2 items-center">{t("bottom.contactMe")} <MailIcon size={16} /> <span onClick={copyMail} title={t("bottom.clickToCopy")} className="cursor-pointer underline"> markusevanger@gmail.com</span></p>
-          <p>{t("bottom.madeBy")}</p>
+          <p className="flex gap-2 items-center">{t("bottom.contactMe")}
+            <span
+              onClick={copyMail}
+              title={t("bottom.clickToCopy")}
+              className="underline">
+              markusevanger@gmail.com
+            </span>
+            <ClipboardIcon size={16} />
+          </p>
           <div className="">
             <a className="w-fit h-fit mb-10 underline hover:markusRed cursor-pointer" onClick={() => toggleLang()}>
               {i18next.language === "en" ? "Bytt til Norsk" : "Swap to English"}
             </a>
           </div>
+          <p className="text-xs font-mono mt-8 bg-gray-100 p-y1 rounded-full px-8">{t("bottom.madeBy")}</p>
+
 
           <motion.div
             whileHover={{ scale: 0.7, rotateY: 180 }} className="w-fit">
