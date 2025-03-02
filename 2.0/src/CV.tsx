@@ -1,11 +1,12 @@
-
-import { ChevronLeft, ExternalLink, FileText, FlaskConical, GithubIcon, Text, TreePine } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import { Link, useLocation } from "react-router-dom";
-import AbilityItem from "./componets/AbilityItem";
 import { useEffect, useState } from "react";
 import i18next from "i18next";
 import { motion } from "framer-motion";
+import { ChevronLeft, ExternalLink, FileText, FlaskConical, GithubIcon, Text, TreePine } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { Link, useLocation } from "react-router-dom";
+
+import AbilityItem from "./componets/AbilityItem";
+
 
 
 

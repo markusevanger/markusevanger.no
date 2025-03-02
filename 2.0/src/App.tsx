@@ -57,7 +57,7 @@ function App() {
   }
 
   return (
-    <div className="pb-10 px-5 pt-10 w-full overflow-x-hidden flex items-center flex-col ">
+    <div className="pb-10 container mx-auto pt-10 w-full overflow-x-hidden flex items-center flex-col ">
       <div className="flex flex-col gap-2 items-center w-full max-w-[610px]">
         <WindowAnimation></WindowAnimation>
 
@@ -88,8 +88,8 @@ function App() {
             <ProjectCarousel></ProjectCarousel>
           </div>
 
-          <div className="flex flex-col gap-2 justify-center h-full items-center">
-            <img src={"/v4-red.gif"} className="w-32 h-auto" />
+          <div className="my-8 flex justify-center h-full items-center">
+            <img src={"/v5-red.webp"} className="w-auto h-28" />
           </div>
 
 
