@@ -12,7 +12,7 @@ export default {
       },
 
       fontFamily: {
-
+        "mogi": ["Mogi", "sans-serif"],
       }
     },
 
