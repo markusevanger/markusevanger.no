@@ -1,6 +1,6 @@
-import { groq } from 'next-sanity'
+import { defineQuery } from 'next-sanity'
 
-export const siteSettingsQuery = groq`
+export const siteSettingsQuery = defineQuery(`
   *[_type == "siteSettings"][0] {
     name,
     email,
@@ -11,9 +11,9 @@ export const siteSettingsQuery = groq`
     cvProfileImage,
     logoImage
   }
-`
+`)
 
-export const frontpageQuery = groq`
+export const frontpageQuery = defineQuery(`
   *[_type == "frontpage"][0] {
     heroTitle_en,
     heroTitle_no,
@@ -60,9 +60,9 @@ export const frontpageQuery = groq`
     copiedNotification_en,
     copiedNotification_no
   }
-`
+`)
 
-export const cvPageQuery = groq`
+export const cvPageQuery = defineQuery(`
   *[_type == "cv"][0] {
     pageTitle_en,
     pageTitle_no,
@@ -142,4 +142,4 @@ export const cvPageQuery = groq`
     contactText_en,
     contactText_no
   }
-`
+`)

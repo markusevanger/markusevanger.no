@@ -1,14 +1,14 @@
 import { client } from '@/lib/sanity'
 import { frontpageQuery, siteSettingsQuery } from '@/lib/queries'
-import type { Frontpage, SiteSettings } from '@/lib/types'
+import type { FrontpageQueryResult, SiteSettingsQueryResult } from '@/lib/types'
 import HomePage from '@/components/HomePage'
 
 export const dynamic = 'force-dynamic'
 
 async function getData() {
   const [frontpage, siteSettings] = await Promise.all([
-    client.fetch<Frontpage | null>(frontpageQuery),
-    client.fetch<SiteSettings | null>(siteSettingsQuery),
+    client.fetch<FrontpageQueryResult>(frontpageQuery),
+    client.fetch<SiteSettingsQueryResult>(siteSettingsQuery),
   ])
   return { frontpage, siteSettings }
 }

@@ -2,12 +2,12 @@
 
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import type { Project } from '@/lib/types'
+import type { SmallProject } from '@/lib/types'
 import { useLanguage } from '@/context/LanguageContext'
 import { t } from '@/lib/types'
 
 interface ProjectItemSmallProps {
-  project: Project
+  project: SmallProject
 }
 
 export default function ProjectItemSmall({ project }: ProjectItemSmallProps) {

@@ -232,6 +232,7 @@ out/
 ### Sanity ###
 sanity/dist/
 sanity/.sanity/
+sanity/schema.json
 
 ### Environment files ###
 .env.local

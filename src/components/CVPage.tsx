@@ -17,12 +17,12 @@ import LanguageToggle from './LanguageToggle'
 import { HeartSvg } from './assets/HeartSvg'
 import { useLanguage } from '@/context/LanguageContext'
 import { t } from '@/lib/types'
-import type { CVPage, SiteSettings } from '@/lib/types'
+import type { CvPageQueryResult, SiteSettingsQueryResult } from '@/lib/types'
 import { urlFor } from '@/lib/sanity'
 
 interface CVPageProps {
-  cvPage: CVPage
-  siteSettings: SiteSettings
+  cvPage: NonNullable<CvPageQueryResult>
+  siteSettings: NonNullable<SiteSettingsQueryResult>
 }
 
 export default function CVPageComponent({ cvPage, siteSettings }: CVPageProps) {
@@ -34,7 +34,9 @@ export default function CVPageComponent({ cvPage, siteSettings }: CVPageProps) {
   }, [])
 
   const copyMail = () => {
-    navigator.clipboard.writeText(siteSettings.email)
+    if (siteSettings.email) {
+      navigator.clipboard.writeText(siteSettings.email)
+    }
     setEmailCopiedBadge(true)
     setTimeout(() => {
       setEmailCopiedBadge(false)
@@ -54,7 +56,7 @@ export default function CVPageComponent({ cvPage, siteSettings }: CVPageProps) {
           {siteSettings.cvProfileImage && (
             <Image
               src={urlFor(siteSettings.cvProfileImage).width(412).height(694).url()}
-              alt={siteSettings.name}
+              alt={siteSettings.name || ''}
               width={206}
               height={347}
               className="w-[206px] h-[347px] rounded-b-[33px] rounded-t-[100px] object-cover hover:scale-105 hover:outline outline-markus-red outline-8 transition-all"

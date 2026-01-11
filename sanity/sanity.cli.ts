@@ -6,4 +6,10 @@ export default defineCliConfig({
     dataset: 'production',
   },
   studioHost: 'markusevanger',
+  typegen: {
+    path: '../src/**/*.{ts,tsx}',
+    schema: './schema.json',
+    generates: '../src/lib/sanity.types.ts',
+    overloadClientMethods: true,
+  },
 })

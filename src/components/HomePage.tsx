@@ -11,12 +11,12 @@ import LanguageToggle from './LanguageToggle'
 import { HeartSvg } from './assets/HeartSvg'
 import { useLanguage } from '@/context/LanguageContext'
 import { t } from '@/lib/types'
-import type { Frontpage, SiteSettings } from '@/lib/types'
+import type { FrontpageQueryResult, SiteSettingsQueryResult } from '@/lib/types'
 import { urlFor } from '@/lib/sanity'
 
 interface HomePageProps {
-  frontpage: Frontpage
-  siteSettings: SiteSettings
+  frontpage: NonNullable<FrontpageQueryResult>
+  siteSettings: NonNullable<SiteSettingsQueryResult>
 }
 
 export default function HomePage({ frontpage, siteSettings }: HomePageProps) {
@@ -42,7 +42,9 @@ export default function HomePage({ frontpage, siteSettings }: HomePageProps) {
   }, [siteSettings.birthDate])
 
   const copyMail = () => {
-    navigator.clipboard.writeText(siteSettings.email)
+    if (siteSettings.email) {
+      navigator.clipboard.writeText(siteSettings.email)
+    }
     setEmailCopiedBadge(true)
     setTimeout(() => {
       setEmailCopiedBadge(false)

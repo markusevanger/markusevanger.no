@@ -4,13 +4,13 @@ import { useEffect, useState, useRef, useCallback } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { ChevronLeftCircle, ChevronRightCircle } from 'lucide-react'
 import Image from 'next/image'
-import type { Project } from '@/lib/types'
+import type { FeaturedProject } from '@/lib/types'
 import { useLanguage } from '@/context/LanguageContext'
 import { t } from '@/lib/types'
 import { urlFor } from '@/lib/sanity'
 
 interface ProjectCarouselProps {
-  projects: Project[]
+  projects: FeaturedProject[]
 }
 
 export default function ProjectCarousel({ projects }: ProjectCarouselProps) {

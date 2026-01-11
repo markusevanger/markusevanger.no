@@ -1,14 +1,14 @@
 import { client } from '@/lib/sanity'
 import { cvPageQuery, siteSettingsQuery } from '@/lib/queries'
-import type { CVPage, SiteSettings } from '@/lib/types'
+import type { CvPageQueryResult, SiteSettingsQueryResult } from '@/lib/types'
 import CVPageComponent from '@/components/CVPage'
 
 export const dynamic = 'force-dynamic'
 
 async function getData() {
   const [cvPage, siteSettings] = await Promise.all([
-    client.fetch<CVPage | null>(cvPageQuery),
-    client.fetch<SiteSettings | null>(siteSettingsQuery),
+    client.fetch<CvPageQueryResult>(cvPageQuery),
+    client.fetch<SiteSettingsQueryResult>(siteSettingsQuery),
   ])
   return { cvPage, siteSettings }
 }

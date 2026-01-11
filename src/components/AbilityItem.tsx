@@ -2,10 +2,10 @@
 
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import type { Skill } from '@/lib/types'
+import type { CVSkill } from '@/lib/types'
 
 interface AbilityItemProps {
-  skill: Skill
+  skill: CVSkill
 }
 
 export default function AbilityItem({ skill }: AbilityItemProps) {
