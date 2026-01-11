@@ -224,3 +224,18 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,react,linux,macos,windows,webstorm
+
+### Next.js ###
+.next/
+out/
+
+### Sanity ###
+sanity/dist/
+sanity/.sanity/
+
+### Environment files ###
+.env.local
+.env*.local
+
+### pnpm ###
+.pnpm-store/
