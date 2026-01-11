@@ -1,9 +1,11 @@
 import { defineField, defineType } from 'sanity'
+import { GraduationCap } from 'lucide-react'
 
 export default defineType({
   name: 'education',
   title: 'Education',
   type: 'document',
+  icon: GraduationCap,
   fields: [
     defineField({
       name: 'institution_en',

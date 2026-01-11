@@ -1,9 +1,11 @@
 import { defineField, defineType } from 'sanity'
+import { FileUser } from 'lucide-react'
 
 export default defineType({
   name: 'cv',
   title: 'CV Page',
   type: 'document',
+  icon: FileUser,
   fields: [
     // Header
     defineField({

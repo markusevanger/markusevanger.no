@@ -1,9 +1,11 @@
 import { defineField, defineType } from 'sanity'
+import { Home } from 'lucide-react'
 
 export default defineType({
   name: 'frontpage',
   title: 'Frontpage',
   type: 'document',
+  icon: Home,
   fields: [
     // Hero Section
     defineField({

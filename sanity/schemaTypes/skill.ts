@@ -1,9 +1,11 @@
 import { defineField, defineType } from 'sanity'
+import { Wrench } from 'lucide-react'
 
 export default defineType({
   name: 'skill',
   title: 'Skill',
   type: 'document',
+  icon: Wrench,
   fields: [
     defineField({
       name: 'name',

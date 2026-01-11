@@ -1,9 +1,11 @@
 import { defineField, defineType } from 'sanity'
+import { Briefcase } from 'lucide-react'
 
 export default defineType({
   name: 'workExperience',
   title: 'Work Experience',
   type: 'document',
+  icon: Briefcase,
   fields: [
     defineField({
       name: 'company_en',

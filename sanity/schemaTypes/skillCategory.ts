@@ -1,9 +1,11 @@
 import { defineField, defineType } from 'sanity'
+import { Layers } from 'lucide-react'
 
 export default defineType({
   name: 'skillCategory',
   title: 'Skill Category',
   type: 'document',
+  icon: Layers,
   fields: [
     defineField({
       name: 'name_en',
