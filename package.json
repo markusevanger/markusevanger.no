@@ -11,8 +11,7 @@
     "start": "next start",
     "lint": "next lint",
     "sanity": "pnpm --filter markusevanger-sanity",
-    "typegen": "cd sanity && sanity schema extract && sanity typegen generate",
-    "prebuild": "pnpm typegen"
+    "typegen": "cd sanity && sanity schema extract && sanity typegen generate"
   },
   "dependencies": {
     "@sanity/client": "^7.14.0",
