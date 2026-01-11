@@ -65,7 +65,7 @@ function App() {
         <h1 className="mt-4 mb-1 transition-all text-markusRed text-4xl font-[Mogi]"> {t("hero.title")}</h1>
 
         <p className="text-center max-w-[350px]">
-          {t("hero.description_1")} <span className="font-mono">{age}</span> {t("hero.description_2")}<a href="https://kult.design" target="_blank" className="underline text-markusRed font-semibold">{t("hero.workplace")}</a>. {t("hero.description_3")}
+          {t("hero.description_1")} <span className="font-mono">{age}</span> {t("hero.description_2")}<a href="https://kult.design" target="_blank" className="underline text-markusRed font-semibold">{t("hero.workplace")}</a>.
         </p>
 
         <div className="flex flex-col gap-2 mt-8">
