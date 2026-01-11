@@ -1,0 +1,35 @@
+{
+  "name": "markusevanger-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.28.0",
+  "scripts": {
+    "dev": "next dev --turbopack & pnpm --filter markusevanger-sanity dev",
+    "dev:next": "next dev --turbopack",
+    "dev:sanity": "pnpm --filter markusevanger-sanity dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "sanity": "pnpm --filter markusevanger-sanity"
+  },
+  "dependencies": {
+    "@sanity/client": "^7.14.0",
+    "@sanity/image-url": "^2.0.2",
+    "framer-motion": "^12.25.0",
+    "lucide-react": "^0.562.0",
+    "next": "^16.1.1",
+    "next-sanity": "^12.0.10",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/node": "^25.0.6",
+    "@types/react": "^19.2.8",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.1.1",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3"
+  }
+}

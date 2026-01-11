@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment files (contain secrets)
+.env.local
+.env*.local
+
+# Sanity runtime (generated)
+.sanity/

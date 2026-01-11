@@ -1,0 +1,31 @@
+{
+  "name": "markusevanger-sanity",
+  "private": true,
+  "version": "1.0.0",
+  "main": "package.json",
+  "license": "MIT",
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "deploy-graphql": "sanity graphql deploy",
+    "migrate": "pnpm sanity dataset import migration.ndjson production --replace",
+    "upload-assets": "tsx scripts/uploadAssets.ts"
+  },
+  "dependencies": {
+    "@sanity/client": "^7.14.0",
+    "@sanity/vision": "^5.2.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "sanity": "^5.2.0",
+    "styled-components": "^6.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.12.0",
+    "@types/react": "^19.2.8",
+    "dotenv": "^16.4.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.9.3"
+  }
+}

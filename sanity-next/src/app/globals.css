@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Mogi';
+  src: url('/fonts/LCMogi-VF.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@theme {
+  --font-mogi: 'Mogi', sans-serif;
+  --color-markus-red: #dc2626;
+  --color-markus-red-secondary: #991b1b;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-white text-black antialiased;
+  font-family: system-ui, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
+
+/* Button styles matching original */
+.button {
+  @apply h-12 md:h-8 w-full md:w-fit cursor-pointer outline hover:scale-105 px-4 py-1 text-center rounded-md flex justify-center items-center gap-1 hover:shadow-lg focus:scale-105 focus:bg-markus-red-secondary active:scale-100 transition-all hover:bg-markus-red-secondary hover:text-white focus:text-white hover:outline-none active:bg-markus-red-secondary;
+}
+
+.button-primary {
+  @apply h-12 md:h-8 w-full md:w-fit cursor-pointer hover:scale-105 px-4 text-center py-1 rounded-md flex justify-center items-center gap-1 hover:shadow-lg focus:scale-105 focus:bg-markus-red-secondary active:scale-100 transition-all bg-markus-red text-white border-none outline-none hover:bg-markus-red-secondary;
+}
+
+/* Mogi font utility class - apply explicitly where needed */
+.font-mogi {
+  font-family: 'Mogi', system-ui, sans-serif;
+}
