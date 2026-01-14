@@ -1,9 +1,12 @@
+import type { Metadata } from 'next'
 import { client } from '@/lib/sanity'
 import { cvPageQuery, siteSettingsQuery } from '@/lib/queries'
 import type { CvPageQueryResult, SiteSettingsQueryResult } from '@/lib/types'
 import CVPageComponent from '@/components/CVPage'
 
-export const dynamic = 'force-dynamic'
+export const metadata: Metadata = {
+  title: 'CV | Markus Evanger',
+}
 
 async function getData() {
   const [cvPage, siteSettings] = await Promise.all([

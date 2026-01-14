@@ -1,13 +1,16 @@
 'use client'
 
-import { useEffect, useState, useRef, useCallback } from 'react'
-import { useReducedMotion } from 'framer-motion'
+import { useEffect, useState, useRef, useMemo } from 'react'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { ChevronLeftCircle, ChevronRightCircle } from 'lucide-react'
 import Image from 'next/image'
 import type { FeaturedProject } from '@/lib/types'
 import { useLanguage } from '@/context/LanguageContext'
-import { t } from '@/lib/types'
+import { t, tPortableText } from '@/lib/types'
 import { urlFor } from '@/lib/sanity'
+import Button from './Button'
+import PortableTextRenderer from './PortableTextRenderer'
+import { toPlainText } from '@portabletext/react'
 
 interface ProjectCarouselProps {
   projects: FeaturedProject[]
@@ -16,139 +19,234 @@ interface ProjectCarouselProps {
 export default function ProjectCarousel({ projects }: ProjectCarouselProps) {
   const shouldReduceMotion = useReducedMotion()
   const { language } = useLanguage()
-  const scrollRef = useRef<HTMLUListElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
-  const [carouselAutoRun, setCarouselAutoRun] = useState(true)
+  const [direction, setDirection] = useState(0)
+  const [isAutoRunning, setIsAutoRunning] = useState(true)
+  const isPausedByHover = useRef(false)
 
-  const goTo = useCallback((index: number) => {
-    if (scrollRef.current) {
-      const child = scrollRef.current.children[index] as HTMLElement
-      if (child) {
-        scrollRef.current.scrollTo({
-          left: child.offsetLeft,
-          behavior: 'smooth',
-        })
-        setActiveIndex(index)
-      }
-    }
-  }, [])
+  // Find the project with the most content to use for height calculation
+  const tallestProject = useMemo(() => {
+    return projects.reduce((longest, current) => {
+      const currentDesc = tPortableText(current, 'description', language)
+      const longestDesc = tPortableText(longest, 'description', language)
+      const currentLength =
+        (t(current, 'title', language)?.length || 0) +
+        (t(current, 'subtitle', language)?.length || 0) +
+        (currentDesc ? toPlainText(currentDesc).length : 0) +
+        (current.buttons?.length || 0) * 20
+      const longestLength =
+        (t(longest, 'title', language)?.length || 0) +
+        (t(longest, 'subtitle', language)?.length || 0) +
+        (longestDesc ? toPlainText(longestDesc).length : 0) +
+        (longest.buttons?.length || 0) * 20
+      return currentLength > longestLength ? current : longest
+    }, projects[0])
+  }, [projects, language])
 
-  const next = useCallback(() => {
-    goTo((activeIndex + 1) % projects.length)
-  }, [activeIndex, projects.length, goTo])
+  const goTo = (index: number, dir?: number) => {
+    if (index === activeIndex) return
+    const newDir = dir ?? (index > activeIndex ? 1 : -1)
+    setDirection(newDir)
+    setActiveIndex(index)
+  }
 
-  const prev = useCallback(() => {
-    goTo((activeIndex - 1 + projects.length) % projects.length)
-  }, [activeIndex, projects.length, goTo])
+  const next = () => {
+    setIsAutoRunning(false)
+    const nextIndex = (activeIndex + 1) % projects.length
+    goTo(nextIndex, 1)
+  }
 
+  const prev = () => {
+    setIsAutoRunning(false)
+    const prevIndex = (activeIndex - 1 + projects.length) % projects.length
+    goTo(prevIndex, -1)
+  }
+
+  const goToManual = (index: number) => {
+    setIsAutoRunning(false)
+    goTo(index)
+  }
+
+  // Auto-advance carousel
   useEffect(() => {
-    if (!carouselAutoRun || shouldReduceMotion) return
+    if (!isAutoRunning || shouldReduceMotion || projects.length <= 1) return
 
     const interval = setInterval(() => {
-      goTo((activeIndex + 1) % projects.length)
+      if (!isPausedByHover.current) {
+        const nextIndex = (activeIndex + 1) % projects.length
+        setDirection(1)
+        setActiveIndex(nextIndex)
+      }
     }, 5000)
 
     return () => clearInterval(interval)
-  }, [activeIndex, carouselAutoRun, projects.length, shouldReduceMotion, goTo])
+  }, [activeIndex, isAutoRunning, projects.length, shouldReduceMotion])
 
-  const hasPrevPage = activeIndex > 0
-  const hasNextPage = activeIndex < projects.length - 1
+  const showChevrons = projects.length > 1
+  const project = projects[activeIndex]
+
+  const variants = {
+    enter: (dir: number) => ({
+      x: dir > 0 ? '100%' : '-100%',
+    }),
+    center: {
+      x: 0,
+    },
+    exit: (dir: number) => ({
+      x: dir > 0 ? '-100%' : '100%',
+    }),
+  }
 
   return (
-    <>
-      <div
-        className="flex items-center gap-2"
-        onMouseEnter={() => setCarouselAutoRun(false)}
-        onMouseLeave={() => setCarouselAutoRun(true)}
-      >
+    <section
+      aria-roledescription="carousel"
+      aria-label="Featured projects"
+      onMouseEnter={() => { isPausedByHover.current = true }}
+      onMouseLeave={() => { isPausedByHover.current = false }}
+    >
+      <div className="flex items-center gap-2">
         <button
-          tabIndex={0}
-          className={`transition-all hover:text-markus-red focus:text-markus-red ${
-            hasPrevPage ? 'opacity-40 hover:opacity-100' : 'invisible cursor-default'
-          } -ml-8`}
+          type="button"
+          aria-label="Previous project"
+          className={`hidden md:block transition-all hover:text-markus-red focus:text-markus-red shrink-0 opacity-40 hover:opacity-100 cursor-pointer ${
+            showChevrons ? '' : 'invisible'
+          }`}
           onClick={prev}
         >
-          <ChevronLeftCircle />
+          <ChevronLeftCircle aria-hidden="true" />
         </button>
 
-        <ul
-          className="flex flex-1 scrollbar-none scroll-smooth overflow-x-auto snap-x snap-mandatory gap-10"
-          ref={scrollRef}
+        <div
+          className="flex-1 min-w-0 overflow-hidden relative"
+          aria-live="polite"
+          aria-atomic="true"
         >
-          {projects.map((project, index) => (
-            <li
-              key={project._id}
-              className="w-full flex-shrink-0 snap-center p-1"
+          {/* Invisible sizing element using tallest project */}
+          <div className="invisible p-1 pointer-events-none" aria-hidden="true">
+            <div className="aspect-video rounded-2xl" />
+            <div className="flex flex-col flex-1">
+              <div>
+                <div className="font-bold mt-2 text-lg">
+                  {t(tallestProject, 'title', language)}
+                </div>
+                <div className="italic text-sm">{t(tallestProject, 'subtitle', language)}</div>
+                <PortableTextRenderer value={tPortableText(tallestProject, 'description', language)} className="break-words" />
+              </div>
+              {tallestProject.buttons && tallestProject.buttons.length > 0 && (
+                <div className="w-full flex flex-col md:flex-row justify-end gap-2 mt-auto pt-4">
+                  {tallestProject.buttons.map((button, idx) => (
+                    <span key={idx} className="button-primary">
+                      {button.text_en || button.text_no}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <AnimatePresence mode="sync" custom={direction} initial={false}>
+            <motion.article
+              key={activeIndex}
+              custom={direction}
+              variants={shouldReduceMotion ? undefined : variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: 'tween', duration: 0.4, ease: 'easeInOut' },
+              }}
+              className="w-full flex flex-col p-1 absolute top-0 left-0 right-0"
+              aria-roledescription="slide"
+              aria-label={`${activeIndex + 1} of ${projects.length}: ${t(project, 'title', language)}`}
             >
-              <div className="aspect-video rounded-2xl outline outline-markus-red shadow-md transition-all overflow-hidden relative">
+              <div className="aspect-video rounded-2xl outline outline-markus-red shadow-md overflow-hidden relative">
                 {project.image && (
                   <Image
                     src={urlFor(project.image).width(800).url()}
-                    alt={t(project, 'imageAlt', language) || t(project, 'title', language)}
+                    alt={t(project, 'imageAlt', language) || ''}
                     fill
                     className="object-cover"
+                    priority={activeIndex === 0}
                   />
                 )}
               </div>
 
-              <div className="flex flex-col">
+              <div className="flex flex-col flex-1">
                 <div>
-                  <h2 className="font-bold mt-2 text-lg">
+                  <h3 className="font-bold mt-2 text-lg">
                     {t(project, 'title', language)}
-                  </h2>
+                  </h3>
                   <p className="italic text-sm">{t(project, 'subtitle', language)}</p>
-                  <p className="break-words">{t(project, 'description', language)}</p>
+                  <PortableTextRenderer value={tPortableText(project, 'description', language)} className="break-words" />
                 </div>
 
-                <div className="w-full flex flex-col md:flex-row justify-end gap-2 mt-4">
-                  {project.githubUrl && (
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="button"
-                    >
-                      GitHub
-                    </a>
-                  )}
-                  {project.demoUrl && (
-                    <a
-                      href={project.demoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="button-primary"
-                    >
-                      {t(project, 'buttonText', language) || 'Demo'}
-                    </a>
-                  )}
-                </div>
+                {project.buttons && project.buttons.length > 0 && (
+                  <div className="w-full flex flex-col md:flex-row justify-end gap-2 mt-auto pt-4">
+                    {project.buttons.map((button, idx) => (
+                      <Button key={idx} button={button} />
+                    ))}
+                  </div>
+                )}
               </div>
-            </li>
-          ))}
-        </ul>
+            </motion.article>
+          </AnimatePresence>
+        </div>
 
         <button
-          tabIndex={1}
-          className={`transition-all hover:text-markus-red focus:text-markus-red focus:opacity-100 ${
-            hasNextPage ? 'opacity-40 hover:opacity-100' : 'invisible cursor-default'
-          } -mr-8`}
+          type="button"
+          aria-label="Next project"
+          className={`hidden md:block transition-all hover:text-markus-red focus:text-markus-red shrink-0 opacity-40 hover:opacity-100 cursor-pointer ${
+            showChevrons ? '' : 'invisible'
+          }`}
           onClick={next}
         >
-          <ChevronRightCircle />
+          <ChevronRightCircle aria-hidden="true" />
         </button>
       </div>
 
-      <div className="flex gap-1 justify-center mt-4">
-        {projects.map((_, i) => (
+      <div
+        className="flex gap-2 items-center justify-center mt-4"
+        role="tablist"
+        aria-label="Select project"
+      >
+        {showChevrons && (
           <button
-            onClick={() => goTo(i)}
-            className={`transition-all rounded-full h-2 w-2 bg-markus-red ${
-              activeIndex === i ? 'scale-125 mx-1' : 'opacity-40'
-            }`}
-            key={i}
-          />
-        ))}
+            type="button"
+            aria-label="Previous project"
+            className="md:hidden transition-all hover:text-markus-red focus:text-markus-red opacity-40 hover:opacity-100 cursor-pointer"
+            onClick={prev}
+          >
+            <ChevronLeftCircle size={20} aria-hidden="true" />
+          </button>
+        )}
+
+        <div className="flex gap-1">
+          {projects.map((p, i) => (
+            <button
+              type="button"
+              role="tab"
+              aria-selected={activeIndex === i}
+              aria-label={`Go to project ${i + 1}: ${t(p, 'title', language)}`}
+              onClick={() => goToManual(i)}
+              className={`transition-all rounded-full h-2 w-2 bg-markus-red cursor-pointer ${
+                activeIndex === i ? 'scale-125 mx-1' : 'opacity-40'
+              }`}
+              key={p._id}
+            />
+          ))}
+        </div>
+
+        {showChevrons && (
+          <button
+            type="button"
+            aria-label="Next project"
+            className="md:hidden transition-all hover:text-markus-red focus:text-markus-red opacity-40 hover:opacity-100 cursor-pointer"
+            onClick={next}
+          >
+            <ChevronRightCircle size={20} aria-hidden="true" />
+          </button>
+        )}
       </div>
-    </>
+    </section>
   )
 }

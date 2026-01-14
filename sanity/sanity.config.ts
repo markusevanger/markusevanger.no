@@ -1,6 +1,8 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
+import { lucideIconPicker } from 'sanity-plugin-lucide-icon-picker'
+import { media } from 'sanity-plugin-media'
 import { schemaTypes } from './schemaTypes'
 
 // Singleton document types that should only have one instance
@@ -66,6 +68,8 @@ export default defineConfig({
           ]),
     }),
     visionTool(),
+    lucideIconPicker(),
+    media(),
   ],
 
   schema: {

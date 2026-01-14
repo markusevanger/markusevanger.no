@@ -35,18 +35,6 @@ export default defineType({
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'skill' }] }],
     }),
-    defineField({
-      name: 'order',
-      title: 'Display Order',
-      type: 'number',
-    }),
-  ],
-  orderings: [
-    {
-      title: 'Display Order',
-      name: 'orderAsc',
-      by: [{ field: 'order', direction: 'asc' }],
-    },
   ],
   preview: {
     select: {

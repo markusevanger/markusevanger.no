@@ -6,6 +6,9 @@ import education from './education'
 import workExperience from './workExperience'
 import skill from './skill'
 import skillCategory from './skillCategory'
+import button from './button'
+import blockContent from './blockContent'
+import heroBlockContent from './heroBlockContent'
 
 export const schemaTypes = [
   // Singleton documents
@@ -18,4 +21,8 @@ export const schemaTypes = [
   workExperience,
   skill,
   skillCategory,
+  // Object types
+  button,
+  blockContent,
+  heroBlockContent,
 ]

@@ -43,12 +43,12 @@ export default defineType({
     defineField({
       name: 'description_en',
       title: 'Description (English)',
-      type: 'text',
+      type: 'blockContent',
     }),
     defineField({
       name: 'description_no',
       title: 'Description (Norwegian)',
-      type: 'text',
+      type: 'blockContent',
     }),
     defineField({
       name: 'period_en',
@@ -84,18 +84,6 @@ export default defineType({
       type: 'url',
       description: 'Link to institution website, etc.',
     }),
-    defineField({
-      name: 'order',
-      title: 'Display Order',
-      type: 'number',
-    }),
-  ],
-  orderings: [
-    {
-      title: 'Display Order',
-      name: 'orderAsc',
-      by: [{ field: 'order', direction: 'asc' }],
-    },
   ],
   preview: {
     select: {

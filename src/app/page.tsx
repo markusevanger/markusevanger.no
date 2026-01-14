@@ -3,8 +3,6 @@ import { frontpageQuery, siteSettingsQuery } from '@/lib/queries'
 import type { FrontpageQueryResult, SiteSettingsQueryResult } from '@/lib/types'
 import HomePage from '@/components/HomePage'
 
-export const dynamic = 'force-dynamic'
-
 async function getData() {
   const [frontpage, siteSettings] = await Promise.all([
     client.fetch<FrontpageQueryResult>(frontpageQuery),

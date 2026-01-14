@@ -1,24 +1,15 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
-import {
-  ChevronLeft,
-  ExternalLink,
-  FileText,
-  FlaskConical,
-  GithubIcon,
-  Text,
-} from 'lucide-react'
-import AbilityItem from './AbilityItem'
-import LanguageToggle from './LanguageToggle'
-import { HeartSvg } from './assets/HeartSvg'
+import { ChevronLeft, ArrowUpRight } from 'lucide-react'
+import Button from './Button'
 import { useLanguage } from '@/context/LanguageContext'
-import { t } from '@/lib/types'
+import { t, tPortableText } from '@/lib/types'
 import type { CvPageQueryResult, SiteSettingsQueryResult } from '@/lib/types'
 import { urlFor } from '@/lib/sanity'
+import PortableTextRenderer from './PortableTextRenderer'
 
 interface CVPageProps {
   cvPage: NonNullable<CvPageQueryResult>
@@ -27,24 +18,13 @@ interface CVPageProps {
 
 export default function CVPageComponent({ cvPage, siteSettings }: CVPageProps) {
   const { language } = useLanguage()
-  const [emailCopiedBadge, setEmailCopiedBadge] = useState(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
-  const copyMail = () => {
-    if (siteSettings.email) {
-      navigator.clipboard.writeText(siteSettings.email)
-    }
-    setEmailCopiedBadge(true)
-    setTimeout(() => {
-      setEmailCopiedBadge(false)
-    }, 2000)
-  }
-
   return (
-    <div className="px-5 pt-10 pb-72 min-h-screen flex flex-col items-center w-full">
+    <div className="px-5 pt-10 min-h-screen flex flex-col items-center w-full">
       <div className="max-w-[1200px] flex flex-col gap-5">
         <div className="flex justify-between">
           <Link className="button w-fit py-1 h-fit mb-10 text-sm" href="/">
@@ -74,41 +54,16 @@ export default function CVPageComponent({ cvPage, siteSettings }: CVPageProps) {
               <li key={project._id} className={index > 0 ? 'mt-16' : 'mt-4'}>
                 <div className="flex flex-col">
                   <p className="text-lg">{t(project, 'title', language)}</p>
-                  <p className="text-sm">{t(project, 'description', language)}</p>
+                  <PortableTextRenderer value={tPortableText(project, 'description', language)} className="text-sm" />
                   <p className="text-sm italic">{t(project, 'period', language)}</p>
 
-                  <div className="mt-4 flex flex-col gap-2 md:flex-row-reverse">
-                    {project.demoUrl && (
-                      <a
-                        href={project.demoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="button-primary"
-                      >
-                        <FlaskConical /> Demo
-                      </a>
-                    )}
-                    {project.reportUrl && (
-                      <a
-                        href={project.reportUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="button"
-                      >
-                        <FileText /> Report
-                      </a>
-                    )}
-                    {project.githubUrl && (
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="button"
-                      >
-                        <GithubIcon /> Code
-                      </a>
-                    )}
-                  </div>
+                  {project.buttons && project.buttons.length > 0 && (
+                    <div className="mt-4 flex flex-col gap-2 md:flex-row-reverse">
+                      {project.buttons.map((button, idx) => (
+                        <Button key={idx} button={button} />
+                      ))}
+                    </div>
+                  )}
                 </div>
               </li>
             ))}
@@ -134,13 +89,15 @@ export default function CVPageComponent({ cvPage, siteSettings }: CVPageProps) {
                   <p className="text-lg">{t(edu, 'institution', language)}</p>
                   <p className="text-sm italic">{t(edu, 'degree', language)}</p>
                   <p className="text-sm italic">{t(edu, 'period', language)}</p>
-                  <p className="mt-2">{t(edu, 'description', language)}</p>
+                  <PortableTextRenderer value={tPortableText(edu, 'description', language)} className="mt-2" />
                   {edu.relatedProjects && edu.relatedProjects.length > 0 && (
                     <div className="mt-2 flex flex-col md:flex-row gap-2">
                       {edu.relatedProjects.map((proj) => (
                         <a
                           key={proj._id}
-                          href={proj.demoUrl || proj.githubUrl || '#'}
+                          href={proj.link || '#'}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="button"
                         >
                           {t(proj, 'title', language)}
@@ -170,13 +127,12 @@ export default function CVPageComponent({ cvPage, siteSettings }: CVPageProps) {
                   <p className="text-sm italic">
                     {t(work, 'company', language)} | {t(work, 'period', language)}
                   </p>
-                  <p className="mt-2">{t(work, 'description', language)}</p>
-                  {work.certificateUrl && (
-                    <div className="">
-                      <a className="button my-8" href={work.certificateUrl}>
-                        <Text />{' '}
-                        {t(work, 'certificateLabel', language) || 'View Certificate'}
-                      </a>
+                  <PortableTextRenderer value={tPortableText(work, 'description', language)} className="mt-2" />
+                  {work.buttons && work.buttons.length > 0 && (
+                    <div className="my-8 flex flex-col gap-2 md:flex-row">
+                      {work.buttons.map((button, idx) => (
+                        <Button key={idx} button={button} />
+                      ))}
                     </div>
                   )}
                 </li>
@@ -189,58 +145,43 @@ export default function CVPageComponent({ cvPage, siteSettings }: CVPageProps) {
             <h2 className="text-2xl w-full mb-4 font-bold">
               {t(cvPage, 'skillsSectionTitle', language)}
             </h2>
-            <div className="h-full flex flex-col md:grid md:grid-cols-2 gap-8 outline rounded-lg p-8">
-              {cvPage.skillCategories?.map((category) => (
-                <div
-                  key={category._id}
-                  className={
-                    category.name_en === 'Development' ? 'col-span-2' : ''
-                  }
-                >
-                  <h3 className="text-lg font-bold mb-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 outline rounded-lg p-8">
+              {cvPage.skillCategories?.map((category) => {
+                const isLarge = (category.skills?.length || 0) > 6
+                return (
+                <div key={category._id} className={isLarge ? 'sm:col-span-2' : ''}>
+                  <h3 className="text-lg font-bold mb-3">
                     {t(category, 'name', language)}
                   </h3>
-                  <ul
-                    className={
-                      category.name_en === 'Development'
-                        ? 'grid md:grid-cols-2 md:gap-x-8'
-                        : ''
-                    }
-                  >
-                    {category.skills?.map((skill) => (
-                      <AbilityItem key={skill._id} skill={skill} />
-                    ))}
-                  </ul>
+                  <div className="flex flex-wrap gap-2">
+                    {category.skills?.map((skill) =>
+                      skill.url ? (
+                        <a
+                          key={skill._id}
+                          href={skill.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 px-3 py-1 text-sm rounded-full border border-current hover:bg-markus-red hover:text-white hover:border-markus-red transition-colors"
+                        >
+                          {skill.name}
+                          <ArrowUpRight size={14} />
+                        </a>
+                      ) : (
+                        <span
+                          key={skill._id}
+                          className="px-3 py-1 text-sm rounded-full border border-current"
+                        >
+                          {skill.name}
+                        </span>
+                      )
+                    )}
+                  </div>
                 </div>
-              ))}
+              )})}
             </div>
           </section>
         </div>
 
-        {/* Bottom Section */}
-        <section
-          id="bottom"
-          className="mt-24 w-full gap-2 text-center flex flex-col items-center"
-        >
-          <div
-            className={`w-full text-center bg-slate-100 py-2 rounded-md transition-all ${
-              emailCopiedBadge ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            Copied!
-          </div>
-
-          <p>
-            {t(cvPage, 'contactText', language)}{' '}
-            <span onClick={copyMail} className="cursor-pointer underline">
-              {siteSettings.email}
-            </span>
-          </p>
-
-          <LanguageToggle />
-
-          <HeartSvg />
-        </section>
       </div>
     </div>
   )

@@ -7,19 +7,22 @@ interface LanguageContextType {
   language: Language
   setLanguage: (lang: Language) => void
   toggleLanguage: () => void
+  hasToggled: boolean
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>('no')
+  const [hasToggled, setHasToggled] = useState(false)
 
   const toggleLanguage = useCallback(() => {
     setLanguage((prev) => (prev === 'en' ? 'no' : 'en'))
+    setHasToggled(true)
   }, [])
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage }}>
+    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage, hasToggled }}>
       {children}
     </LanguageContext.Provider>
   )

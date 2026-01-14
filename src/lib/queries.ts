@@ -9,7 +9,11 @@ export const siteSettingsQuery = defineQuery(`
     linkedinUrl,
     profileImage,
     cvProfileImage,
-    logoImage
+    logoImage,
+    contactText_en,
+    contactText_no,
+    madeByText_en,
+    madeByText_no
   }
 `)
 
@@ -37,22 +41,22 @@ export const frontpageQuery = defineQuery(`
       image,
       imageAlt_en,
       imageAlt_no,
-      demoUrl,
-      githubUrl,
-      buttonText_en,
-      buttonText_no,
-      order
-    } | order(order asc),
+      buttons[] {
+        text_en,
+        text_no,
+        link,
+        type,
+        icon
+      }
+    },
     smallProjects[]-> {
       _id,
       title_en,
       title_no,
       subtitle_en,
       subtitle_no,
-      externalUrl,
-      githubUrl,
-      order
-    } | order(order asc),
+      link
+    },
     contactText_en,
     contactText_no,
     madeByText_en,
@@ -84,11 +88,15 @@ export const cvPageQuery = defineQuery(`
       description_no,
       period_en,
       period_no,
-      demoUrl,
-      githubUrl,
-      "reportUrl": reportDocument.asset->url,
-      order
-    } | order(order asc),
+      buttons[] {
+        text_en,
+        text_no,
+        link,
+        type,
+        icon
+      },
+      "reportUrl": reportDocument.asset->url
+    },
     education[]-> {
       _id,
       institution_en,
@@ -106,11 +114,9 @@ export const cvPageQuery = defineQuery(`
         _id,
         title_en,
         title_no,
-        demoUrl,
-        githubUrl
-      },
-      order
-    } | order(order asc),
+        link
+      }
+    },
     workExperience[]-> {
       _id,
       company_en,
@@ -122,11 +128,14 @@ export const cvPageQuery = defineQuery(`
       period_en,
       period_no,
       companyUrl,
-      "certificateUrl": certificate.asset->url,
-      certificateLabel_en,
-      certificateLabel_no,
-      order
-    } | order(order asc),
+      buttons[] {
+        text_en,
+        text_no,
+        link,
+        type,
+        icon
+      }
+    },
     skillCategories[]-> {
       _id,
       name_en,
@@ -136,9 +145,8 @@ export const cvPageQuery = defineQuery(`
         name,
         url,
         icon
-      },
-      order
-    } | order(order asc),
+      }
+    },
     contactText_en,
     contactText_no
   }

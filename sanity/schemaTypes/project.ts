@@ -56,12 +56,12 @@ export default defineType({
     defineField({
       name: 'description_en',
       title: 'Description (English)',
-      type: 'text',
+      type: 'blockContent',
     }),
     defineField({
       name: 'description_no',
       title: 'Description (Norwegian)',
-      type: 'text',
+      type: 'blockContent',
     }),
     defineField({
       name: 'period_en',
@@ -94,20 +94,19 @@ export default defineType({
       type: 'string',
     }),
     defineField({
-      name: 'demoUrl',
-      title: 'Demo URL',
-      type: 'url',
+      name: 'buttons',
+      title: 'Buttons (Featured Projects)',
+      type: 'array',
+      of: [{ type: 'button' }],
+      description: 'Action buttons for featured projects (e.g., Demo, GitHub, Report)',
+      hidden: ({ parent }) => parent?.projectType === 'small',
     }),
     defineField({
-      name: 'githubUrl',
-      title: 'GitHub URL',
+      name: 'link',
+      title: 'Link (Small Projects)',
       type: 'url',
-    }),
-    defineField({
-      name: 'externalUrl',
-      title: 'External URL',
-      type: 'url',
-      description: 'For small projects linking to X/Twitter, etc.',
+      description: 'Single link for small projects (the entire row is clickable)',
+      hidden: ({ parent }) => parent?.projectType !== 'small',
     }),
     defineField({
       name: 'reportDocument',
@@ -116,17 +115,7 @@ export default defineType({
       options: {
         accept: '.pdf',
       },
-    }),
-    defineField({
-      name: 'buttonText_en',
-      title: 'Button Text (English)',
-      type: 'string',
-      description: 'Custom button label (defaults to "View Project")',
-    }),
-    defineField({
-      name: 'buttonText_no',
-      title: 'Button Text (Norwegian)',
-      type: 'string',
+      description: 'Upload a PDF report (the URL will be available for buttons)',
     }),
     defineField({
       name: 'technologies',
@@ -134,19 +123,6 @@ export default defineType({
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'skill' }] }],
     }),
-    defineField({
-      name: 'order',
-      title: 'Display Order',
-      type: 'number',
-      description: 'Lower numbers appear first',
-    }),
-  ],
-  orderings: [
-    {
-      title: 'Display Order',
-      name: 'orderAsc',
-      by: [{ field: 'order', direction: 'asc' }],
-    },
   ],
   preview: {
     select: {

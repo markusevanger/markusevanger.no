@@ -13,6 +13,65 @@
  */
 
 // Source: schema.json
+export type HeroBlockContent = Array<{
+  children?: Array<
+    | {
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }
+    | {
+        label?: string;
+        _type: "agePlaceholder";
+        _key: string;
+      }
+    | {
+        label?: string;
+        _type: "workplacePlaceholder";
+        _key: string;
+      }
+  >;
+  style?: "normal";
+  listItem?: never;
+  markDefs?: Array<{
+    href?: string;
+    _type: "link";
+    _key: string;
+  }>;
+  level?: number;
+  _type: "block";
+  _key: string;
+}>;
+
+export type BlockContent = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal";
+  listItem?: "bullet" | "number";
+  markDefs?: Array<{
+    href?: string;
+    _type: "link";
+    _key: string;
+  }>;
+  level?: number;
+  _type: "block";
+  _key: string;
+}>;
+
+export type Button = {
+  _type: "button";
+  text_en?: string;
+  text_no?: string;
+  link?: string;
+  type?: "primary" | "secondary" | "outline" | "ghost";
+  icon?: LucideIcon;
+};
+
 export type SkillReference = {
   _ref: string;
   _type: "reference";
@@ -34,7 +93,6 @@ export type SkillCategory = {
       _key: string;
     } & SkillReference
   >;
-  order?: number;
 };
 
 export type Slug = {
@@ -101,8 +159,8 @@ export type WorkExperience = {
   company_no?: string;
   position_en?: string;
   position_no?: string;
-  description_en?: string;
-  description_no?: string;
+  description_en?: BlockContent;
+  description_no?: BlockContent;
   period_en?: string;
   period_no?: string;
   startDate?: string;
@@ -113,9 +171,11 @@ export type WorkExperience = {
     media?: unknown;
     _type: "file";
   };
-  certificateLabel_en?: string;
-  certificateLabel_no?: string;
-  order?: number;
+  buttons?: Array<
+    {
+      _key: string;
+    } & Button
+  >;
 };
 
 export type ProjectReference = {
@@ -137,8 +197,8 @@ export type Education = {
   degree_no?: string;
   location_en?: string;
   location_no?: string;
-  description_en?: string;
-  description_no?: string;
+  description_en?: BlockContent;
+  description_no?: BlockContent;
   period_en?: string;
   period_no?: string;
   startDate?: string;
@@ -149,7 +209,6 @@ export type Education = {
     } & ProjectReference
   >;
   externalUrl?: string;
-  order?: number;
 };
 
 export type Project = {
@@ -164,8 +223,8 @@ export type Project = {
   projectType?: "featured" | "small";
   subtitle_en?: string;
   subtitle_no?: string;
-  description_en?: string;
-  description_no?: string;
+  description_en?: BlockContent;
+  description_no?: BlockContent;
   period_en?: string;
   period_no?: string;
   image?: {
@@ -177,23 +236,25 @@ export type Project = {
   };
   imageAlt_en?: string;
   imageAlt_no?: string;
-  demoUrl?: string;
-  githubUrl?: string;
-  externalUrl?: string;
+  buttons?: Array<
+    {
+      _key: string;
+    } & Button
+  >;
+  link?: string;
   reportDocument?: {
     asset?: SanityFileAssetReference;
     media?: unknown;
     _type: "file";
   };
-  buttonText_en?: string;
-  buttonText_no?: string;
   technologies?: Array<
     {
       _key: string;
     } & SkillReference
   >;
-  order?: number;
 };
+
+export type LucideIcon = string;
 
 export type EducationReference = {
   _ref: string;
@@ -266,8 +327,8 @@ export type Frontpage = {
   _rev: string;
   heroTitle_en?: string;
   heroTitle_no?: string;
-  heroDescription_en?: string;
-  heroDescription_no?: string;
+  heroDescription_en?: HeroBlockContent;
+  heroDescription_no?: HeroBlockContent;
   workplaceText_en?: string;
   workplaceText_no?: string;
   workplaceUrl?: string;
@@ -302,13 +363,6 @@ export type SiteSettings = {
   birthDate?: string;
   githubUrl?: string;
   linkedinUrl?: string;
-  profileImage?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
   cvProfileImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -316,13 +370,19 @@ export type SiteSettings = {
     crop?: SanityImageCrop;
     _type: "image";
   };
-  logoImage?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
+  contactText_en?: string;
+  contactText_no?: string;
+  madeByText_en?: string;
+  madeByText_no?: string;
+};
+
+export type MediaTag = {
+  _id: string;
+  _type: "media.tag";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: Slug;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -422,6 +482,9 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | HeroBlockContent
+  | BlockContent
+  | Button
   | SkillReference
   | SkillCategory
   | Slug
@@ -434,12 +497,14 @@ export type AllSanitySchemaTypes =
   | ProjectReference
   | Education
   | Project
+  | LucideIcon
   | EducationReference
   | WorkExperienceReference
   | SkillCategoryReference
   | Cv
   | Frontpage
   | SiteSettings
+  | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
@@ -453,20 +518,14 @@ export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: ../src/lib/queries.ts
 // Variable: siteSettingsQuery
-// Query: *[_type == "siteSettings"][0] {    name,    email,    birthDate,    githubUrl,    linkedinUrl,    profileImage,    cvProfileImage,    logoImage  }
+// Query: *[_type == "siteSettings"][0] {    name,    email,    birthDate,    githubUrl,    linkedinUrl,    profileImage,    cvProfileImage,    logoImage,    contactText_en,    contactText_no,    madeByText_en,    madeByText_no  }
 export type SiteSettingsQueryResult = {
   name: string | null;
   email: string | null;
   birthDate: string | null;
   githubUrl: string | null;
   linkedinUrl: string | null;
-  profileImage: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  } | null;
+  profileImage: null;
   cvProfileImage: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -474,23 +533,21 @@ export type SiteSettingsQueryResult = {
     crop?: SanityImageCrop;
     _type: "image";
   } | null;
-  logoImage: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  } | null;
+  logoImage: null;
+  contactText_en: string | null;
+  contactText_no: string | null;
+  madeByText_en: string | null;
+  madeByText_no: string | null;
 } | null;
 
 // Source: ../src/lib/queries.ts
 // Variable: frontpageQuery
-// Query: *[_type == "frontpage"][0] {    heroTitle_en,    heroTitle_no,    heroDescription_en,    heroDescription_no,    workplaceText_en,    workplaceText_no,    workplaceUrl,    portfolioTitle_en,    portfolioTitle_no,    featuredProjects[]-> {      _id,      title_en,      title_no,      subtitle_en,      subtitle_no,      description_en,      description_no,      period_en,      period_no,      image,      imageAlt_en,      imageAlt_no,      demoUrl,      githubUrl,      buttonText_en,      buttonText_no,      order    } | order(order asc),    smallProjects[]-> {      _id,      title_en,      title_no,      subtitle_en,      subtitle_no,      externalUrl,      githubUrl,      order    } | order(order asc),    contactText_en,    contactText_no,    madeByText_en,    madeByText_no,    copiedNotification_en,    copiedNotification_no  }
+// Query: *[_type == "frontpage"][0] {    heroTitle_en,    heroTitle_no,    heroDescription_en,    heroDescription_no,    workplaceText_en,    workplaceText_no,    workplaceUrl,    portfolioTitle_en,    portfolioTitle_no,    featuredProjects[]-> {      _id,      title_en,      title_no,      subtitle_en,      subtitle_no,      description_en,      description_no,      period_en,      period_no,      image,      imageAlt_en,      imageAlt_no,      buttons[] {        text_en,        text_no,        link,        type,        icon      }    },    smallProjects[]-> {      _id,      title_en,      title_no,      subtitle_en,      subtitle_no,      link    },    contactText_en,    contactText_no,    madeByText_en,    madeByText_no,    copiedNotification_en,    copiedNotification_no  }
 export type FrontpageQueryResult = {
   heroTitle_en: string | null;
   heroTitle_no: string | null;
-  heroDescription_en: string | null;
-  heroDescription_no: string | null;
+  heroDescription_en: HeroBlockContent | null;
+  heroDescription_no: HeroBlockContent | null;
   workplaceText_en: string | null;
   workplaceText_no: string | null;
   workplaceUrl: string | null;
@@ -502,8 +559,8 @@ export type FrontpageQueryResult = {
     title_no: string | null;
     subtitle_en: string | null;
     subtitle_no: string | null;
-    description_en: string | null;
-    description_no: string | null;
+    description_en: BlockContent | null;
+    description_no: BlockContent | null;
     period_en: string | null;
     period_no: string | null;
     image: {
@@ -515,11 +572,13 @@ export type FrontpageQueryResult = {
     } | null;
     imageAlt_en: string | null;
     imageAlt_no: string | null;
-    demoUrl: string | null;
-    githubUrl: string | null;
-    buttonText_en: string | null;
-    buttonText_no: string | null;
-    order: number | null;
+    buttons: Array<{
+      text_en: string | null;
+      text_no: string | null;
+      link: string | null;
+      type: "ghost" | "outline" | "primary" | "secondary" | null;
+      icon: LucideIcon | null;
+    }> | null;
   }> | null;
   smallProjects: Array<{
     _id: string;
@@ -527,9 +586,7 @@ export type FrontpageQueryResult = {
     title_no: string | null;
     subtitle_en: string | null;
     subtitle_no: string | null;
-    externalUrl: string | null;
-    githubUrl: string | null;
-    order: number | null;
+    link: string | null;
   }> | null;
   contactText_en: string | null;
   contactText_no: string | null;
@@ -541,7 +598,7 @@ export type FrontpageQueryResult = {
 
 // Source: ../src/lib/queries.ts
 // Variable: cvPageQuery
-// Query: *[_type == "cv"][0] {    pageTitle_en,    pageTitle_no,    backButtonText_en,    backButtonText_no,    projectsSectionTitle_en,    projectsSectionTitle_no,    educationSectionTitle_en,    educationSectionTitle_no,    workSectionTitle_en,    workSectionTitle_no,    skillsSectionTitle_en,    skillsSectionTitle_no,    featuredProjects[]-> {      _id,      title_en,      title_no,      description_en,      description_no,      period_en,      period_no,      demoUrl,      githubUrl,      "reportUrl": reportDocument.asset->url,      order    } | order(order asc),    education[]-> {      _id,      institution_en,      institution_no,      degree_en,      degree_no,      location_en,      location_no,      description_en,      description_no,      period_en,      period_no,      externalUrl,      relatedProjects[]-> {        _id,        title_en,        title_no,        demoUrl,        githubUrl      },      order    } | order(order asc),    workExperience[]-> {      _id,      company_en,      company_no,      position_en,      position_no,      description_en,      description_no,      period_en,      period_no,      companyUrl,      "certificateUrl": certificate.asset->url,      certificateLabel_en,      certificateLabel_no,      order    } | order(order asc),    skillCategories[]-> {      _id,      name_en,      name_no,      skills[]-> {        _id,        name,        url,        icon      },      order    } | order(order asc),    contactText_en,    contactText_no  }
+// Query: *[_type == "cv"][0] {    pageTitle_en,    pageTitle_no,    backButtonText_en,    backButtonText_no,    projectsSectionTitle_en,    projectsSectionTitle_no,    educationSectionTitle_en,    educationSectionTitle_no,    workSectionTitle_en,    workSectionTitle_no,    skillsSectionTitle_en,    skillsSectionTitle_no,    featuredProjects[]-> {      _id,      title_en,      title_no,      description_en,      description_no,      period_en,      period_no,      buttons[] {        text_en,        text_no,        link,        type,        icon      },      "reportUrl": reportDocument.asset->url    },    education[]-> {      _id,      institution_en,      institution_no,      degree_en,      degree_no,      location_en,      location_no,      description_en,      description_no,      period_en,      period_no,      externalUrl,      relatedProjects[]-> {        _id,        title_en,        title_no,        link      }    },    workExperience[]-> {      _id,      company_en,      company_no,      position_en,      position_no,      description_en,      description_no,      period_en,      period_no,      companyUrl,      buttons[] {        text_en,        text_no,        link,        type,        icon      }    },    skillCategories[]-> {      _id,      name_en,      name_no,      skills[]-> {        _id,        name,        url,        icon      }    },    contactText_en,    contactText_no  }
 export type CvPageQueryResult = {
   pageTitle_en: string | null;
   pageTitle_no: string | null;
@@ -559,14 +616,18 @@ export type CvPageQueryResult = {
     _id: string;
     title_en: string | null;
     title_no: string | null;
-    description_en: string | null;
-    description_no: string | null;
+    description_en: BlockContent | null;
+    description_no: BlockContent | null;
     period_en: string | null;
     period_no: string | null;
-    demoUrl: string | null;
-    githubUrl: string | null;
+    buttons: Array<{
+      text_en: string | null;
+      text_no: string | null;
+      link: string | null;
+      type: "ghost" | "outline" | "primary" | "secondary" | null;
+      icon: LucideIcon | null;
+    }> | null;
     reportUrl: string | null;
-    order: number | null;
   }> | null;
   education: Array<{
     _id: string;
@@ -576,8 +637,8 @@ export type CvPageQueryResult = {
     degree_no: string | null;
     location_en: string | null;
     location_no: string | null;
-    description_en: string | null;
-    description_no: string | null;
+    description_en: BlockContent | null;
+    description_no: BlockContent | null;
     period_en: string | null;
     period_no: string | null;
     externalUrl: string | null;
@@ -585,10 +646,8 @@ export type CvPageQueryResult = {
       _id: string;
       title_en: string | null;
       title_no: string | null;
-      demoUrl: string | null;
-      githubUrl: string | null;
+      link: string | null;
     }> | null;
-    order: number | null;
   }> | null;
   workExperience: Array<{
     _id: string;
@@ -596,15 +655,18 @@ export type CvPageQueryResult = {
     company_no: string | null;
     position_en: string | null;
     position_no: string | null;
-    description_en: string | null;
-    description_no: string | null;
+    description_en: BlockContent | null;
+    description_no: BlockContent | null;
     period_en: string | null;
     period_no: string | null;
     companyUrl: string | null;
-    certificateUrl: string | null;
-    certificateLabel_en: string | null;
-    certificateLabel_no: string | null;
-    order: number | null;
+    buttons: Array<{
+      text_en: string | null;
+      text_no: string | null;
+      link: string | null;
+      type: "ghost" | "outline" | "primary" | "secondary" | null;
+      icon: LucideIcon | null;
+    }> | null;
   }> | null;
   skillCategories: Array<{
     _id: string;
@@ -622,7 +684,6 @@ export type CvPageQueryResult = {
         _type: "image";
       } | null;
     }> | null;
-    order: number | null;
   }> | null;
   contactText_en: string | null;
   contactText_no: string | null;
@@ -632,8 +693,8 @@ export type CvPageQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "siteSettings"][0] {\n    name,\n    email,\n    birthDate,\n    githubUrl,\n    linkedinUrl,\n    profileImage,\n    cvProfileImage,\n    logoImage\n  }\n': SiteSettingsQueryResult;
-    '\n  *[_type == "frontpage"][0] {\n    heroTitle_en,\n    heroTitle_no,\n    heroDescription_en,\n    heroDescription_no,\n    workplaceText_en,\n    workplaceText_no,\n    workplaceUrl,\n    portfolioTitle_en,\n    portfolioTitle_no,\n    featuredProjects[]-> {\n      _id,\n      title_en,\n      title_no,\n      subtitle_en,\n      subtitle_no,\n      description_en,\n      description_no,\n      period_en,\n      period_no,\n      image,\n      imageAlt_en,\n      imageAlt_no,\n      demoUrl,\n      githubUrl,\n      buttonText_en,\n      buttonText_no,\n      order\n    } | order(order asc),\n    smallProjects[]-> {\n      _id,\n      title_en,\n      title_no,\n      subtitle_en,\n      subtitle_no,\n      externalUrl,\n      githubUrl,\n      order\n    } | order(order asc),\n    contactText_en,\n    contactText_no,\n    madeByText_en,\n    madeByText_no,\n    copiedNotification_en,\n    copiedNotification_no\n  }\n': FrontpageQueryResult;
-    '\n  *[_type == "cv"][0] {\n    pageTitle_en,\n    pageTitle_no,\n    backButtonText_en,\n    backButtonText_no,\n    projectsSectionTitle_en,\n    projectsSectionTitle_no,\n    educationSectionTitle_en,\n    educationSectionTitle_no,\n    workSectionTitle_en,\n    workSectionTitle_no,\n    skillsSectionTitle_en,\n    skillsSectionTitle_no,\n    featuredProjects[]-> {\n      _id,\n      title_en,\n      title_no,\n      description_en,\n      description_no,\n      period_en,\n      period_no,\n      demoUrl,\n      githubUrl,\n      "reportUrl": reportDocument.asset->url,\n      order\n    } | order(order asc),\n    education[]-> {\n      _id,\n      institution_en,\n      institution_no,\n      degree_en,\n      degree_no,\n      location_en,\n      location_no,\n      description_en,\n      description_no,\n      period_en,\n      period_no,\n      externalUrl,\n      relatedProjects[]-> {\n        _id,\n        title_en,\n        title_no,\n        demoUrl,\n        githubUrl\n      },\n      order\n    } | order(order asc),\n    workExperience[]-> {\n      _id,\n      company_en,\n      company_no,\n      position_en,\n      position_no,\n      description_en,\n      description_no,\n      period_en,\n      period_no,\n      companyUrl,\n      "certificateUrl": certificate.asset->url,\n      certificateLabel_en,\n      certificateLabel_no,\n      order\n    } | order(order asc),\n    skillCategories[]-> {\n      _id,\n      name_en,\n      name_no,\n      skills[]-> {\n        _id,\n        name,\n        url,\n        icon\n      },\n      order\n    } | order(order asc),\n    contactText_en,\n    contactText_no\n  }\n': CvPageQueryResult;
+    '\n  *[_type == "siteSettings"][0] {\n    name,\n    email,\n    birthDate,\n    githubUrl,\n    linkedinUrl,\n    profileImage,\n    cvProfileImage,\n    logoImage,\n    contactText_en,\n    contactText_no,\n    madeByText_en,\n    madeByText_no\n  }\n': SiteSettingsQueryResult;
+    '\n  *[_type == "frontpage"][0] {\n    heroTitle_en,\n    heroTitle_no,\n    heroDescription_en,\n    heroDescription_no,\n    workplaceText_en,\n    workplaceText_no,\n    workplaceUrl,\n    portfolioTitle_en,\n    portfolioTitle_no,\n    featuredProjects[]-> {\n      _id,\n      title_en,\n      title_no,\n      subtitle_en,\n      subtitle_no,\n      description_en,\n      description_no,\n      period_en,\n      period_no,\n      image,\n      imageAlt_en,\n      imageAlt_no,\n      buttons[] {\n        text_en,\n        text_no,\n        link,\n        type,\n        icon\n      }\n    },\n    smallProjects[]-> {\n      _id,\n      title_en,\n      title_no,\n      subtitle_en,\n      subtitle_no,\n      link\n    },\n    contactText_en,\n    contactText_no,\n    madeByText_en,\n    madeByText_no,\n    copiedNotification_en,\n    copiedNotification_no\n  }\n': FrontpageQueryResult;
+    '\n  *[_type == "cv"][0] {\n    pageTitle_en,\n    pageTitle_no,\n    backButtonText_en,\n    backButtonText_no,\n    projectsSectionTitle_en,\n    projectsSectionTitle_no,\n    educationSectionTitle_en,\n    educationSectionTitle_no,\n    workSectionTitle_en,\n    workSectionTitle_no,\n    skillsSectionTitle_en,\n    skillsSectionTitle_no,\n    featuredProjects[]-> {\n      _id,\n      title_en,\n      title_no,\n      description_en,\n      description_no,\n      period_en,\n      period_no,\n      buttons[] {\n        text_en,\n        text_no,\n        link,\n        type,\n        icon\n      },\n      "reportUrl": reportDocument.asset->url\n    },\n    education[]-> {\n      _id,\n      institution_en,\n      institution_no,\n      degree_en,\n      degree_no,\n      location_en,\n      location_no,\n      description_en,\n      description_no,\n      period_en,\n      period_no,\n      externalUrl,\n      relatedProjects[]-> {\n        _id,\n        title_en,\n        title_no,\n        link\n      }\n    },\n    workExperience[]-> {\n      _id,\n      company_en,\n      company_no,\n      position_en,\n      position_no,\n      description_en,\n      description_no,\n      period_en,\n      period_no,\n      companyUrl,\n      buttons[] {\n        text_en,\n        text_no,\n        link,\n        type,\n        icon\n      }\n    },\n    skillCategories[]-> {\n      _id,\n      name_en,\n      name_no,\n      skills[]-> {\n        _id,\n        name,\n        url,\n        icon\n      }\n    },\n    contactText_en,\n    contactText_no\n  }\n': CvPageQueryResult;
   }
 }

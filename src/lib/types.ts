@@ -11,9 +11,11 @@ export type {
   SiteSettingsQueryResult,
   FrontpageQueryResult,
   CvPageQueryResult,
+  BlockContent,
+  HeroBlockContent,
 } from './sanity.types'
 
-import type { FrontpageQueryResult, CvPageQueryResult } from './sanity.types'
+import type { FrontpageQueryResult, CvPageQueryResult, BlockContent, HeroBlockContent } from './sanity.types'
 
 // Helper types for component props (extracted from query results)
 export type FeaturedProject = NonNullable<NonNullable<FrontpageQueryResult>['featuredProjects']>[number]
@@ -35,4 +37,26 @@ export function t(
   const key = `${field}_${lang}`
   const fallbackKey = `${field}_en`
   return (obj[key] as string) || (obj[fallbackKey] as string) || ''
+}
+
+// Helper to get localized Portable Text field
+export function tPortableText(
+  obj: Record<string, unknown>,
+  field: string,
+  lang: Language
+): BlockContent | null {
+  const key = `${field}_${lang}`
+  const fallbackKey = `${field}_en`
+  return (obj[key] as BlockContent) || (obj[fallbackKey] as BlockContent) || null
+}
+
+// Helper to get localized Hero Portable Text field
+export function tHeroPortableText(
+  obj: Record<string, unknown>,
+  field: string,
+  lang: Language
+): HeroBlockContent | null {
+  const key = `${field}_${lang}`
+  const fallbackKey = `${field}_en`
+  return (obj[key] as HeroBlockContent) || (obj[fallbackKey] as HeroBlockContent) || null
 }

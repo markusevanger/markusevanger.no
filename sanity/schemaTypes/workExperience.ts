@@ -34,12 +34,12 @@ export default defineType({
     defineField({
       name: 'description_en',
       title: 'Description (English)',
-      type: 'text',
+      type: 'blockContent',
     }),
     defineField({
       name: 'description_no',
       title: 'Description (Norwegian)',
-      type: 'text',
+      type: 'blockContent',
     }),
     defineField({
       name: 'period_en',
@@ -75,30 +75,15 @@ export default defineType({
       options: {
         accept: '.pdf',
       },
+      description: 'Upload a certificate PDF (URL will be available for the button below)',
     }),
     defineField({
-      name: 'certificateLabel_en',
-      title: 'Certificate Link Label (English)',
-      type: 'string',
-      description: 'e.g., "View Certificate"',
+      name: 'buttons',
+      title: 'Buttons',
+      type: 'array',
+      of: [{ type: 'button' }],
+      description: 'Optional buttons (e.g., certificate, reference links)',
     }),
-    defineField({
-      name: 'certificateLabel_no',
-      title: 'Certificate Link Label (Norwegian)',
-      type: 'string',
-    }),
-    defineField({
-      name: 'order',
-      title: 'Display Order',
-      type: 'number',
-    }),
-  ],
-  orderings: [
-    {
-      title: 'Display Order',
-      name: 'orderAsc',
-      by: [{ field: 'order', direction: 'asc' }],
-    },
   ],
   preview: {
     select: {

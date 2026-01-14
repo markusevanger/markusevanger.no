@@ -11,7 +11,9 @@
     "deploy": "sanity deploy",
     "deploy-graphql": "sanity graphql deploy",
     "migrate": "pnpm sanity dataset import migration.ndjson production --replace",
-    "upload-assets": "tsx scripts/uploadAssets.ts"
+    "upload-assets": "tsx scripts/uploadAssets.ts",
+    "migrate:buttons": "tsx scripts/migrateButtons.ts --run",
+    "migrate:buttons:dry": "tsx scripts/migrateButtons.ts --dry-run"
   },
   "dependencies": {
     "@sanity/client": "^7.14.0",
@@ -20,6 +22,8 @@
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "sanity": "^5.2.0",
+    "sanity-plugin-lucide-icon-picker": "^1.0.3",
+    "sanity-plugin-media": "^4.1.1",
     "styled-components": "^6.2.1"
   },
   "devDependencies": {

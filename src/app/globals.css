@@ -42,14 +42,59 @@ body {
 
 /* Button styles matching original */
 .button {
-  @apply h-12 md:h-8 w-full md:w-fit cursor-pointer outline hover:scale-105 px-4 py-1 text-center rounded-md flex justify-center items-center gap-1 hover:shadow-lg focus:scale-105 focus:bg-markus-red-secondary active:scale-100 transition-all hover:bg-markus-red-secondary hover:text-white focus:text-white hover:outline-none active:bg-markus-red-secondary;
+  @apply h-12 md:h-8 w-full md:w-fit cursor-pointer outline px-4 py-1 text-center rounded-md flex justify-center items-center gap-1 focus:bg-markus-red-secondary transition-colors duration-200 hover:bg-markus-red-secondary hover:text-white focus:text-white hover:outline-none active:bg-markus-red-secondary;
 }
 
 .button-primary {
-  @apply h-12 md:h-8 w-full md:w-fit cursor-pointer hover:scale-105 px-4 text-center py-1 rounded-md flex justify-center items-center gap-1 hover:shadow-lg focus:scale-105 focus:bg-markus-red-secondary active:scale-100 transition-all bg-markus-red text-white border-none outline-none hover:bg-markus-red-secondary;
+  @apply h-12 md:h-8 w-full md:w-fit cursor-pointer px-4 text-center py-1 rounded-md flex justify-center items-center gap-1 focus:bg-markus-red-secondary transition-colors duration-200 bg-markus-red text-white border-none outline-none hover:bg-markus-red-secondary;
 }
 
 /* Mogi font utility class - apply explicitly where needed */
 .font-mogi {
   font-family: 'Mogi', system-ui, sans-serif;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ghost button variant */
+.button-ghost {
+  @apply h-12 md:h-8 w-full md:w-fit cursor-pointer px-4 py-1 text-center rounded-md flex justify-center items-center gap-1 hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-200 transition-all;
+}
+
+/* Infinite scroll animation */
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+  width: max-content;
+}
+
+/* Language toggle fade-in animation */
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in-left {
+  animation: fade-in-left 0.2s ease-out forwards;
 }

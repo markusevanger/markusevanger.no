@@ -25,15 +25,15 @@ export default defineType({
     defineField({
       name: 'heroDescription_en',
       title: 'Hero Description (English)',
-      type: 'text',
-      description: 'Use {{age}} as placeholder for dynamic age',
+      type: 'heroBlockContent',
+      description: 'Use inline "Age Placeholder" and "Workplace Link" for dynamic content',
       group: 'hero',
     }),
     defineField({
       name: 'heroDescription_no',
       title: 'Hero Description (Norwegian)',
-      type: 'text',
-      description: 'Use {{age}} as placeholder for dynamic age',
+      type: 'heroBlockContent',
+      description: 'Use inline "Age Placeholder" and "Workplace Link" for dynamic content',
       group: 'hero',
     }),
     defineField({
