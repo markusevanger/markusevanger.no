@@ -1,30 +1,47 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { useLanguage } from "@/context/LanguageContext";
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
+import type { Locale } from "@/i18n/config";
+import {
+  LanguagesIcon,
+  type LanguagesIconHandle,
+} from "@/components/ui/languages";
 
-export default function LanguageToggle() {
-  const { language, toggleLanguage } = useLanguage();
+interface LanguageToggleProps {
+  locale: Locale;
+  showText?: boolean;
+  variant?: "default" | "light" | "dark";
+}
+
+function getLocalePath(pathname: string, targetLocale: Locale): string {
+  const segments = pathname.split("/");
+  if (segments.length >= 2 && (segments[1] === "no" || segments[1] === "en")) {
+    segments[1] = targetLocale;
+  }
+  return segments.join("/") || `/${targetLocale}`;
+}
+
+export default function LanguageToggle({
+  locale,
+  showText = true,
+  variant = "default",
+}: LanguageToggleProps) {
+  const currentPath = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const toggleBtnRef = useRef<HTMLButtonElement>(null);
-  const norskBtnRef = useRef<HTMLButtonElement>(null);
-  const englishBtnRef = useRef<HTMLButtonElement>(null);
+  const norskLinkRef = useRef<HTMLAnchorElement>(null);
+  const englishLinkRef = useRef<HTMLAnchorElement>(null);
+  const languagesIconRef = useRef<LanguagesIconHandle>(null);
 
-  const languages = ["no", "en"] as const;
-
-  const selectLanguage = useCallback(
-    (lang: "en" | "no") => {
-      if (lang !== language) {
-        toggleLanguage();
-      }
-      setIsOpen(false);
-      setFocusedIndex(null);
-      toggleBtnRef.current?.focus();
-    },
-    [language, toggleLanguage]
-  );
+  const closeDropdown = useCallback(() => {
+    setIsOpen(false);
+    setFocusedIndex(null);
+    toggleBtnRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -48,56 +65,99 @@ export default function LanguageToggle() {
       switch (event.key) {
         case "ArrowLeft":
           event.preventDefault();
-          setFocusedIndex(0); // Norsk
-          norskBtnRef.current?.focus();
+          setFocusedIndex(0);
+          norskLinkRef.current?.focus();
           break;
         case "ArrowRight":
           event.preventDefault();
-          setFocusedIndex(1); // English
-          englishBtnRef.current?.focus();
-          break;
-        case "Enter":
-        case " ":
-          if (focusedIndex !== null) {
-            event.preventDefault();
-            selectLanguage(languages[focusedIndex]);
-          }
+          setFocusedIndex(1);
+          englishLinkRef.current?.focus();
           break;
         case "Escape":
           event.preventDefault();
-          setIsOpen(false);
-          setFocusedIndex(null);
+          closeDropdown();
           break;
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, focusedIndex, selectLanguage]);
+  }, [isOpen, closeDropdown]);
 
-  // Focus first button when opening
+  // Focus first link when opening
   useEffect(() => {
     if (isOpen) {
-      const initialIndex = language === "no" ? 0 : 1;
+      const initialIndex = locale === "no" ? 0 : 1;
       setFocusedIndex(initialIndex);
       setTimeout(() => {
         if (initialIndex === 0) {
-          norskBtnRef.current?.focus();
+          norskLinkRef.current?.focus();
         } else {
-          englishBtnRef.current?.focus();
+          englishLinkRef.current?.focus();
         }
       }, 150);
     }
-  }, [isOpen, language]);
+  }, [isOpen, locale]);
+
+  const noPath = getLocalePath(currentPath, "no");
+  const enPath = getLocalePath(currentPath, "en");
+  const router = useRouter();
+
+  // Prefetch both language routes when hovering/focusing the toggle
+  const handlePrefetch = useCallback(() => {
+    router.prefetch(noPath);
+    router.prefetch(enPath);
+  }, [router, noPath, enPath]);
+
+  const variantStyles = {
+    default: {
+      container: "bg-white/10",
+      button: "hover:bg-white/10 focus:bg-white/10 focus:ring-white/40",
+      icon: "opacity-60 group-hover:opacity-100",
+      text: "text-current",
+      optionActive: "bg-white/90 text-markus-red",
+      optionInactive:
+        "bg-transparent hover:bg-white/15 focus:bg-white/20 text-white",
+      focusRing: "focus:ring-white/50",
+    },
+    light: {
+      container: "bg-white border border-black",
+      button: "hover:bg-black/5 focus:bg-black/5 focus:ring-markus-red",
+      icon: "opacity-80 group-hover:opacity-100",
+      text: "text-black",
+      optionActive: "bg-markus-red text-white",
+      optionInactive:
+        "bg-transparent hover:bg-black/5 focus:bg-black/10 text-black",
+      focusRing: "focus:ring-markus-red",
+    },
+    dark: {
+      container: "bg-white/10",
+      button: "hover:bg-white/10 focus:bg-white/10 focus:ring-white/40",
+      icon: "opacity-60 group-hover:opacity-100",
+      text: "text-white",
+      optionActive: "bg-white/90 text-markus-red",
+      optionInactive:
+        "bg-transparent hover:bg-white/15 focus:bg-white/20 text-white",
+      focusRing: "focus:ring-white/50",
+    },
+  };
+
+  const styles = variantStyles[variant];
 
   return (
     <div
       ref={dropdownRef}
-      className="flex items-center bg-white/10 rounded-xl p-1 transition-all duration-200"
+      className={`group flex items-center ${styles.container} rounded-xl ${styles.button} transition-colors duration-200 ease-out cursor-pointer`}
+      onClick={() => setIsOpen(!isOpen)}
+      onMouseEnter={() => {
+        languagesIconRef.current?.startAnimation();
+        handlePrefetch();
+      }}
+      onMouseLeave={() => languagesIconRef.current?.stopAnimation()}
+      onFocus={handlePrefetch}
     >
       <button
         ref={toggleBtnRef}
-        onClick={() => setIsOpen(!isOpen)}
         onKeyDown={(e) => {
           if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
             e.preventDefault();
@@ -106,86 +166,85 @@ export default function LanguageToggle() {
         }}
         aria-expanded={isOpen}
         aria-haspopup="true"
-        aria-label={`Language: ${language === "en" ? "English" : "Norsk"}. Press arrow keys to change.`}
-        className="group flex items-center gap-2 hover:bg-white/10 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40 px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer"
+        aria-label={`Language: ${
+          locale === "en" ? "English" : "Norsk"
+        }. Press arrow keys to change.`}
+        className="flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-markus-red px-3 py-2 rounded-lg cursor-pointer"
       >
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="opacity-60 group-hover:opacity-100 transition-opacity"
-        >
-          <circle cx="12" cy="12" r="10" />
-          <path d="M2 12h20" />
-          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-        </svg>
-        <span className="font-medium">
-          {language === "en" ? "English" : "Norsk"}
-        </span>
-        <svg
-          width="12"
-          height="12"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className={`opacity-60 transition-transform duration-200 ease-out ${
-            isOpen ? "rotate-90" : ""
-          }`}
-        >
-          <path d="M9 18l6-6-6-6" />
-        </svg>
+        <LanguagesIcon
+          ref={languagesIconRef}
+          size={18}
+          className={`${styles.icon} transition-opacity duration-200 ease-out`}
+        />
+        {showText && (
+          <>
+            <span className={`font-medium ${styles.text}`}>
+              {locale === "en" ? "English" : "Norsk"}
+            </span>
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className={`opacity-60 transition-transform duration-150 ease-out ${
+                isOpen ? "rotate-90" : ""
+              }`}
+            >
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </>
+        )}
       </button>
 
       <div
-        className={`transition-all duration-200 ease-out overflow-hidden ${
-          isOpen ? "opacity-100 max-w-48" : "opacity-0 max-w-0"
-        }`}
+        className="grid transition-[grid-template-columns] duration-200 ease-out"
+        style={{ gridTemplateColumns: isOpen ? "1fr" : "0fr" }}
       >
-        <div
-          role="listbox"
-          aria-label="Select language"
-          className="flex items-center gap-1 py-0.5 pr-0.5"
-        >
-          <button
-            ref={norskBtnRef}
-            onClick={() => selectLanguage("no")}
-            onFocus={() => setFocusedIndex(0)}
-            role="option"
-            aria-selected={language === "no"}
-            tabIndex={isOpen ? 0 : -1}
-            className={`px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-300 ease-out cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white/50 ${
-              language === "no"
-                ? "bg-white/90 text-markus-red"
-                : "bg-transparent hover:bg-white/15 focus:bg-white/20 text-white"
-            } ${isOpen ? "animate-fade-in-left" : ""}`}
-            style={{ animationDelay: "50ms" }}
+        <div className="overflow-hidden">
+          <div
+            role="listbox"
+            aria-label="Select language"
+            className={`flex items-center gap-1 py-0.5 pr-0.5 transition-opacity duration-150 ease-out ${
+              isOpen ? "opacity-100" : "opacity-0"
+            }`}
           >
-            Norsk
-          </button>
-          <button
-            ref={englishBtnRef}
-            onClick={() => selectLanguage("en")}
-            onFocus={() => setFocusedIndex(1)}
-            role="option"
-            aria-selected={language === "en"}
-            tabIndex={isOpen ? 0 : -1}
-            className={`px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-300 ease-out cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white/50 ${
-              language === "en"
-                ? "bg-white/90 text-markus-red"
-                : "bg-transparent hover:bg-white/15 focus:bg-white/20 text-white"
-            } ${isOpen ? "animate-fade-in-left" : ""}`}
-            style={{ animationDelay: "100ms" }}
-          >
-            English
-          </button>
+            <Link
+              ref={norskLinkRef}
+              href={noPath}
+              onFocus={() => setFocusedIndex(0)}
+              role="option"
+              aria-selected={locale === "no"}
+              tabIndex={isOpen ? 0 : -1}
+              hrefLang="no"
+              className={`px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset ${
+                styles.focusRing
+              } ${
+                locale === "no" ? styles.optionActive : styles.optionInactive
+              }`}
+            >
+              Norsk
+            </Link>
+            <Link
+              ref={englishLinkRef}
+              href={enPath}
+              onFocus={() => setFocusedIndex(1)}
+              role="option"
+              aria-selected={locale === "en"}
+              tabIndex={isOpen ? 0 : -1}
+              hrefLang="en"
+              className={`px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset ${
+                styles.focusRing
+              } ${
+                locale === "en" ? styles.optionActive : styles.optionInactive
+              }`}
+            >
+              English
+            </Link>
+          </div>
         </div>
       </div>
     </div>

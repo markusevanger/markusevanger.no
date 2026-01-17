@@ -1,11 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { DynamicIcon, type IconName } from 'lucide-react/dynamic'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
-import { useLanguage } from '@/context/LanguageContext'
-import type { Language } from '@/lib/types'
+import type { Locale } from '@/i18n/config'
 
 export interface ButtonData {
   text_en?: string | null
@@ -19,6 +18,7 @@ export interface ButtonData {
 
 interface ButtonProps {
   button: ButtonData
+  locale?: Locale
   className?: string
 }
 
@@ -30,29 +30,31 @@ const buttonStyles: Record<string, string> = {
 }
 
 const pageRoutes: Record<string, string> = {
-  frontpage: '/',
+  frontpage: '',
   cv: '/cv',
 }
 
-function getButtonText(button: ButtonData, language: Language): string {
-  if (language === 'no' && button.text_no) return button.text_no
+function getButtonText(button: ButtonData, locale: Locale): string {
+  if (locale === 'no' && button.text_no) return button.text_no
   return button.text_en || ''
 }
 
-export default function Button({ button, className = '' }: ButtonProps) {
-  const { language } = useLanguage()
+export default function Button({ button, locale, className = '' }: ButtonProps) {
+  const router = useRouter()
+  const pathname = usePathname()
+
+  // Extract locale from pathname if not provided as prop
+  const currentLocale: Locale = locale || (pathname.startsWith('/en') ? 'en' : 'no')
 
   const isInternal = button.linkType === 'internal'
   const href = isInternal
-    ? (button.internalLink ? pageRoutes[button.internalLink] : null)
+    ? (button.internalLink ? `/${currentLocale}${pageRoutes[button.internalLink]}` : null)
     : button.link
 
   if (!href) return null
 
   const buttonClass = `${buttonStyles[button.type || 'primary'] || 'button-primary'} ${className}`.trim()
-  const text = getButtonText(button, language)
-
-  const router = useRouter()
+  const text = getButtonText(button, currentLocale)
 
   const handleInternalClick = (e: React.MouseEvent) => {
     e.preventDefault()

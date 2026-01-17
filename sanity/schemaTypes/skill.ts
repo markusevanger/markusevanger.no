@@ -32,14 +32,13 @@ export default defineType({
     defineField({
       name: 'icon',
       title: 'Icon',
-      type: 'image',
+      type: 'lucide-icon',
       description: 'Optional icon for the skill',
     }),
   ],
   preview: {
     select: {
       title: 'name',
-      media: 'icon',
     },
   },
 })

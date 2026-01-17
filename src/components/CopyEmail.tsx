@@ -1,23 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { useLanguage } from "@/context/LanguageContext";
+import type { Locale } from "@/i18n/config";
 
 interface CopyEmailProps {
   email: string;
   contactText_en: string;
   contactText_no: string;
+  locale: Locale;
 }
 
 export default function CopyEmail({
   email,
   contactText_en,
   contactText_no,
+  locale,
 }: CopyEmailProps) {
-  const { language } = useLanguage();
   const [copied, setCopied] = useState(false);
   const [fading, setFading] = useState(false);
-  const contactText = language === "en" ? contactText_en : contactText_no;
+  const contactText = locale === "en" ? contactText_en : contactText_no;
 
   const copyMail = () => {
     navigator.clipboard.writeText(email);

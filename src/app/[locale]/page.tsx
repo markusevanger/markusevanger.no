@@ -1,7 +1,13 @@
+import { notFound } from 'next/navigation'
 import { client } from '@/lib/sanity'
 import { frontpageQuery, siteSettingsQuery } from '@/lib/queries'
 import type { FrontpageQueryResult, SiteSettingsQueryResult } from '@/lib/types'
 import HomePage from '@/components/HomePage'
+import { isValidLocale } from '@/i18n/config'
+
+type Props = {
+  params: Promise<{ locale: string }>
+}
 
 async function getData() {
   const [frontpage, siteSettings] = await Promise.all([
@@ -11,7 +17,13 @@ async function getData() {
   return { frontpage, siteSettings }
 }
 
-export default async function Page() {
+export default async function Page({ params }: Props) {
+  const { locale } = await params
+
+  if (!isValidLocale(locale)) {
+    notFound()
+  }
+
   const { frontpage, siteSettings } = await getData()
 
   if (!frontpage || !siteSettings) {
@@ -25,5 +37,5 @@ export default async function Page() {
     )
   }
 
-  return <HomePage frontpage={frontpage} siteSettings={siteSettings} />
+  return <HomePage frontpage={frontpage} siteSettings={siteSettings} locale={locale} />
 }

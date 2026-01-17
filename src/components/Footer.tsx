@@ -4,12 +4,14 @@ import CopyEmail from "./CopyEmail";
 import ScrollToTopButton from "./ScrollToTopButton";
 import FooterLanguageText from "./FooterLanguageText";
 import type { SiteSettingsQueryResult } from "@/lib/sanity.types";
+import type { Locale } from "@/i18n/config";
 
 export interface FooterProps {
   siteSettings: NonNullable<SiteSettingsQueryResult>;
+  locale: Locale;
 }
 
-export default function Footer({ siteSettings }: FooterProps) {
+export default function Footer({ siteSettings, locale }: FooterProps) {
   return (
     <footer className="bg-markus-red mt-24 pt-12 pb-4 text-white">
       <div className="container mx-auto px-8 md:px-4">
@@ -19,10 +21,11 @@ export default function Footer({ siteSettings }: FooterProps) {
               email={siteSettings.email || ""}
               contactText_en={siteSettings.contactText_en || ""}
               contactText_no={siteSettings.contactText_no || ""}
+              locale={locale}
             />
             <div className="flex items-center gap-2">
-              <LanguageToggle />
-              <ScrollToTopButton />
+              <LanguageToggle locale={locale} />
+              <ScrollToTopButton locale={locale} />
             </div>
           </div>
 
@@ -32,6 +35,7 @@ export default function Footer({ siteSettings }: FooterProps) {
               <FooterLanguageText
                 text_en={siteSettings.madeByText_en}
                 text_no={siteSettings.madeByText_no}
+                locale={locale}
               />
             </p>
           </div>

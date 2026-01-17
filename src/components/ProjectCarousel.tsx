@@ -5,20 +5,20 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { ChevronLeftCircle, ChevronRightCircle } from 'lucide-react'
 import Image from 'next/image'
 import type { FeaturedProject } from '@/lib/types'
-import { useLanguage } from '@/context/LanguageContext'
 import { t, tPortableText } from '@/lib/types'
 import { urlFor } from '@/lib/sanity'
+import type { Locale } from '@/i18n/config'
 import Button from './Button'
 import PortableTextRenderer from './PortableTextRenderer'
 import { toPlainText } from '@portabletext/react'
 
 interface ProjectCarouselProps {
   projects: FeaturedProject[]
+  locale: Locale
 }
 
-export default function ProjectCarousel({ projects }: ProjectCarouselProps) {
+export default function ProjectCarousel({ projects, locale }: ProjectCarouselProps) {
   const shouldReduceMotion = useReducedMotion()
-  const { language } = useLanguage()
   const [activeIndex, setActiveIndex] = useState(0)
   const [direction, setDirection] = useState(0)
   const [isAutoRunning, setIsAutoRunning] = useState(true)
@@ -27,21 +27,21 @@ export default function ProjectCarousel({ projects }: ProjectCarouselProps) {
   // Find the project with the most content to use for height calculation
   const tallestProject = useMemo(() => {
     return projects.reduce((longest, current) => {
-      const currentDesc = tPortableText(current, 'description', language)
-      const longestDesc = tPortableText(longest, 'description', language)
+      const currentDesc = tPortableText(current, 'description', locale)
+      const longestDesc = tPortableText(longest, 'description', locale)
       const currentLength =
-        (t(current, 'title', language)?.length || 0) +
-        (t(current, 'subtitle', language)?.length || 0) +
+        (t(current, 'title', locale)?.length || 0) +
+        (t(current, 'subtitle', locale)?.length || 0) +
         (currentDesc ? toPlainText(currentDesc).length : 0) +
         (current.buttons?.length || 0) * 20
       const longestLength =
-        (t(longest, 'title', language)?.length || 0) +
-        (t(longest, 'subtitle', language)?.length || 0) +
+        (t(longest, 'title', locale)?.length || 0) +
+        (t(longest, 'subtitle', locale)?.length || 0) +
         (longestDesc ? toPlainText(longestDesc).length : 0) +
         (longest.buttons?.length || 0) * 20
       return currentLength > longestLength ? current : longest
     }, projects[0])
-  }, [projects, language])
+  }, [projects, locale])
 
   const goTo = (index: number, dir?: number) => {
     if (index === activeIndex) return
@@ -127,10 +127,10 @@ export default function ProjectCarousel({ projects }: ProjectCarouselProps) {
             <div className="flex flex-col flex-1">
               <div>
                 <div className="font-bold mt-2 text-lg">
-                  {t(tallestProject, 'title', language)}
+                  {t(tallestProject, 'title', locale)}
                 </div>
-                <div className="italic text-sm">{t(tallestProject, 'subtitle', language)}</div>
-                <PortableTextRenderer value={tPortableText(tallestProject, 'description', language)} className="break-words" />
+                <div className="italic text-sm">{t(tallestProject, 'subtitle', locale)}</div>
+                <PortableTextRenderer value={tPortableText(tallestProject, 'description', locale)} className="break-words" />
               </div>
               {tallestProject.buttons && tallestProject.buttons.length > 0 && (
                 <div className="w-full flex flex-col md:flex-row justify-end gap-2 mt-auto pt-4">
@@ -157,13 +157,13 @@ export default function ProjectCarousel({ projects }: ProjectCarouselProps) {
               }}
               className="w-full flex flex-col p-1 absolute top-0 left-0 right-0"
               aria-roledescription="slide"
-              aria-label={`${activeIndex + 1} of ${projects.length}: ${t(project, 'title', language)}`}
+              aria-label={`${activeIndex + 1} of ${projects.length}: ${t(project, 'title', locale)}`}
             >
               <div className="aspect-video rounded-2xl outline outline-markus-red shadow-md overflow-hidden relative">
                 {project.image && (
                   <Image
                     src={urlFor(project.image).width(800).url()}
-                    alt={t(project, 'imageAlt', language) || ''}
+                    alt={t(project, 'imageAlt', locale) || ''}
                     fill
                     className="object-cover"
                     priority={activeIndex === 0}
@@ -174,16 +174,16 @@ export default function ProjectCarousel({ projects }: ProjectCarouselProps) {
               <div className="flex flex-col flex-1">
                 <div>
                   <h3 className="font-bold mt-2 text-lg">
-                    {t(project, 'title', language)}
+                    {t(project, 'title', locale)}
                   </h3>
-                  <p className="italic text-sm">{t(project, 'subtitle', language)}</p>
-                  <PortableTextRenderer value={tPortableText(project, 'description', language)} className="break-words" />
+                  <p className="italic text-sm">{t(project, 'subtitle', locale)}</p>
+                  <PortableTextRenderer value={tPortableText(project, 'description', locale)} className="break-words" />
                 </div>
 
                 {project.buttons && project.buttons.length > 0 && (
                   <div className="w-full flex flex-col md:flex-row justify-end gap-2 mt-auto pt-4">
                     {project.buttons.map((button, idx) => (
-                      <Button key={idx} button={button} />
+                      <Button key={idx} button={button} locale={locale} />
                     ))}
                   </div>
                 )}
@@ -226,7 +226,7 @@ export default function ProjectCarousel({ projects }: ProjectCarouselProps) {
               type="button"
               role="tab"
               aria-selected={activeIndex === i}
-              aria-label={`Go to project ${i + 1}: ${t(p, 'title', language)}`}
+              aria-label={`Go to project ${i + 1}: ${t(p, 'title', locale)}`}
               onClick={() => goToManual(i)}
               className={`transition-all rounded-full h-2 w-2 bg-markus-red cursor-pointer ${
                 activeIndex === i ? 'scale-125 mx-1' : 'opacity-40'

@@ -26,13 +26,15 @@ export type CVWorkExperience = NonNullable<NonNullable<CvPageQueryResult>['workE
 export type CVSkillCategory = NonNullable<NonNullable<CvPageQueryResult>['skillCategories']>[number]
 export type CVSkill = NonNullable<NonNullable<CVSkillCategory>['skills']>[number]
 
-export type Language = 'en' | 'no'
+// Language type is defined in i18n/config.ts
+export type { Locale as Language } from '@/i18n/config'
+import type { Locale } from '@/i18n/config'
 
 // Helper to get localized field
 export function t(
   obj: Record<string, unknown>,
   field: string,
-  lang: Language
+  lang: Locale
 ): string {
   const key = `${field}_${lang}`
   const fallbackKey = `${field}_en`
@@ -43,7 +45,7 @@ export function t(
 export function tPortableText(
   obj: Record<string, unknown>,
   field: string,
-  lang: Language
+  lang: Locale
 ): BlockContent | null {
   const key = `${field}_${lang}`
   const fallbackKey = `${field}_en`
@@ -54,7 +56,7 @@ export function tPortableText(
 export function tHeroPortableText(
   obj: Record<string, unknown>,
   field: string,
-  lang: Language
+  lang: Locale
 ): HeroBlockContent | null {
   const key = `${field}_${lang}`
   const fallbackKey = `${field}_en`
