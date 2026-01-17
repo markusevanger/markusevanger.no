@@ -10,7 +10,6 @@ type Frontpage = NonNullable<FrontpageQueryResult>;
 interface HeroProps {
   frontpage: Frontpage;
   birthDate?: string | null;
-  workplaceUrl?: string | null;
   variant?: "hero";
 }
 
@@ -46,8 +45,6 @@ export default function HomePageText(props: HomePageTextProps) {
         <HeroPortableTextRenderer
           value={tHeroPortableText(frontpage, "heroDescription", language)}
           birthDate={props.birthDate}
-          workplaceText={t(frontpage, "workplaceText", language)}
-          workplaceUrl={props.workplaceUrl}
         />
       </p>
     </>

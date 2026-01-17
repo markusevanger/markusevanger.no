@@ -39,7 +39,7 @@ export default function Footer({ siteSettings }: FooterProps) {
       </div>
 
       {/* Infinite scrolling banner */}
-      <div className="mt-12 overflow-hidden">
+      <div className="mt-12 overflow-hidden select-none">
         <div className="flex animate-scroll">
           {Array.from({ length: 20 }).map((_, i) => (
             <span

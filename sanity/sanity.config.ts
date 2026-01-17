@@ -1,9 +1,11 @@
+import React from 'react'
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 import { lucideIconPicker } from 'sanity-plugin-lucide-icon-picker'
 import { media } from 'sanity-plugin-media'
 import { schemaTypes } from './schemaTypes'
+import { Home, FileUser, Settings, FolderKanban, GraduationCap, Briefcase, Layers, Wrench } from 'lucide-react'
 
 // Singleton document types that should only have one instance
 const singletonTypes = new Set(['siteSettings', 'frontpage', 'cv'])
@@ -12,11 +14,13 @@ const singletonTypes = new Set(['siteSettings', 'frontpage', 'cv'])
 const singletonListItem = (
   S: any,
   typeName: string,
-  title: string
+  title: string,
+  icon?: React.ComponentType
 ) =>
   S.listItem()
     .title(title)
     .id(typeName)
+    .icon(icon)
     .child(
       S.document()
         .schemaType(typeName)
@@ -25,10 +29,17 @@ const singletonListItem = (
 
 export default defineConfig({
   name: 'default',
-  title: 'Markus Evanger Portfolio',
+  title: 'markusevanger.no',
 
   projectId: 'cs56jnxu',
   dataset: 'production',
+
+  icon: () => React.createElement('img', {
+    src: '/static/favicon-32x32.png',
+    alt: 'markusevanger.no',
+    style: { width: '100%', height: '100%', objectFit: 'contain' }
+  }),
+
 
   plugins: [
     structureTool({
@@ -37,15 +48,7 @@ export default defineConfig({
           .title('Content')
           .items([
             // Singleton pages
-            S.listItem()
-              .title('Settings')
-              .child(
-                S.list()
-                  .title('Settings')
-                  .items([
-                    singletonListItem(S, 'siteSettings', 'Site Settings'),
-                  ])
-              ),
+            singletonListItem(S, 'siteSettings', 'Site Settings', Settings),
             S.divider(),
             S.listItem()
               .title('Pages')
@@ -53,18 +56,18 @@ export default defineConfig({
                 S.list()
                   .title('Pages')
                   .items([
-                    singletonListItem(S, 'frontpage', 'Frontpage'),
-                    singletonListItem(S, 'cv', 'CV Page'),
+                    singletonListItem(S, 'frontpage', 'Frontpage', Home),
+                    singletonListItem(S, 'cv', 'CV Page', FileUser),
                   ])
               ),
             S.divider(),
             // Regular document lists
-            S.documentTypeListItem('project').title('Projects'),
-            S.documentTypeListItem('education').title('Education'),
-            S.documentTypeListItem('workExperience').title('Work Experience'),
+            S.documentTypeListItem('project').title('Projects').icon(FolderKanban),
+            S.documentTypeListItem('education').title('Education').icon(GraduationCap),
+            S.documentTypeListItem('workExperience').title('Work Experience').icon(Briefcase),
             S.divider(),
-            S.documentTypeListItem('skillCategory').title('Skill Categories'),
-            S.documentTypeListItem('skill').title('Skills'),
+            S.documentTypeListItem('skillCategory').title('Skill Categories').icon(Layers),
+            S.documentTypeListItem('skill').title('Skills').icon(Wrench),
           ]),
     }),
     visionTool(),

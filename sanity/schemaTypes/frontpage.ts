@@ -1,72 +1,76 @@
 import { defineField, defineType } from 'sanity'
-import { Home } from 'lucide-react'
+import { Home, Sparkles, FolderKanban } from 'lucide-react'
 
 export default defineType({
   name: 'frontpage',
   title: 'Frontpage',
   type: 'document',
   icon: Home,
+  groups: [
+    { name: 'hero', title: 'Hero Section', icon: Sparkles, default: true },
+    { name: 'portfolio', title: 'Portfolio Section', icon: FolderKanban },
+  ],
+  fieldsets: [
+    { name: 'heroTitle', title: 'Title', options: { collapsible: true, collapsed: false } },
+    { name: 'heroDescription', title: 'Description', options: { collapsible: true, collapsed: false } },
+    { name: 'portfolioTitle', title: 'Section Title', options: { collapsible: true, collapsed: false } },
+  ],
   fields: [
     // Hero Section
     defineField({
       name: 'heroTitle_en',
-      title: 'Hero Title (English)',
+      title: 'English',
       type: 'string',
       validation: (Rule) => Rule.required(),
       group: 'hero',
+      fieldset: 'heroTitle',
     }),
     defineField({
       name: 'heroTitle_no',
-      title: 'Hero Title (Norwegian)',
+      title: 'Norwegian',
       type: 'string',
       validation: (Rule) => Rule.required(),
       group: 'hero',
+      fieldset: 'heroTitle',
     }),
     defineField({
       name: 'heroDescription_en',
-      title: 'Hero Description (English)',
+      title: 'English',
       type: 'heroBlockContent',
-      description: 'Use inline "Age Placeholder" and "Workplace Link" for dynamic content',
+      description: 'Use inline "Age Placeholder" for dynamic age content',
       group: 'hero',
+      fieldset: 'heroDescription',
     }),
     defineField({
       name: 'heroDescription_no',
-      title: 'Hero Description (Norwegian)',
+      title: 'Norwegian',
       type: 'heroBlockContent',
-      description: 'Use inline "Age Placeholder" and "Workplace Link" for dynamic content',
+      description: 'Use inline "Age Placeholder" for dynamic age content',
       group: 'hero',
+      fieldset: 'heroDescription',
     }),
     defineField({
-      name: 'workplaceText_en',
-      title: 'Workplace Text (English)',
-      type: 'string',
-      group: 'hero',
-    }),
-    defineField({
-      name: 'workplaceText_no',
-      title: 'Workplace Text (Norwegian)',
-      type: 'string',
-      group: 'hero',
-    }),
-    defineField({
-      name: 'workplaceUrl',
-      title: 'Workplace URL',
-      type: 'url',
+      name: 'heroButtons',
+      title: 'Hero Buttons',
+      type: 'array',
+      of: [{ type: 'button' }],
       group: 'hero',
     }),
 
     // Portfolio Section
     defineField({
       name: 'portfolioTitle_en',
-      title: 'Portfolio Section Title (English)',
+      title: 'English',
       type: 'string',
       group: 'portfolio',
+      fieldset: 'portfolioTitle',
     }),
     defineField({
       name: 'portfolioTitle_no',
-      title: 'Portfolio Section Title (Norwegian)',
+      title: 'Norwegian',
       type: 'string',
       group: 'portfolio',
+      fieldset: 'portfolioTitle',
     }),
     defineField({
       name: 'featuredProjects',
@@ -84,49 +88,6 @@ export default defineType({
       description: 'Select projects for the small projects list',
       group: 'portfolio',
     }),
-
-    // Bottom Section
-    defineField({
-      name: 'contactText_en',
-      title: 'Contact Text (English)',
-      type: 'string',
-      group: 'bottom',
-    }),
-    defineField({
-      name: 'contactText_no',
-      title: 'Contact Text (Norwegian)',
-      type: 'string',
-      group: 'bottom',
-    }),
-    defineField({
-      name: 'madeByText_en',
-      title: 'Made By Text (English)',
-      type: 'string',
-      group: 'bottom',
-    }),
-    defineField({
-      name: 'madeByText_no',
-      title: 'Made By Text (Norwegian)',
-      type: 'string',
-      group: 'bottom',
-    }),
-    defineField({
-      name: 'copiedNotification_en',
-      title: 'Copied Notification (English)',
-      type: 'string',
-      group: 'bottom',
-    }),
-    defineField({
-      name: 'copiedNotification_no',
-      title: 'Copied Notification (Norwegian)',
-      type: 'string',
-      group: 'bottom',
-    }),
-  ],
-  groups: [
-    { name: 'hero', title: 'Hero Section' },
-    { name: 'portfolio', title: 'Portfolio Section' },
-    { name: 'bottom', title: 'Bottom Section' },
   ],
   preview: {
     prepare() {

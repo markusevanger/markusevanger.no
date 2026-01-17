@@ -7,15 +7,11 @@ import AgeCounter from './AgeCounter'
 interface HeroPortableTextRendererProps {
   value: HeroBlockContent | null | undefined
   birthDate?: string | null
-  workplaceText?: string | null
-  workplaceUrl?: string | null
 }
 
 export default function HeroPortableTextRenderer({
   value,
   birthDate,
-  workplaceText,
-  workplaceUrl,
 }: HeroPortableTextRendererProps) {
   if (!value || value.length === 0) return null
 
@@ -41,19 +37,6 @@ export default function HeroPortableTextRenderer({
       agePlaceholder: () => {
         if (!birthDate) return null
         return <AgeCounter birthDate={birthDate} />
-      },
-      workplacePlaceholder: () => {
-        if (!workplaceUrl || !workplaceText) return null
-        return (
-          <a
-            href={workplaceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline text-markus-red font-semibold"
-          >
-            {workplaceText}
-          </a>
-        )
       },
     },
   }

@@ -1,86 +1,113 @@
 import { defineField, defineType } from 'sanity'
-import { FileUser } from 'lucide-react'
+import { FileUser, PanelTop, Heading, FileStack, MessageCircle } from 'lucide-react'
 
 export default defineType({
   name: 'cv',
   title: 'CV Page',
   type: 'document',
   icon: FileUser,
+  groups: [
+    { name: 'header', title: 'Header', icon: PanelTop, default: true },
+    { name: 'sections', title: 'Section Titles', icon: Heading },
+    { name: 'content', title: 'Content', icon: FileStack },
+    { name: 'bottom', title: 'Bottom Section', icon: MessageCircle },
+  ],
+  fieldsets: [
+    { name: 'pageTitle', title: 'Page Title', options: { collapsible: true, collapsed: false } },
+    { name: 'backButton', title: 'Back Button', options: { collapsible: true, collapsed: false } },
+    { name: 'projectsTitle', title: 'Projects', options: { collapsible: true, collapsed: false } },
+    { name: 'educationTitle', title: 'Education', options: { collapsible: true, collapsed: false } },
+    { name: 'workTitle', title: 'Work Experience', options: { collapsible: true, collapsed: false } },
+    { name: 'skillsTitle', title: 'Skills', options: { collapsible: true, collapsed: false } },
+    { name: 'contactText', title: 'Contact Text', options: { collapsible: true, collapsed: false } },
+  ],
   fields: [
     // Header
     defineField({
       name: 'pageTitle_en',
-      title: 'Page Title (English)',
+      title: 'English',
       type: 'string',
       group: 'header',
+      fieldset: 'pageTitle',
     }),
     defineField({
       name: 'pageTitle_no',
-      title: 'Page Title (Norwegian)',
+      title: 'Norwegian',
       type: 'string',
       group: 'header',
+      fieldset: 'pageTitle',
     }),
     defineField({
       name: 'backButtonText_en',
-      title: 'Back Button Text (English)',
+      title: 'English',
       type: 'string',
       group: 'header',
+      fieldset: 'backButton',
     }),
     defineField({
       name: 'backButtonText_no',
-      title: 'Back Button Text (Norwegian)',
+      title: 'Norwegian',
       type: 'string',
       group: 'header',
+      fieldset: 'backButton',
     }),
 
     // Section Titles
     defineField({
       name: 'projectsSectionTitle_en',
-      title: 'Projects Section Title (English)',
+      title: 'English',
       type: 'string',
       group: 'sections',
+      fieldset: 'projectsTitle',
     }),
     defineField({
       name: 'projectsSectionTitle_no',
-      title: 'Projects Section Title (Norwegian)',
+      title: 'Norwegian',
       type: 'string',
       group: 'sections',
+      fieldset: 'projectsTitle',
     }),
     defineField({
       name: 'educationSectionTitle_en',
-      title: 'Education Section Title (English)',
+      title: 'English',
       type: 'string',
       group: 'sections',
+      fieldset: 'educationTitle',
     }),
     defineField({
       name: 'educationSectionTitle_no',
-      title: 'Education Section Title (Norwegian)',
+      title: 'Norwegian',
       type: 'string',
       group: 'sections',
+      fieldset: 'educationTitle',
     }),
     defineField({
       name: 'workSectionTitle_en',
-      title: 'Work Experience Section Title (English)',
+      title: 'English',
       type: 'string',
       group: 'sections',
+      fieldset: 'workTitle',
     }),
     defineField({
       name: 'workSectionTitle_no',
-      title: 'Work Experience Section Title (Norwegian)',
+      title: 'Norwegian',
       type: 'string',
       group: 'sections',
+      fieldset: 'workTitle',
     }),
     defineField({
       name: 'skillsSectionTitle_en',
-      title: 'Skills Section Title (English)',
+      title: 'English',
       type: 'string',
       group: 'sections',
+      fieldset: 'skillsTitle',
     }),
     defineField({
       name: 'skillsSectionTitle_no',
-      title: 'Skills Section Title (Norwegian)',
+      title: 'Norwegian',
       type: 'string',
       group: 'sections',
+      fieldset: 'skillsTitle',
     }),
 
     // Content References
@@ -117,22 +144,18 @@ export default defineType({
     // Bottom Section
     defineField({
       name: 'contactText_en',
-      title: 'Contact Text (English)',
+      title: 'English',
       type: 'string',
       group: 'bottom',
+      fieldset: 'contactText',
     }),
     defineField({
       name: 'contactText_no',
-      title: 'Contact Text (Norwegian)',
+      title: 'Norwegian',
       type: 'string',
       group: 'bottom',
+      fieldset: 'contactText',
     }),
-  ],
-  groups: [
-    { name: 'header', title: 'Header' },
-    { name: 'sections', title: 'Section Titles' },
-    { name: 'content', title: 'Content' },
-    { name: 'bottom', title: 'Bottom Section' },
   ],
   preview: {
     prepare() {

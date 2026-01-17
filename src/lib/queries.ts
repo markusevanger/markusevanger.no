@@ -23,9 +23,15 @@ export const frontpageQuery = defineQuery(`
     heroTitle_no,
     heroDescription_en,
     heroDescription_no,
-    workplaceText_en,
-    workplaceText_no,
-    workplaceUrl,
+    heroButtons[] {
+      text_en,
+      text_no,
+      link,
+      "internalLink": internalLink->_type,
+      linkType,
+      type,
+      icon
+    },
     portfolioTitle_en,
     portfolioTitle_no,
     featuredProjects[]-> {
@@ -56,13 +62,7 @@ export const frontpageQuery = defineQuery(`
       subtitle_en,
       subtitle_no,
       link
-    },
-    contactText_en,
-    contactText_no,
-    madeByText_en,
-    madeByText_no,
-    copiedNotification_en,
-    copiedNotification_no
+    }
   }
 `)
 

@@ -26,11 +26,6 @@ export type HeroBlockContent = Array<{
         _type: "agePlaceholder";
         _key: string;
       }
-    | {
-        label?: string;
-        _type: "workplacePlaceholder";
-        _key: string;
-      }
   >;
   style?: "normal";
   listItem?: never;
@@ -63,11 +58,27 @@ export type BlockContent = Array<{
   _key: string;
 }>;
 
+export type FrontpageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "frontpage";
+};
+
+export type CvReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "cv";
+};
+
 export type Button = {
   _type: "button";
   text_en?: string;
   text_no?: string;
   link?: string;
+  internalLink?: FrontpageReference | CvReference;
+  linkType?: "external" | "internal";
   type?: "primary" | "secondary" | "outline" | "ghost";
   icon?: LucideIcon;
 };
@@ -254,8 +265,6 @@ export type Project = {
   >;
 };
 
-export type LucideIcon = string;
-
 export type EducationReference = {
   _ref: string;
   _type: "reference";
@@ -329,9 +338,11 @@ export type Frontpage = {
   heroTitle_no?: string;
   heroDescription_en?: HeroBlockContent;
   heroDescription_no?: HeroBlockContent;
-  workplaceText_en?: string;
-  workplaceText_no?: string;
-  workplaceUrl?: string;
+  heroButtons?: Array<
+    {
+      _key: string;
+    } & Button
+  >;
   portfolioTitle_en?: string;
   portfolioTitle_no?: string;
   featuredProjects?: Array<
@@ -351,6 +362,8 @@ export type Frontpage = {
   copiedNotification_en?: string;
   copiedNotification_no?: string;
 };
+
+export type LucideIcon = string;
 
 export type SiteSettings = {
   _id: string;
@@ -484,6 +497,8 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | HeroBlockContent
   | BlockContent
+  | FrontpageReference
+  | CvReference
   | Button
   | SkillReference
   | SkillCategory
@@ -497,12 +512,12 @@ export type AllSanitySchemaTypes =
   | ProjectReference
   | Education
   | Project
-  | LucideIcon
   | EducationReference
   | WorkExperienceReference
   | SkillCategoryReference
   | Cv
   | Frontpage
+  | LucideIcon
   | SiteSettings
   | MediaTag
   | SanityImagePaletteSwatch
@@ -542,15 +557,21 @@ export type SiteSettingsQueryResult = {
 
 // Source: ../src/lib/queries.ts
 // Variable: frontpageQuery
-// Query: *[_type == "frontpage"][0] {    heroTitle_en,    heroTitle_no,    heroDescription_en,    heroDescription_no,    workplaceText_en,    workplaceText_no,    workplaceUrl,    portfolioTitle_en,    portfolioTitle_no,    featuredProjects[]-> {      _id,      title_en,      title_no,      subtitle_en,      subtitle_no,      description_en,      description_no,      period_en,      period_no,      image,      imageAlt_en,      imageAlt_no,      buttons[] {        text_en,        text_no,        link,        type,        icon      }    },    smallProjects[]-> {      _id,      title_en,      title_no,      subtitle_en,      subtitle_no,      link    },    contactText_en,    contactText_no,    madeByText_en,    madeByText_no,    copiedNotification_en,    copiedNotification_no  }
+// Query: *[_type == "frontpage"][0] {    heroTitle_en,    heroTitle_no,    heroDescription_en,    heroDescription_no,    heroButtons[] {      text_en,      text_no,      link,      "internalLink": internalLink->_type,      linkType,      type,      icon    },    portfolioTitle_en,    portfolioTitle_no,    featuredProjects[]-> {      _id,      title_en,      title_no,      subtitle_en,      subtitle_no,      description_en,      description_no,      period_en,      period_no,      image,      imageAlt_en,      imageAlt_no,      buttons[] {        text_en,        text_no,        link,        type,        icon      }    },    smallProjects[]-> {      _id,      title_en,      title_no,      subtitle_en,      subtitle_no,      link    },    contactText_en,    contactText_no,    madeByText_en,    madeByText_no,    copiedNotification_en,    copiedNotification_no  }
 export type FrontpageQueryResult = {
   heroTitle_en: string | null;
   heroTitle_no: string | null;
   heroDescription_en: HeroBlockContent | null;
   heroDescription_no: HeroBlockContent | null;
-  workplaceText_en: string | null;
-  workplaceText_no: string | null;
-  workplaceUrl: string | null;
+  heroButtons: Array<{
+    text_en: string | null;
+    text_no: string | null;
+    link: string | null;
+    internalLink: "cv" | "frontpage" | null;
+    linkType: "external" | "internal" | null;
+    type: "ghost" | "outline" | "primary" | "secondary" | null;
+    icon: LucideIcon | null;
+  }> | null;
   portfolioTitle_en: string | null;
   portfolioTitle_no: string | null;
   featuredProjects: Array<{
@@ -694,7 +715,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "siteSettings"][0] {\n    name,\n    email,\n    birthDate,\n    githubUrl,\n    linkedinUrl,\n    profileImage,\n    cvProfileImage,\n    logoImage,\n    contactText_en,\n    contactText_no,\n    madeByText_en,\n    madeByText_no\n  }\n': SiteSettingsQueryResult;
-    '\n  *[_type == "frontpage"][0] {\n    heroTitle_en,\n    heroTitle_no,\n    heroDescription_en,\n    heroDescription_no,\n    workplaceText_en,\n    workplaceText_no,\n    workplaceUrl,\n    portfolioTitle_en,\n    portfolioTitle_no,\n    featuredProjects[]-> {\n      _id,\n      title_en,\n      title_no,\n      subtitle_en,\n      subtitle_no,\n      description_en,\n      description_no,\n      period_en,\n      period_no,\n      image,\n      imageAlt_en,\n      imageAlt_no,\n      buttons[] {\n        text_en,\n        text_no,\n        link,\n        type,\n        icon\n      }\n    },\n    smallProjects[]-> {\n      _id,\n      title_en,\n      title_no,\n      subtitle_en,\n      subtitle_no,\n      link\n    },\n    contactText_en,\n    contactText_no,\n    madeByText_en,\n    madeByText_no,\n    copiedNotification_en,\n    copiedNotification_no\n  }\n': FrontpageQueryResult;
+    '\n  *[_type == "frontpage"][0] {\n    heroTitle_en,\n    heroTitle_no,\n    heroDescription_en,\n    heroDescription_no,\n    heroButtons[] {\n      text_en,\n      text_no,\n      link,\n      "internalLink": internalLink->_type,\n      linkType,\n      type,\n      icon\n    },\n    portfolioTitle_en,\n    portfolioTitle_no,\n    featuredProjects[]-> {\n      _id,\n      title_en,\n      title_no,\n      subtitle_en,\n      subtitle_no,\n      description_en,\n      description_no,\n      period_en,\n      period_no,\n      image,\n      imageAlt_en,\n      imageAlt_no,\n      buttons[] {\n        text_en,\n        text_no,\n        link,\n        type,\n        icon\n      }\n    },\n    smallProjects[]-> {\n      _id,\n      title_en,\n      title_no,\n      subtitle_en,\n      subtitle_no,\n      link\n    },\n    contactText_en,\n    contactText_no,\n    madeByText_en,\n    madeByText_no,\n    copiedNotification_en,\n    copiedNotification_no\n  }\n': FrontpageQueryResult;
     '\n  *[_type == "cv"][0] {\n    pageTitle_en,\n    pageTitle_no,\n    backButtonText_en,\n    backButtonText_no,\n    projectsSectionTitle_en,\n    projectsSectionTitle_no,\n    educationSectionTitle_en,\n    educationSectionTitle_no,\n    workSectionTitle_en,\n    workSectionTitle_no,\n    skillsSectionTitle_en,\n    skillsSectionTitle_no,\n    featuredProjects[]-> {\n      _id,\n      title_en,\n      title_no,\n      description_en,\n      description_no,\n      period_en,\n      period_no,\n      buttons[] {\n        text_en,\n        text_no,\n        link,\n        type,\n        icon\n      },\n      "reportUrl": reportDocument.asset->url\n    },\n    education[]-> {\n      _id,\n      institution_en,\n      institution_no,\n      degree_en,\n      degree_no,\n      location_en,\n      location_no,\n      description_en,\n      description_no,\n      period_en,\n      period_no,\n      externalUrl,\n      relatedProjects[]-> {\n        _id,\n        title_en,\n        title_no,\n        link\n      }\n    },\n    workExperience[]-> {\n      _id,\n      company_en,\n      company_no,\n      position_en,\n      position_no,\n      description_en,\n      description_no,\n      period_en,\n      period_no,\n      companyUrl,\n      buttons[] {\n        text_en,\n        text_no,\n        link,\n        type,\n        icon\n      }\n    },\n    skillCategories[]-> {\n      _id,\n      name_en,\n      name_no,\n      skills[]-> {\n        _id,\n        name,\n        url,\n        icon\n      }\n    },\n    contactText_en,\n    contactText_no\n  }\n': CvPageQueryResult;
   }
 }

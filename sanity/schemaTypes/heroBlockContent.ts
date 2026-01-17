@@ -1,5 +1,5 @@
 import { defineType, defineArrayMember } from 'sanity'
-import { Clock, Briefcase } from 'lucide-react'
+import { Clock } from 'lucide-react'
 
 export default defineType({
   name: 'heroBlockContent',
@@ -41,25 +41,6 @@ export default defineType({
           preview: {
             prepare() {
               return { title: '{{age}}' }
-            },
-          },
-        },
-        {
-          name: 'workplacePlaceholder',
-          type: 'object',
-          title: 'Workplace Link',
-          icon: Briefcase,
-          fields: [
-            {
-              name: 'label',
-              type: 'string',
-              initialValue: 'workplace',
-              hidden: true,
-            },
-          ],
-          preview: {
-            prepare() {
-              return { title: '{{workplace}}' }
             },
           },
         },
