@@ -39,7 +39,7 @@ export default function Header({ locale }: HeaderProps) {
     >
       <Link href={`/${locale}`}>
         <Image
-          src="/v5-red-small.webp"
+          src="/v5-red.webp"
           alt="Home"
           width={64}
           height={64}
