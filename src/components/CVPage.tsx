@@ -75,7 +75,7 @@ export default function CVPageComponent({
           </div>
         </AppearInView>
 
-        <div className="flex flex-col gap-8 lg:grid lg:grid-cols-2">
+        <div className="flex flex-col gap-8">
           {/* Education Section */}
           <AppearInView delay={100}>
             <section className="h-full">
@@ -158,7 +158,7 @@ export default function CVPageComponent({
           </AppearInView>
 
           {/* Skills Section */}
-          <AppearInView delay={200} className="lg:col-span-full">
+          <AppearInView delay={200}>
             <section className="mt-16">
               <h2 className="text-2xl w-full mb-4 font-bold">
                 {t(cvPage, "skillsSectionTitle", locale)}
