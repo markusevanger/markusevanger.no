@@ -99,31 +99,15 @@ export default function CVPageComponent({
                       value={tPortableText(edu, "description", locale)}
                       className="mt-2"
                     />
-                    {edu.relatedProjects && edu.relatedProjects.length > 0 && (
-                      <div className="mt-2 flex flex-col md:flex-row gap-2">
-                        {edu.relatedProjects.map((proj) =>
-                          proj.buttons && proj.buttons.length > 0 ? (
-                            proj.buttons.map((button, idx) => (
-                              <Button
-                                key={`${proj._id}-${idx}`}
-                                button={button}
-                                locale={locale}
-                              />
-                            ))
-                          ) : (
-                            <Button
-                              key={proj._id}
-                              button={{
-                                text_en: proj.title_en,
-                                text_no: proj.title_no,
-                                link: proj.link,
-                                linkType: "external",
-                                type: "secondary",
-                              }}
-                              locale={locale}
-                            />
-                          )
-                        )}
+                    {edu.buttons && edu.buttons.length > 0 && (
+                      <div className="mt-4 flex flex-col md:flex-row gap-2">
+                        {edu.buttons.map((button, idx) => (
+                          <Button
+                            key={idx}
+                            button={button}
+                            locale={locale}
+                          />
+                        ))}
                       </div>
                     )}
                   </li>

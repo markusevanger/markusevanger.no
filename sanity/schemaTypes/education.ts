@@ -90,18 +90,12 @@ export default defineType({
       description: 'Leave empty if ongoing',
     }),
     defineField({
-      name: 'relatedProjects',
-      title: 'Related Projects',
+      name: 'buttons',
+      title: 'Buttons',
       type: 'array',
       group: 'links',
-      of: [{ type: 'reference', to: [{ type: 'project' }] }],
-    }),
-    defineField({
-      name: 'externalUrl',
-      title: 'External Link',
-      type: 'url',
-      group: 'links',
-      description: 'Link to institution website, etc.',
+      of: [{ type: 'button' }],
+      description: 'Action buttons (e.g., related projects, reports, links)',
     }),
   ],
   preview: {

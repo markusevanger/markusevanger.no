@@ -30,7 +30,8 @@ export const frontpageQuery = defineQuery(`
       "internalLink": internalLink->_type,
       linkType,
       type,
-      icon
+      icon,
+      "downloadUrl": downloadFile.asset->url
     },
     portfolioTitle_en,
     portfolioTitle_no,
@@ -51,8 +52,10 @@ export const frontpageQuery = defineQuery(`
         text_en,
         text_no,
         link,
+        linkType,
         type,
-        icon
+        icon,
+        "downloadUrl": downloadFile.asset->url
       }
     },
     smallProjects[]-> {
@@ -92,8 +95,10 @@ export const cvPageQuery = defineQuery(`
         text_en,
         text_no,
         link,
+        linkType,
         type,
-        icon
+        icon,
+        "downloadUrl": downloadFile.asset->url
       },
       "reportUrl": reportDocument.asset->url
     },
@@ -109,19 +114,14 @@ export const cvPageQuery = defineQuery(`
       description_no,
       period_en,
       period_no,
-      externalUrl,
-      relatedProjects[]-> {
-        _id,
-        title_en,
-        title_no,
+      buttons[] {
+        text_en,
+        text_no,
         link,
-        buttons[] {
-          text_en,
-          text_no,
-          link,
-          type,
-          icon
-        }
+        linkType,
+        type,
+        icon,
+        "downloadUrl": downloadFile.asset->url
       }
     },
     workExperience[]-> {
@@ -134,13 +134,14 @@ export const cvPageQuery = defineQuery(`
       description_no,
       period_en,
       period_no,
-      companyUrl,
       buttons[] {
         text_en,
         text_no,
         link,
+        linkType,
         type,
-        icon
+        icon,
+        "downloadUrl": downloadFile.asset->url
       }
     },
     skillCategories[]-> {

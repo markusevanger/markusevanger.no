@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { DynamicIcon, type IconName } from 'lucide-react/dynamic'
-import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Download } from 'lucide-react'
 import type { Locale } from '@/i18n/config'
 
 export interface ButtonData {
@@ -11,7 +11,8 @@ export interface ButtonData {
   text_no?: string | null
   link?: string | null
   internalLink?: string | null
-  linkType?: 'external' | 'internal' | null
+  downloadUrl?: string | null
+  linkType?: 'external' | 'internal' | 'download' | null
   type?: 'primary' | 'secondary' | 'outline' | 'ghost' | null
   icon?: string | null
 }
@@ -47,9 +48,16 @@ export default function Button({ button, locale, className = '' }: ButtonProps) 
   const currentLocale: Locale = locale || (pathname.startsWith('/en') ? 'en' : 'no')
 
   const isInternal = button.linkType === 'internal'
-  const href = isInternal
-    ? (button.internalLink ? `/${currentLocale}${pageRoutes[button.internalLink]}` : null)
-    : button.link
+  const isDownload = button.linkType === 'download'
+
+  let href: string | null = null
+  if (isInternal) {
+    href = button.internalLink ? `/${currentLocale}${pageRoutes[button.internalLink]}` : null
+  } else if (isDownload) {
+    href = button.downloadUrl || null
+  } else {
+    href = button.link || null
+  }
 
   if (!href) return null
 
@@ -72,6 +80,20 @@ export default function Button({ button, locale, className = '' }: ButtonProps) 
         {text}
         <ArrowRight size={16} className="arrow-icon-right" />
       </Link>
+    )
+  }
+
+  if (isDownload) {
+    return (
+      <a
+        href={href}
+        download
+        className={buttonClass}
+      >
+        {button.icon && <DynamicIcon name={button.icon as IconName} size={16} />}
+        {text}
+        <Download size={16} className="arrow-icon" />
+      </a>
     )
   }
 

@@ -43,6 +43,7 @@ export default defineType({
         list: [
           { title: 'External URL', value: 'external' },
           { title: 'Internal Page', value: 'internal' },
+          { title: 'File Download', value: 'download' },
         ],
         layout: 'radio',
       },
@@ -54,11 +55,11 @@ export default defineType({
       type: 'url',
       fieldset: 'link',
       description: 'External URL (https://...)',
-      hidden: ({ parent }) => parent?.linkType === 'internal',
+      hidden: ({ parent }) => parent?.linkType !== 'external',
       validation: (Rule) =>
         Rule.custom((value, context) => {
           const parent = context.parent as { linkType?: string }
-          if (parent?.linkType !== 'internal' && !value) {
+          if (parent?.linkType === 'external' && !value) {
             return 'Link URL is required for external links'
           }
           return true
@@ -76,6 +77,25 @@ export default defineType({
           const parent = context.parent as { linkType?: string }
           if (parent?.linkType === 'internal' && !value) {
             return 'Internal page is required'
+          }
+          return true
+        }),
+    }),
+    defineField({
+      name: 'downloadFile',
+      title: 'File to Download',
+      type: 'file',
+      fieldset: 'link',
+      options: {
+        accept: '.pdf,.doc,.docx,.zip',
+      },
+      description: 'Upload a file for download (PDF, DOC, ZIP)',
+      hidden: ({ parent }) => parent?.linkType !== 'download',
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as { linkType?: string }
+          if (parent?.linkType === 'download' && !value) {
+            return 'File is required for download links'
           }
           return true
         }),
