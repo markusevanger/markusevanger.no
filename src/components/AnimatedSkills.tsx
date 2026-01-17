@@ -35,7 +35,7 @@ const itemVariants = {
     opacity: 1,
     x: 0,
     transition: {
-      type: "tween",
+      type: "tween" as const,
       duration: 0.025,
     },
   },

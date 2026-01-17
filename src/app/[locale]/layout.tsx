@@ -93,14 +93,32 @@ export default async function LocaleLayout({ children, params }: Props) {
     notFound();
   }
 
+  const meta = siteMetadata[locale as Locale];
+  const localePrefix = locale === "no" ? "" : `${locale}/`;
+
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Markus Evanger",
-    url: siteUrl,
-    jobTitle: "Developer and Designer",
-    sameAs: ["https://github.com/markusevanger"],
-    inLanguage: locale,
+    "@graph": [
+      {
+        "@type": "Person",
+        name: "Markus Evanger",
+        url: siteUrl,
+        jobTitle: "Developer and Designer",
+        sameAs: ["https://github.com/markusevanger"],
+      },
+      {
+        "@type": "WebSite",
+        url: siteUrl,
+        name: "Markus Evanger",
+        description: meta.description,
+        inLanguage: locale,
+      },
+      {
+        "@type": "SiteNavigationElement",
+        name: "CV",
+        url: `${siteUrl}/${localePrefix}cv`,
+      },
+    ],
   };
 
   return (
