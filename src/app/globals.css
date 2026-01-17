@@ -52,6 +52,10 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+html {
+  @apply bg-markus-red;
+}
+
 body {
   @apply bg-white text-black antialiased;
   font-family: system-ui, sans-serif;

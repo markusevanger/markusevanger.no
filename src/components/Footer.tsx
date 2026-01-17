@@ -1,5 +1,5 @@
 import LanguageToggle from "./LanguageToggle";
-import { HeartSvg } from "./assets/HeartSvg";
+import { Logo } from "./assets/Logo";
 import CopyEmail from "./CopyEmail";
 import ScrollToTopButton from "./ScrollToTopButton";
 import FooterLanguageText from "./FooterLanguageText";
@@ -30,7 +30,7 @@ export default function Footer({ siteSettings, locale }: FooterProps) {
           </div>
 
           <div className="flex flex-col items-center gap-2">
-            <HeartSvg className="fill-white" />
+            <Logo className="fill-white" />
             <p className="text-xs font-mono">
               <FooterLanguageText
                 text_en={siteSettings.madeByText_en}
