@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(CHROME_PATH=/usr/bin/google-chrome npx lighthouse:*)",
+      "Bash(xargs:*)"
+    ]
+  }
+}

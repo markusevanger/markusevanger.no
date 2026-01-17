@@ -111,14 +111,14 @@ export default function LanguageToggle({
 
   const variantStyles = {
     default: {
-      container: "bg-white/10",
-      button: "hover:bg-white/10 focus:bg-white/10 focus:ring-white/40",
-      icon: "opacity-60 group-hover:opacity-100",
+      container: "bg-white/30",
+      button: "hover:bg-white/35 focus:bg-white/35 focus:ring-white/60",
+      icon: "opacity-100",
       text: "text-current",
       optionActive: "bg-white/90 text-markus-red",
       optionInactive:
-        "bg-transparent hover:bg-white/15 focus:bg-white/20 text-white",
-      focusRing: "focus:ring-white/50",
+        "bg-transparent hover:bg-white/35 focus:bg-white/40 text-white",
+      focusRing: "focus:ring-white/70",
     },
     light: {
       container: "bg-white border border-black",
@@ -131,14 +131,14 @@ export default function LanguageToggle({
       focusRing: "focus:ring-markus-red",
     },
     dark: {
-      container: "bg-white/10",
-      button: "hover:bg-white/10 focus:bg-white/10 focus:ring-white/40",
-      icon: "opacity-60 group-hover:opacity-100",
+      container: "bg-white/30",
+      button: "hover:bg-white/35 focus:bg-white/35 focus:ring-white/60",
+      icon: "opacity-100",
       text: "text-white",
       optionActive: "bg-white/90 text-markus-red",
       optionInactive:
-        "bg-transparent hover:bg-white/15 focus:bg-white/20 text-white",
-      focusRing: "focus:ring-white/50",
+        "bg-transparent hover:bg-white/35 focus:bg-white/40 text-white",
+      focusRing: "focus:ring-white/70",
     },
   };
 
@@ -165,7 +165,7 @@ export default function LanguageToggle({
           }
         }}
         aria-expanded={isOpen}
-        aria-haspopup="true"
+        aria-haspopup="menu"
         aria-label={`Language: ${
           locale === "en" ? "English" : "Norsk"
         }. Press arrow keys to change.`}
@@ -190,7 +190,7 @@ export default function LanguageToggle({
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className={`opacity-60 transition-transform duration-150 ease-out ${
+              className={`opacity-80 transition-transform duration-150 ease-out ${
                 isOpen ? "rotate-90" : ""
               }`}
             >
@@ -206,7 +206,7 @@ export default function LanguageToggle({
       >
         <div className="overflow-hidden">
           <div
-            role="listbox"
+            role="menu"
             aria-label="Select language"
             className={`flex items-center gap-1 py-0.5 pr-0.5 transition-opacity duration-150 ease-out ${
               isOpen ? "opacity-100" : "opacity-0"
@@ -216,8 +216,8 @@ export default function LanguageToggle({
               ref={norskLinkRef}
               href={noPath}
               onFocus={() => setFocusedIndex(0)}
-              role="option"
-              aria-selected={locale === "no"}
+              role="menuitem"
+              aria-current={locale === "no" ? "page" : undefined}
               tabIndex={isOpen ? 0 : -1}
               hrefLang="no"
               className={`px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset ${
@@ -232,8 +232,8 @@ export default function LanguageToggle({
               ref={englishLinkRef}
               href={enPath}
               onFocus={() => setFocusedIndex(1)}
-              role="option"
-              aria-selected={locale === "en"}
+              role="menuitem"
+              aria-current={locale === "en" ? "page" : undefined}
               tabIndex={isOpen ? 0 : -1}
               hrefLang="en"
               className={`px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset ${

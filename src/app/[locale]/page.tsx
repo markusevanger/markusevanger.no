@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { client } from '@/lib/sanity'
+import { client, urlFor } from '@/lib/sanity'
 import { frontpageQuery, siteSettingsQuery } from '@/lib/queries'
 import type { FrontpageQueryResult, SiteSettingsQueryResult } from '@/lib/types'
 import HomePage from '@/components/HomePage'
@@ -37,5 +37,23 @@ export default async function Page({ params }: Props) {
     )
   }
 
-  return <HomePage frontpage={frontpage} siteSettings={siteSettings} locale={locale} />
+  // Preload LCP image (first featured project image)
+  const firstProject = frontpage.featuredProjects?.[0]
+  const lcpImageUrl = firstProject?.image
+    ? urlFor(firstProject.image).width(800).format('webp').quality(80).url()
+    : null
+
+  return (
+    <>
+      {lcpImageUrl && (
+        <link
+          rel="preload"
+          as="image"
+          href={lcpImageUrl}
+          fetchPriority="high"
+        />
+      )}
+      <HomePage frontpage={frontpage} siteSettings={siteSettings} locale={locale} />
+    </>
+  )
 }

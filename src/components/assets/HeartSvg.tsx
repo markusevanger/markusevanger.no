@@ -11,7 +11,7 @@ const pathD = "M62.03 25.75C60.3151 27.6208 57.3645 27.7737 55.32 26.36C58.3611 
 
 export function HeartSvg({ className }: HeartSvgProps) {
   return (
-    <Link href="/">
+    <Link href="/" aria-label="Go to homepage">
       <motion.div
         className="w-fit cursor-pointer"
         initial="hidden"

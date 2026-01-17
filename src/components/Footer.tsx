@@ -48,7 +48,8 @@ export default function Footer({ siteSettings, locale }: FooterProps) {
           {Array.from({ length: 20 }).map((_, i) => (
             <span
               key={i}
-              className="text-white/20 text-2xl font-mogi mx-4 shrink-0"
+              className="text-white/60 text-2xl font-mogi mx-4 shrink-0"
+              aria-hidden="true"
             >
               markusevanger.no
             </span>

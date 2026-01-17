@@ -149,6 +149,52 @@ body {
   transform-origin: center;
 }
 
+/* WindowAnimation cloud drift animations */
+@keyframes cloud-drift-slow {
+  from { transform: translateX(200px); }
+  to { transform: translateX(-200px); }
+}
+
+@keyframes cloud-drift-medium {
+  from { transform: translateX(200px); }
+  to { transform: translateX(-200px); }
+}
+
+@keyframes cloud-drift-fast {
+  from { transform: translateX(200px); }
+  to { transform: translateX(-200px); }
+}
+
+@keyframes wave-drift {
+  from { transform: translateX(200px); }
+  to { transform: translateX(-600px); }
+}
+
+@keyframes wing-bob {
+  0%, 100% { transform: translate(40px, 80px); }
+  50% { transform: translate(45px, 90px); }
+}
+
+.animate-cloud-slow {
+  animation: cloud-drift-slow 13s linear infinite;
+}
+
+.animate-cloud-medium {
+  animation: cloud-drift-medium 8s linear infinite;
+}
+
+.animate-cloud-fast {
+  animation: cloud-drift-fast 5s linear infinite;
+}
+
+.animate-wave {
+  animation: wave-drift 16s linear infinite;
+}
+
+.animate-wing-bob {
+  animation: wing-bob 5s ease-in-out infinite;
+}
+
 /* Button arrow hover animations */
 .arrow-icon,
 .arrow-icon-right {

@@ -240,3 +240,7 @@ sanity/schema.json
 
 ### pnpm ###
 .pnpm-store/
+
+### Lighthouse ###
+lighthouse-report*
+lighthouse.*/

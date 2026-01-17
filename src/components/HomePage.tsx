@@ -49,14 +49,12 @@ export default function HomePage({ frontpage, siteSettings, locale }: HomePagePr
               <HomePageText frontpage={frontpage} locale={locale} variant="portfolioTitle" />
             </AppearInView>
 
-            <AppearInView>
-              <div className="px-2">
-                {frontpage.featuredProjects &&
-                  frontpage.featuredProjects.length > 0 && (
-                    <ProjectCarousel projects={frontpage.featuredProjects} locale={locale} />
-                  )}
-              </div>
-            </AppearInView>
+            <div className="px-2">
+              {frontpage.featuredProjects &&
+                frontpage.featuredProjects.length > 0 && (
+                  <ProjectCarousel projects={frontpage.featuredProjects} locale={locale} />
+                )}
+            </div>
 
             <AppearInView>
               <div className="my-8 flex justify-center h-full items-center">
@@ -67,6 +65,7 @@ export default function HomePage({ frontpage, siteSettings, locale }: HomePagePr
                   height={112}
                   className="w-auto h-28"
                   unoptimized
+                  loading="lazy"
                 />
               </div>
             </AppearInView>

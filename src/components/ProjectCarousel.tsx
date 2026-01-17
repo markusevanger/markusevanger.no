@@ -108,7 +108,7 @@ export default function ProjectCarousel({ projects, locale }: ProjectCarouselPro
         <button
           type="button"
           aria-label="Previous project"
-          className={`hidden md:block transition-all hover:text-markus-red focus:text-markus-red shrink-0 opacity-40 hover:opacity-100 cursor-pointer ${
+          className={`hidden md:block transition-all hover:text-markus-red focus:text-markus-red shrink-0 opacity-70 hover:opacity-100 cursor-pointer ${
             showChevrons ? '' : 'invisible'
           }`}
           onClick={prev}
@@ -162,11 +162,13 @@ export default function ProjectCarousel({ projects, locale }: ProjectCarouselPro
               <div className="aspect-video rounded-2xl outline outline-markus-red shadow-md overflow-hidden relative">
                 {project.image && (
                   <Image
-                    src={urlFor(project.image).width(800).url()}
+                    src={urlFor(project.image).width(800).format('webp').quality(80).url()}
                     alt={t(project, 'imageAlt', locale) || ''}
                     fill
+                    sizes="(max-width: 768px) 100vw, 800px"
                     className="object-cover"
                     priority={activeIndex === 0}
+                    fetchPriority={activeIndex === 0 ? "high" : "auto"}
                   />
                 )}
               </div>
@@ -195,7 +197,7 @@ export default function ProjectCarousel({ projects, locale }: ProjectCarouselPro
         <button
           type="button"
           aria-label="Next project"
-          className={`hidden md:block transition-all hover:text-markus-red focus:text-markus-red shrink-0 opacity-40 hover:opacity-100 cursor-pointer ${
+          className={`hidden md:block transition-all hover:text-markus-red focus:text-markus-red shrink-0 opacity-70 hover:opacity-100 cursor-pointer ${
             showChevrons ? '' : 'invisible'
           }`}
           onClick={next}
@@ -204,23 +206,23 @@ export default function ProjectCarousel({ projects, locale }: ProjectCarouselPro
         </button>
       </div>
 
-      <div
-        className="flex gap-2 items-center justify-center mt-4"
-        role="tablist"
-        aria-label="Select project"
-      >
+      <div className="flex gap-2 items-center justify-center mt-4">
         {showChevrons && (
           <button
             type="button"
             aria-label="Previous project"
-            className="md:hidden transition-all hover:text-markus-red focus:text-markus-red opacity-40 hover:opacity-100 cursor-pointer"
+            className="md:hidden transition-all hover:text-markus-red focus:text-markus-red opacity-80 hover:opacity-100 cursor-pointer"
             onClick={prev}
           >
             <ChevronLeftCircle size={20} aria-hidden="true" />
           </button>
         )}
 
-        <div className="flex gap-1">
+        <div
+          className="flex gap-2"
+          role="tablist"
+          aria-label="Select project"
+        >
           {projects.map((p, i) => (
             <button
               type="button"
@@ -228,11 +230,13 @@ export default function ProjectCarousel({ projects, locale }: ProjectCarouselPro
               aria-selected={activeIndex === i}
               aria-label={`Go to project ${i + 1}: ${t(p, 'title', locale)}`}
               onClick={() => goToManual(i)}
-              className={`transition-all rounded-full h-2 w-2 bg-markus-red cursor-pointer ${
-                activeIndex === i ? 'scale-125 mx-1' : 'opacity-40'
-              }`}
+              className="transition-all rounded-full min-h-6 min-w-6 flex items-center justify-center cursor-pointer"
               key={p._id}
-            />
+            >
+              <span className={`rounded-full h-2 w-2 bg-markus-red transition-all ${
+                activeIndex === i ? 'scale-125' : 'opacity-70'
+              }`} />
+            </button>
           ))}
         </div>
 
@@ -240,7 +244,7 @@ export default function ProjectCarousel({ projects, locale }: ProjectCarouselPro
           <button
             type="button"
             aria-label="Next project"
-            className="md:hidden transition-all hover:text-markus-red focus:text-markus-red opacity-40 hover:opacity-100 cursor-pointer"
+            className="md:hidden transition-all hover:text-markus-red focus:text-markus-red opacity-80 hover:opacity-100 cursor-pointer"
             onClick={next}
           >
             <ChevronRightCircle size={20} aria-hidden="true" />

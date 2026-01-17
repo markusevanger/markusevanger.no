@@ -140,7 +140,9 @@ export default async function LocaleLayout({ children, params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <Header locale={locale as Locale} />
-        {children}
+        <main id="main-content">
+          {children}
+        </main>
         <FooterWrapper locale={locale as Locale} />
       </body>
     </html>
