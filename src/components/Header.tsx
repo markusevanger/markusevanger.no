@@ -39,10 +39,10 @@ export default function Header({ locale }: HeaderProps) {
     >
       <Link href={`/${locale}`}>
         <Image
-          src="/v5-red.webp"
+          src="/v5-red-small.webp"
           alt="Home"
-          width={40}
-          height={40}
+          width={64}
+          height={64}
           className="w-auto h-10 md:h-16 hover:scale-110 transition-transform"
           unoptimized
         />
