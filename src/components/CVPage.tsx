@@ -101,17 +101,29 @@ export default function CVPageComponent({
                     />
                     {edu.relatedProjects && edu.relatedProjects.length > 0 && (
                       <div className="mt-2 flex flex-col md:flex-row gap-2">
-                        {edu.relatedProjects.map((proj) => (
-                          <a
-                            key={proj._id}
-                            href={proj.link || "#"}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="button"
-                          >
-                            {t(proj, "title", locale)}
-                          </a>
-                        ))}
+                        {edu.relatedProjects.map((proj) =>
+                          proj.buttons && proj.buttons.length > 0 ? (
+                            proj.buttons.map((button, idx) => (
+                              <Button
+                                key={`${proj._id}-${idx}`}
+                                button={button}
+                                locale={locale}
+                              />
+                            ))
+                          ) : (
+                            <Button
+                              key={proj._id}
+                              button={{
+                                text_en: proj.title_en,
+                                text_no: proj.title_no,
+                                link: proj.link,
+                                linkType: "external",
+                                type: "secondary",
+                              }}
+                              locale={locale}
+                            />
+                          )
+                        )}
                       </div>
                     )}
                   </li>
@@ -163,21 +175,17 @@ export default function CVPageComponent({
               <h2 className="text-2xl w-full mb-4 font-bold">
                 {t(cvPage, "skillsSectionTitle", locale)}
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 outline rounded-lg p-8">
-                {cvPage.skillCategories?.map((category) => {
-                  const isLarge = (category.skills?.length || 0) > 6;
-                  return (
+              <div className="flex flex-col gap-6 outline rounded-lg p-8">
+                {cvPage.skillCategories?.map((category) => (
                     <div
                       key={category._id}
-                      className={isLarge ? "sm:col-span-2" : ""}
                     >
                       <h3 className="text-lg font-bold mb-3">
                         {t(category, "name", locale)}
                       </h3>
                       <AnimatedSkills skills={category.skills || []} />
                     </div>
-                  );
-                })}
+                ))}
               </div>
             </section>
           </AppearInView>

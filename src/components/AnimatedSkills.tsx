@@ -44,10 +44,13 @@ const itemVariants = {
 function SkillItem({ skill }: { skill: Skill }) {
   const hasLink = !!skill.url;
   const hasIcon = !!skill.icon;
-  const className =
-    hasLink || hasIcon
-      ? "inline-flex items-center gap-1 px-3 py-1 text-sm rounded-full border border-current hover:bg-markus-red hover:text-white hover:border-markus-red transition-colors"
-      : "px-3 py-1 text-sm rounded-full border border-current";
+  const needsFlex = hasIcon || hasLink;
+  const baseClass = needsFlex
+    ? "inline-flex items-center gap-1 px-3 py-1 text-sm rounded-full border border-current"
+    : "px-3 py-1 text-sm rounded-full border border-current";
+  const className = hasLink
+    ? `${baseClass} hover:bg-markus-red hover:text-white hover:border-markus-red transition-colors`
+    : baseClass;
 
   if (hasLink) {
     return (
@@ -76,10 +79,13 @@ function SkillItem({ skill }: { skill: Skill }) {
 function StaticSkillItem({ skill }: { skill: Skill }) {
   const hasLink = !!skill.url;
   const hasIcon = !!skill.icon;
-  const className =
-    hasLink || hasIcon
-      ? "inline-flex items-center gap-1 px-3 py-1 text-sm rounded-full border border-current hover:bg-markus-red hover:text-white hover:border-markus-red transition-colors"
-      : "px-3 py-1 text-sm rounded-full border border-current";
+  const needsFlex = hasIcon || hasLink;
+  const baseClass = needsFlex
+    ? "inline-flex items-center gap-1 px-3 py-1 text-sm rounded-full border border-current"
+    : "px-3 py-1 text-sm rounded-full border border-current";
+  const className = hasLink
+    ? `${baseClass} hover:bg-markus-red hover:text-white hover:border-markus-red transition-colors`
+    : baseClass;
 
   if (hasLink) {
     return (

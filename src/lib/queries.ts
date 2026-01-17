@@ -114,7 +114,14 @@ export const cvPageQuery = defineQuery(`
         _id,
         title_en,
         title_no,
-        link
+        link,
+        buttons[] {
+          text_en,
+          text_no,
+          link,
+          type,
+          icon
+        }
       }
     },
     workExperience[]-> {
@@ -140,12 +147,18 @@ export const cvPageQuery = defineQuery(`
       _id,
       name_en,
       name_no,
-      skills[]-> {
+      "skills": skills[]-> {
         _id,
         name,
         url,
         icon
-      }
+      } | order(
+        select(
+          defined(url) => 0,
+          defined(icon) => 1,
+          2
+        )
+      )
     },
     contactText_en,
     contactText_no
