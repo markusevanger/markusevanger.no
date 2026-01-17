@@ -61,8 +61,8 @@ export default function HomePage({ frontpage, siteSettings, locale }: HomePagePr
                 <Image
                   src="/v5-red.webp"
                   alt="Logo"
-                  width={112}
-                  height={112}
+                  width={224}
+                  height={224}
                   className="w-auto h-28"
                   unoptimized
                   loading="lazy"
