@@ -24,23 +24,28 @@ export async function POST(req: NextRequest) {
     }
 
     // Revalidate based on document type
+    // Note: Pages are under [locale] routes (/en, /no)
     switch (body._type) {
       case 'frontpage':
       case 'project':
       case 'siteSettings':
-        revalidatePath('/')
+        revalidatePath('/en')
+        revalidatePath('/no')
         break
       case 'cv':
       case 'education':
       case 'workExperience':
       case 'skill':
       case 'skillCategory':
-        revalidatePath('/cv')
+        revalidatePath('/en/cv')
+        revalidatePath('/no/cv')
         break
       default:
         // Revalidate everything for unknown types
-        revalidatePath('/')
-        revalidatePath('/cv')
+        revalidatePath('/en')
+        revalidatePath('/no')
+        revalidatePath('/en/cv')
+        revalidatePath('/no/cv')
     }
 
     return NextResponse.json({
