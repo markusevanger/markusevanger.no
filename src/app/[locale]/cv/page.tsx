@@ -1,10 +1,13 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { setRequestLocale } from 'next-intl/server'
+import { hasLocale } from 'next-intl'
 import { client, urlFor } from '@/lib/sanity'
 import { cvPageQuery, siteSettingsQuery } from '@/lib/queries'
 import type { CvPageQueryResult, SiteSettingsQueryResult } from '@/lib/types'
 import CVPageComponent from '@/components/CVPage'
-import { isValidLocale, cvMetadata, ogLocales, locales } from '@/i18n/config'
+import { routing } from '@/i18n/routing'
+import { cvMetadata, ogLocales, locales } from '@/i18n/config'
 
 const siteUrl = 'https://markusevanger.no'
 
@@ -23,7 +26,7 @@ async function getData() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
 
-  if (!isValidLocale(locale)) {
+  if (!hasLocale(routing.locales, locale)) {
     return {}
   }
 
@@ -38,17 +41,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: meta.title,
     description: meta.description,
     alternates: {
-      canonical: locale === 'no' ? `${siteUrl}/cv` : `${siteUrl}/${locale}/cv`,
+      canonical: locale === 'no' ? `${siteUrl}/cv` : `${siteUrl}/en/cv`,
       languages: {
-        'no': `${siteUrl}/no/cv`,
+        'no': `${siteUrl}/cv`,
         'en': `${siteUrl}/en/cv`,
-        'x-default': `${siteUrl}/no/cv`,
+        'x-default': `${siteUrl}/cv`,
       },
     },
     openGraph: {
       title: meta.title,
       description: meta.description,
-      url: locale === 'no' ? `${siteUrl}/cv` : `${siteUrl}/${locale}/cv`,
+      url: locale === 'no' ? `${siteUrl}/cv` : `${siteUrl}/en/cv`,
       type: 'profile',
       locale: ogLocales[locale],
       alternateLocale: locales.filter((l) => l !== locale).map((l) => ogLocales[l]),
@@ -66,9 +69,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
   const { locale } = await params
 
-  if (!isValidLocale(locale)) {
+  if (!hasLocale(routing.locales, locale)) {
     notFound()
   }
+
+  setRequestLocale(locale)
 
   const { cvPage, siteSettings } = await getData()
 
@@ -87,7 +92,7 @@ export default async function Page({ params }: Props) {
     ? urlFor(siteSettings.cvProfileImage).width(400).height(400).url()
     : undefined
 
-  const cvUrl = locale === 'no' ? `${siteUrl}/cv` : `${siteUrl}/${locale}/cv`
+  const cvUrl = locale === 'no' ? `${siteUrl}/cv` : `${siteUrl}/en/cv`
   const homeName = locale === 'no' ? 'Hjem' : 'Home'
 
   const jsonLd = {
@@ -126,7 +131,7 @@ export default async function Page({ params }: Props) {
             '@type': 'ListItem',
             position: 1,
             name: homeName,
-            item: locale === 'no' ? siteUrl : `${siteUrl}/${locale}`,
+            item: locale === 'no' ? siteUrl : `${siteUrl}/en`,
           },
           {
             '@type': 'ListItem',

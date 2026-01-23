@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import Link from "next/link";
-import type { Locale } from "@/i18n/config";
+import { Link, usePathname } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/routing";
 import {
   LanguagesIcon,
   type LanguagesIconHandle,
@@ -15,20 +14,12 @@ interface LanguageToggleProps {
   variant?: "default" | "light" | "dark";
 }
 
-function getLocalePath(pathname: string, targetLocale: Locale): string {
-  const segments = pathname.split("/");
-  if (segments.length >= 2 && (segments[1] === "no" || segments[1] === "en")) {
-    segments[1] = targetLocale;
-  }
-  return segments.join("/") || `/${targetLocale}`;
-}
-
 export default function LanguageToggle({
   locale,
   showText = true,
   variant = "default",
 }: LanguageToggleProps) {
-  const currentPath = usePathname();
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -99,16 +90,6 @@ export default function LanguageToggle({
     }
   }, [isOpen, locale]);
 
-  const noPath = getLocalePath(currentPath, "no");
-  const enPath = getLocalePath(currentPath, "en");
-  const router = useRouter();
-
-  // Prefetch both language routes when hovering/focusing the toggle
-  const handlePrefetch = useCallback(() => {
-    router.prefetch(noPath);
-    router.prefetch(enPath);
-  }, [router, noPath, enPath]);
-
   const variantStyles = {
     default: {
       container: "bg-white/30",
@@ -151,10 +132,8 @@ export default function LanguageToggle({
       onClick={() => setIsOpen(!isOpen)}
       onMouseEnter={() => {
         languagesIconRef.current?.startAnimation();
-        handlePrefetch();
       }}
       onMouseLeave={() => languagesIconRef.current?.stopAnimation()}
-      onFocus={handlePrefetch}
     >
       <button
         ref={toggleBtnRef}
@@ -214,7 +193,8 @@ export default function LanguageToggle({
           >
             <Link
               ref={norskLinkRef}
-              href={noPath}
+              href={pathname}
+              locale="no"
               onFocus={() => setFocusedIndex(0)}
               role="menuitem"
               aria-current={locale === "no" ? "page" : undefined}
@@ -230,7 +210,8 @@ export default function LanguageToggle({
             </Link>
             <Link
               ref={englishLinkRef}
-              href={enPath}
+              href={pathname}
+              locale="en"
               onFocus={() => setFocusedIndex(1)}
               role="menuitem"
               aria-current={locale === "en" ? "page" : undefined}

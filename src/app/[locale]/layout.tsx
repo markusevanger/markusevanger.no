@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { setRequestLocale } from "next-intl/server";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
 import FooterWrapper from "@/components/FooterWrapper";
 import Header from "@/components/Header";
-import {
-  locales,
-  isValidLocale,
-  siteMetadata,
-  ogLocales,
-  type Locale,
-} from "@/i18n/config";
+import { routing, type Locale } from "@/i18n/routing";
+import { siteMetadata, ogLocales, locales } from "@/i18n/config";
 import "../globals.css";
 
 const siteUrl = "https://markusevanger.no";
@@ -20,14 +17,14 @@ type Props = {
 
 // Generate static params for all locales
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  return routing.locales.map((locale) => ({ locale }));
 }
 
 // Generate metadata with locale-aware content
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
 
-  if (!isValidLocale(locale)) {
+  if (!hasLocale(routing.locales, locale)) {
     return {};
   }
 
@@ -55,7 +52,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     metadataBase: new URL(siteUrl),
     alternates: {
-      canonical: locale === "no" ? siteUrl : `${siteUrl}/${locale}`,
+      canonical: locale === "no" ? siteUrl : `${siteUrl}/en`,
       languages: {
         no: siteUrl,
         en: `${siteUrl}/en`,
@@ -65,7 +62,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: meta.title,
       description: meta.description,
-      url: locale === "no" ? siteUrl : `${siteUrl}/${locale}`,
+      url: locale === "no" ? siteUrl : `${siteUrl}/en`,
       siteName: "Markus Evanger",
       locale: ogLocales[locale],
       alternateLocale: locales
@@ -89,12 +86,15 @@ export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
 
   // Validate locale
-  if (!isValidLocale(locale)) {
+  if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
 
+  // Enable static rendering
+  setRequestLocale(locale);
+
   const meta = siteMetadata[locale as Locale];
-  const localePrefix = locale === "no" ? "" : `${locale}/`;
+  const localePrefix = locale === "no" ? "" : "en/";
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -139,11 +139,13 @@ export default async function LocaleLayout({ children, params }: Props) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <Header locale={locale as Locale} />
-        <main id="main-content">
-          {children}
-        </main>
-        <FooterWrapper locale={locale as Locale} />
+        <NextIntlClientProvider>
+          <Header locale={locale as Locale} />
+          <main id="main-content">
+            {children}
+          </main>
+          <FooterWrapper locale={locale as Locale} />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

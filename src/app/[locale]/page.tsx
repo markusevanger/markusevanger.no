@@ -1,9 +1,11 @@
 import { notFound } from 'next/navigation'
+import { setRequestLocale } from 'next-intl/server'
+import { hasLocale } from 'next-intl'
 import { client, urlFor } from '@/lib/sanity'
 import { frontpageQuery, siteSettingsQuery } from '@/lib/queries'
 import type { FrontpageQueryResult, SiteSettingsQueryResult } from '@/lib/types'
 import HomePage from '@/components/HomePage'
-import { isValidLocale } from '@/i18n/config'
+import { routing } from '@/i18n/routing'
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -20,9 +22,11 @@ async function getData() {
 export default async function Page({ params }: Props) {
   const { locale } = await params
 
-  if (!isValidLocale(locale)) {
+  if (!hasLocale(routing.locales, locale)) {
     notFound()
   }
+
+  setRequestLocale(locale)
 
   const { frontpage, siteSettings } = await getData()
 

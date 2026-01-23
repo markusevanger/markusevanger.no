@@ -1,7 +1,8 @@
-export const locales = ["no", "en"] as const;
-export type Locale = (typeof locales)[number];
-
-export const defaultLocale: Locale = "no";
+// Import and re-export from routing for consistency
+import { routing, type Locale } from './routing'
+export { routing, type Locale }
+export const locales = ['no', 'en'] as const
+export const defaultLocale = 'no' as const
 
 export const localeNames: Record<Locale, string> = {
   no: "Norsk",
