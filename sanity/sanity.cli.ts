@@ -6,6 +6,9 @@ export default defineCliConfig({
     dataset: 'production',
   },
   studioHost: 'markusevanger',
+  deployment: {
+    appId: 'y62kef4639wtg9fnf7chb2r2',
+  },
   typegen: {
     path: '../src/**/*.{ts,tsx}',
     schema: './schema.json',
