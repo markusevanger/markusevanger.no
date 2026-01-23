@@ -87,19 +87,56 @@ export default async function Page({ params }: Props) {
     ? urlFor(siteSettings.cvProfileImage).width(400).height(400).url()
     : undefined
 
+  const cvUrl = locale === 'no' ? `${siteUrl}/cv` : `${siteUrl}/${locale}/cv`
+  const homeName = locale === 'no' ? 'Hjem' : 'Home'
+
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: siteSettings.name || 'Markus Evanger',
-    url: siteUrl,
-    email: siteSettings.email,
-    jobTitle: 'Developer and Designer',
-    image: profileImageUrl,
-    inLanguage: locale,
-    sameAs: [
-      siteSettings.githubUrl,
-      siteSettings.linkedinUrl,
-    ].filter(Boolean),
+    '@graph': [
+      {
+        '@type': 'ProfilePage',
+        '@id': cvUrl,
+        url: cvUrl,
+        name: cvMetadata[locale].title,
+        description: cvMetadata[locale].description,
+        inLanguage: locale,
+        isPartOf: {
+          '@type': 'WebSite',
+          '@id': siteUrl,
+          url: siteUrl,
+          name: 'Markus Evanger',
+        },
+        mainEntity: {
+          '@type': 'Person',
+          name: siteSettings.name || 'Markus Evanger',
+          url: siteUrl,
+          email: siteSettings.email,
+          jobTitle: 'Developer and Designer',
+          image: profileImageUrl,
+          sameAs: [
+            siteSettings.githubUrl,
+            siteSettings.linkedinUrl,
+          ].filter(Boolean),
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: homeName,
+            item: locale === 'no' ? siteUrl : `${siteUrl}/${locale}`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'CV',
+            item: cvUrl,
+          },
+        ],
+      },
+    ],
   }
 
   return (
