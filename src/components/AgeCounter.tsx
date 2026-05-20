@@ -25,5 +25,5 @@ export default function AgeCounter({ birthDate }: AgeCounterProps) {
     return () => clearInterval(updateFrequency)
   }, [birthDate])
 
-  return <>{age}</>
+  return <span className="tabular-nums">{age}</span>
 }
