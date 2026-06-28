@@ -78,18 +78,30 @@ export default defineType({
       group: 'content',
     }),
     defineField({
-      name: 'period_en',
-      title: 'Period (English)',
-      type: 'string',
+      name: 'startDate',
+      title: 'Start date',
+      type: 'date',
       group: 'meta',
-      description: 'e.g., "Summer 2024"',
+      options: { dateFormat: 'MMMM yyyy' },
+      description: 'Month granularity — only the month and year are shown. Pick any day in the month.',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'period_no',
-      title: 'Period (Norwegian)',
-      type: 'string',
+      name: 'endDate',
+      title: 'End date',
+      type: 'date',
       group: 'meta',
-      description: 'e.g., "Sommer 2024"',
+      options: { dateFormat: 'MMMM yyyy' },
+      description: 'Leave empty for a single-month project. Ignored if "Ongoing" is on.',
+      hidden: ({ parent }) => parent?.ongoing === true,
+    }),
+    defineField({
+      name: 'ongoing',
+      title: 'Ongoing',
+      type: 'boolean',
+      group: 'meta',
+      initialValue: false,
+      description: 'Project is still in progress — shows "… – present" instead of an end month.',
     }),
     defineField({
       name: 'image',
@@ -99,6 +111,15 @@ export default defineType({
       options: {
         hotspot: true,
       },
+    }),
+    defineField({
+      name: 'silhouette',
+      title: 'Silhouette (SVG path)',
+      type: 'text',
+      rows: 3,
+      group: 'media',
+      description:
+        'Optional SVG shape for the topographic-field preview. Paste full SVG markup or a bare path "d" straight from Figma. Preview shapes on /dev. Falls back to the default badge if empty.',
     }),
     defineField({
       name: 'imageAlt_en',
@@ -153,11 +174,13 @@ export default defineType({
       subtitle: 'subtitle_en',
       media: 'image',
       type: 'projectType',
+      startDate: 'startDate',
     },
-    prepare({ title, subtitle, media, type }) {
+    prepare({ title, subtitle, media, type, startDate }) {
+      const year = startDate ? String(startDate).slice(0, 4) : '—'
       return {
         title,
-        subtitle: `${type === 'featured' ? '⭐ Featured' : '📁 Small'} - ${subtitle || ''}`,
+        subtitle: `${type === 'featured' ? '⭐ Featured' : '📁 Small'} · ${year}${subtitle ? ` · ${subtitle}` : ''}`,
         media,
       }
     },

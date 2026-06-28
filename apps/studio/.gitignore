@@ -10,3 +10,4 @@ dist/
 
 # Sanity runtime (generated)
 .sanity/
+.vercel

@@ -35,19 +35,25 @@ export const frontpageQuery = defineQuery(`
     },
     portfolioTitle_en,
     portfolioTitle_no,
-    featuredProjects[]-> {
+    projects[]-> {
       _id,
+      projectType,
       title_en,
       title_no,
       subtitle_en,
       subtitle_no,
       description_en,
       description_no,
-      period_en,
-      period_no,
-      image,
+      startDate,
+      endDate,
+      ongoing,
+      image {
+        ...,
+        "dimensions": asset->metadata.dimensions
+      },
       imageAlt_en,
       imageAlt_no,
+      silhouette,
       buttons[] {
         text_en,
         text_no,
@@ -56,14 +62,7 @@ export const frontpageQuery = defineQuery(`
         type,
         icon,
         "downloadUrl": downloadFile.asset->url
-      }
-    },
-    smallProjects[]-> {
-      _id,
-      title_en,
-      title_no,
-      subtitle_en,
-      subtitle_no,
+      },
       link
     }
   }
@@ -89,8 +88,9 @@ export const cvPageQuery = defineQuery(`
       title_no,
       description_en,
       description_no,
-      period_en,
-      period_no,
+      startDate,
+      endDate,
+      ongoing,
       buttons[] {
         text_en,
         text_no,

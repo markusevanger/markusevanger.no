@@ -41,8 +41,8 @@ export default async function Page({ params }: Props) {
     )
   }
 
-  // Preload LCP image (first featured project image)
-  const firstProject = frontpage.featuredProjects?.[0]
+  // Preload LCP image (first project that has an image)
+  const firstProject = frontpage.projects?.find((p) => p.image)
   const lcpImageUrl = firstProject?.image
     ? urlFor(firstProject.image).width(800).format('webp').quality(80).url()
     : null

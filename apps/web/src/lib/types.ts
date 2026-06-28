@@ -18,8 +18,7 @@ export type {
 import type { FrontpageQueryResult, CvPageQueryResult, BlockContent, HeroBlockContent } from './sanity.types'
 
 // Helper types for component props (extracted from query results)
-export type FeaturedProject = NonNullable<NonNullable<FrontpageQueryResult>['featuredProjects']>[number]
-export type SmallProject = NonNullable<NonNullable<FrontpageQueryResult>['smallProjects']>[number]
+export type PortfolioProject = NonNullable<NonNullable<FrontpageQueryResult>['projects']>[number]
 export type CVFeaturedProject = NonNullable<NonNullable<CvPageQueryResult>['featuredProjects']>[number]
 export type CVEducation = NonNullable<NonNullable<CvPageQueryResult>['education']>[number]
 export type CVWorkExperience = NonNullable<NonNullable<CvPageQueryResult>['workExperience']>[number]

@@ -73,19 +73,12 @@ export default defineType({
       fieldset: 'portfolioTitle',
     }),
     defineField({
-      name: 'featuredProjects',
-      title: 'Featured Projects',
+      name: 'projects',
+      title: 'Projects',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'project' }] }],
-      description: 'Select projects to feature in the carousel',
-      group: 'portfolio',
-    }),
-    defineField({
-      name: 'smallProjects',
-      title: 'Small Projects',
-      type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'project' }] }],
-      description: 'Select projects for the small projects list',
+      description:
+        'Ordered list of projects to show. Featured vs. small styling comes from each project\'s "Project Type".',
       group: 'portfolio',
     }),
   ],

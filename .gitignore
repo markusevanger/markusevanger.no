@@ -230,9 +230,9 @@ $RECYCLE.BIN/
 out/
 
 ### Sanity ###
-sanity/dist/
-sanity/.sanity/
-sanity/schema.json
+apps/studio/dist/
+apps/studio/.sanity/
+apps/studio/schema.json
 
 ### Environment files ###
 .env.local
@@ -244,3 +244,8 @@ sanity/schema.json
 ### Lighthouse ###
 lighthouse-report*
 lighthouse.*/
+.vercel
+
+### Local tooling / scratch ###
+.claude/
+scratchpad/

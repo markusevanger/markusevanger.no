@@ -3,6 +3,7 @@ import Button from "./Button";
 import AppearInView from "./AppearInView";
 import AnimatedSkills from "./AnimatedSkills";
 import { t, tPortableText } from "@/lib/types";
+import { formatProjectPeriod } from "@/lib/projectPeriod";
 import type { CvPageQueryResult, SiteSettingsQueryResult } from "@/lib/types";
 import { urlFor } from "@/lib/sanity";
 import type { Locale } from "@/i18n/config";
@@ -58,7 +59,7 @@ export default function CVPageComponent({
                       className="text-sm"
                     />
                     <p className="text-sm italic">
-                      {t(project, "period", locale)}
+                      {formatProjectPeriod(project.startDate, project.endDate, project.ongoing, locale)}
                     </p>
 
                     {project.buttons && project.buttons.length > 0 && (
