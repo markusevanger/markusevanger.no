@@ -524,7 +524,7 @@ export type AllSanitySchemaTypes =
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
-// Source: ../src/lib/queries.ts
+// Source: ../web/src/lib/queries.ts
 // Variable: siteSettingsQuery
 // Query: *[_type == "siteSettings"][0] {    name,    email,    birthDate,    githubUrl,    linkedinUrl,    profileImage,    cvProfileImage,    logoImage,    contactText_en,    contactText_no,    madeByText_en,    madeByText_no  }
 export type SiteSettingsQueryResult = {
@@ -548,7 +548,7 @@ export type SiteSettingsQueryResult = {
   madeByText_no: string | null;
 } | null;
 
-// Source: ../src/lib/queries.ts
+// Source: ../web/src/lib/queries.ts
 // Variable: frontpageQuery
 // Query: *[_type == "frontpage"][0] {    heroTitle_en,    heroTitle_no,    heroDescription_en,    heroDescription_no,    heroButtons[] {      text_en,      text_no,      link,      "internalLink": internalLink->_type,      linkType,      type,      icon,      "downloadUrl": downloadFile.asset->url    },    portfolioTitle_en,    portfolioTitle_no,    featuredProjects[]-> {      _id,      title_en,      title_no,      subtitle_en,      subtitle_no,      description_en,      description_no,      period_en,      period_no,      image,      imageAlt_en,      imageAlt_no,      buttons[] {        text_en,        text_no,        link,        linkType,        type,        icon,        "downloadUrl": downloadFile.asset->url      }    },    smallProjects[]-> {      _id,      title_en,      title_no,      subtitle_en,      subtitle_no,      link    }  }
 export type FrontpageQueryResult = {
@@ -607,7 +607,7 @@ export type FrontpageQueryResult = {
   }> | null;
 } | null;
 
-// Source: ../src/lib/queries.ts
+// Source: ../web/src/lib/queries.ts
 // Variable: cvPageQuery
 // Query: *[_type == "cv"][0] {    pageTitle_en,    pageTitle_no,    backButtonText_en,    backButtonText_no,    projectsSectionTitle_en,    projectsSectionTitle_no,    educationSectionTitle_en,    educationSectionTitle_no,    workSectionTitle_en,    workSectionTitle_no,    skillsSectionTitle_en,    skillsSectionTitle_no,    featuredProjects[]-> {      _id,      title_en,      title_no,      description_en,      description_no,      period_en,      period_no,      buttons[] {        text_en,        text_no,        link,        linkType,        type,        icon,        "downloadUrl": downloadFile.asset->url      },      "reportUrl": reportDocument.asset->url    },    education[]-> {      _id,      institution_en,      institution_no,      degree_en,      degree_no,      location_en,      location_no,      description_en,      description_no,      period_en,      period_no,      buttons[] {        text_en,        text_no,        link,        linkType,        type,        icon,        "downloadUrl": downloadFile.asset->url      }    },    workExperience[]-> {      _id,      company_en,      company_no,      position_en,      position_no,      description_en,      description_no,      period_en,      period_no,      buttons[] {        text_en,        text_no,        link,        linkType,        type,        icon,        "downloadUrl": downloadFile.asset->url      }    },    skillCategories[]-> {      _id,      name_en,      name_no,      "skills": skills[]-> {        _id,        name,        url,        icon      } | order(        select(          defined(url) => 0,          defined(icon) => 1,          2        )      )    },    contactText_en,    contactText_no  }
 export type CvPageQueryResult = {

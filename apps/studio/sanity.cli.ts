@@ -10,9 +10,9 @@ export default defineCliConfig({
     appId: 'y62kef4639wtg9fnf7chb2r2',
   },
   typegen: {
-    path: '../src/**/*.{ts,tsx}',
+    path: '../web/src/**/*.{ts,tsx}',
     schema: './schema.json',
-    generates: '../src/lib/sanity.types.ts',
+    generates: '../web/src/lib/sanity.types.ts',
     overloadClientMethods: true,
   },
 })
