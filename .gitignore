@@ -249,3 +249,6 @@ lighthouse.*/
 ### Local tooling / scratch ###
 .claude/
 scratchpad/
+
+### TypeScript build cache ###
+*.tsbuildinfo
