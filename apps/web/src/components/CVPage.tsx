@@ -77,6 +77,43 @@ export default function CVPageComponent({
         </AppearInView>
 
         <div className="flex flex-col gap-8">
+          {/* Work Experience Section */}
+          <AppearInView delay={100}>
+            <section className="h-full">
+              <h2 className="text-2xl mb-4 font-bold">
+                {t(cvPage, "workSectionTitle", locale)}
+              </h2>
+              <ul className="h-full grid grid-flow-row gap-8 outline rounded-lg p-8">
+                {cvPage.workExperience?.map((work, index) => (
+                  <li
+                    key={work._id}
+                    className={
+                      index < (cvPage.workExperience?.length || 0) - 1
+                        ? "border-b-2 pb-8"
+                        : ""
+                    }
+                  >
+                    <p className="text-lg">{t(work, "position", locale)}</p>
+                    <p className="text-sm italic">
+                      {t(work, "company", locale)} | {t(work, "period", locale)}
+                    </p>
+                    <PortableTextRenderer
+                      value={tPortableText(work, "description", locale)}
+                      className="mt-2"
+                    />
+                    {work.buttons && work.buttons.length > 0 && (
+                      <div className="mt-8 flex flex-col gap-2 md:flex-row">
+                        {work.buttons.map((button, idx) => (
+                          <Button key={idx} button={button} locale={locale} />
+                        ))}
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </AppearInView>
+
           {/* Education Section */}
           <AppearInView delay={100}>
             <section className="h-full">
@@ -108,43 +145,6 @@ export default function CVPageComponent({
                             button={button}
                             locale={locale}
                           />
-                        ))}
-                      </div>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </AppearInView>
-
-          {/* Work Experience Section */}
-          <AppearInView delay={100}>
-            <section className="h-full">
-              <h2 className="text-2xl mb-4 font-bold">
-                {t(cvPage, "workSectionTitle", locale)}
-              </h2>
-              <ul className="h-full grid grid-flow-row gap-8 outline rounded-lg p-8">
-                {cvPage.workExperience?.map((work, index) => (
-                  <li
-                    key={work._id}
-                    className={
-                      index < (cvPage.workExperience?.length || 0) - 1
-                        ? "border-b-2 pb-8"
-                        : ""
-                    }
-                  >
-                    <p className="text-lg">{t(work, "position", locale)}</p>
-                    <p className="text-sm italic">
-                      {t(work, "company", locale)} | {t(work, "period", locale)}
-                    </p>
-                    <PortableTextRenderer
-                      value={tPortableText(work, "description", locale)}
-                      className="mt-2"
-                    />
-                    {work.buttons && work.buttons.length > 0 && (
-                      <div className="mt-8 flex flex-col gap-2 md:flex-row">
-                        {work.buttons.map((button, idx) => (
-                          <Button key={idx} button={button} locale={locale} />
                         ))}
                       </div>
                     )}
