@@ -3,7 +3,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { ArrowLeft, ArrowRight, ArrowUpRight, ChevronDown } from 'lucide-react'
+import { ArrowUpRight, ChevronDown } from 'lucide-react'
 import type { SanityImageSource } from '@sanity/image-url'
 import type { PortfolioProject, BlockContent } from '@/lib/types'
 import { t, tPortableText } from '@/lib/types'
@@ -80,8 +80,8 @@ export default function ProjectIndex({
     [input, locale]
   )
 
-  // `previewId` tracks the hovered/focused row instantly (drives the arrows and
-  // the row highlight) and is null when the pointer/focus is off the list — no
+  // `previewId` tracks the hovered/focused row instantly (drives the row
+  // highlight and the sibling dimming) and is null when the pointer/focus is off the list — no
   // row is marked active just because the page loaded. `committedId` lags
   // behind by a beat so the heavier aside — which swaps a full card and fires
   // an image request — only updates once the pointer settles on a row, not for
@@ -134,6 +134,9 @@ export default function ProjectIndex({
   // Committed (debounced): the aside card + its blob, which always shows one.
   const active = projects.find((p) => p.id === previewId) ?? null
   const committed = projects.find((p) => p.id === committedId) ?? projects[0]
+  // The highlighted row falls back to the committed project so the list always
+  // marks whichever card the aside is previewing, even with the pointer away.
+  const highlightId = active?.id ?? committed?.id
 
   if (projects.length === 0) return null
 
@@ -147,7 +150,7 @@ export default function ProjectIndex({
       <ul className="flex min-w-0 flex-col" onMouseLeave={() => setPreviewId(null)}>
         {projects.map((project) => {
           const isOpen = openId === project.id
-          const isActive = active?.id === project.id
+          const isActive = highlightId === project.id
           const detailId = `project-detail-${project.id}`
           return (
             <li key={project.id}>
@@ -181,50 +184,16 @@ export default function ProjectIndex({
                     asideRef.current.focus()
                   }
                 }}
-                className={`group relative flex w-full items-center justify-between gap-4 py-3 text-left transition-colors hover:text-markus-red focus:outline-none focus-visible:rounded-sm focus-visible:text-markus-red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-markus-red ${
-                  isActive ? 'md:text-markus-red' : ''
+                className={`group relative flex w-full items-center justify-between gap-4 py-3 text-left transition-[color,opacity] duration-300 ease-out hover:text-markus-red focus:outline-none focus-visible:rounded-sm focus-visible:text-markus-red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-markus-red ${
+                  isActive ? 'md:text-markus-red' : active ? 'md:opacity-40' : ''
                 }`}
               >
-                {/* Fixed-width slots on both sides so the arrows can appear
-                    without nudging the title; desktop only. */}
-                <span className="hidden w-7 shrink-0 md:block">
-                  {isActive && (
-                    <motion.span
-                      layoutId="projectMarkerLeft"
-                      className="block text-markus-red"
-                      transition={
-                        reduce ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 32 }
-                      }
-                    >
-                      <ArrowRight size={26} strokeWidth={2.25} aria-hidden />
-                    </motion.span>
-                  )}
-                </span>
-
                 <span className="min-w-0 flex-1 transition-transform duration-300 ease-out group-hover:translate-x-1">
                   <span className="flex items-baseline gap-2 font-bold">
                     <span>{project.title}</span>
                   </span>
-                  {project.period && (
-                    <span className="mt-0.5 block text-sm text-gray-500 tabular-nums">
-                      {project.period}
-                    </span>
-                  )}
                 </span>
                 <span className="flex shrink-0 items-center gap-2">
-                  <span className="hidden w-7 md:block">
-                    {isActive && (
-                      <motion.span
-                        layoutId="projectMarkerRight"
-                        className="block text-markus-red"
-                        transition={
-                          reduce ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 32 }
-                        }
-                      >
-                        <ArrowLeft size={26} strokeWidth={2.25} aria-hidden />
-                      </motion.span>
-                    )}
-                  </span>
                   {/* Mobile-only: rows expand on tap; desktop uses the aside. */}
                   <ChevronDown
                     size={16}
@@ -263,33 +232,41 @@ export default function ProjectIndex({
       </ul>
 
       {/* Desktop detail panel. Focusable (tabIndex -1) so keyboard row
-          activation can move focus here, keeping every project's links reachable. */}
+          activation can move focus here, keeping every project's links reachable.
+          Every card renders stacked in the same grid cell (hidden ones inert),
+          so the aside always measures the tallest card and the page height
+          stays put when the committed project changes. */}
       <aside className="hidden md:block">
-        {committed && (
-          <div
-            ref={asideRef}
-            id={detailPanelId}
-            role="region"
-            aria-label={locale === 'no' ? 'Prosjektdetaljer' : 'Project details'}
-            tabIndex={-1}
-            className="sticky top-6 rounded-lg focus:outline-2 focus:outline-offset-4 focus:outline-markus-red"
-          >
-            <motion.div
-              key={committed.id}
-              initial={reduce ? false : { opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={reduce ? { duration: 0 } : { duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <ProjectMeta
-                project={committed}
-                locale={locale}
-                anchors={anchors}
-                interactive={isDesktop}
-                priority
-              />
-            </motion.div>
-          </div>
-        )}
+        <div
+          ref={asideRef}
+          id={detailPanelId}
+          role="region"
+          aria-label={locale === 'no' ? 'Prosjektdetaljer' : 'Project details'}
+          tabIndex={-1}
+          className="sticky top-6 grid rounded-lg focus:outline-2 focus:outline-offset-4 focus:outline-markus-red"
+        >
+          {projects.map((project, idx) => {
+            const isCommitted = project.id === committed?.id
+            return (
+              <motion.div
+                key={project.id}
+                className="col-start-1 row-start-1"
+                inert={isCommitted ? undefined : true}
+                initial={false}
+                animate={{ opacity: isCommitted ? 1 : 0, y: isCommitted ? 0 : 10 }}
+                transition={reduce ? { duration: 0 } : { duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <ProjectMeta
+                  project={project}
+                  locale={locale}
+                  anchors={anchors}
+                  interactive={isDesktop && isCommitted}
+                  priority={idx === 0}
+                />
+              </motion.div>
+            )
+          })}
+        </div>
       </aside>
       </div>
     </div>
@@ -340,16 +317,14 @@ function ProjectMeta({
   const nest = radarNest(axes)
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-5">
       {showHeader && (
-        <div>
-          <div className="flex items-baseline justify-between gap-3">
-            <h3 className="font-bold">{title}</h3>
-            {period && (
-              <span className="shrink-0 text-sm text-gray-500 tabular-nums">{period}</span>
-            )}
-          </div>
-          {subtitle && <p className="text-sm italic text-gray-600">{subtitle}</p>}
+        <div className="flex flex-col gap-1">
+          <h3 className="text-lg font-bold leading-tight">{title}</h3>
+          {subtitle && <p className="text-sm text-gray-600">{subtitle}</p>}
+          {period && (
+            <span className="text-sm text-gray-500 tabular-nums">{period}</span>
+          )}
         </div>
       )}
 
