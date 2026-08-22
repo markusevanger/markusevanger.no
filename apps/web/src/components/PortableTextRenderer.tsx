@@ -24,15 +24,28 @@ const components: PortableTextComponents = {
     ),
   },
   block: {
-    normal: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+    // `whitespace-pre-line` keeps soft breaks (Shift+Enter in the Studio, which
+    // Sanity stores as a "\n" inside one block) instead of collapsing them —
+    // without it the only way to break a line is a whole new paragraph.
+    normal: ({ children }) => (
+      <p className="mb-3 whitespace-pre-line leading-relaxed last:mb-0">{children}</p>
+    ),
   },
   list: {
-    bullet: ({ children }) => <ul className="list-disc ml-4 mb-2">{children}</ul>,
-    number: ({ children }) => <ol className="list-decimal ml-4 mb-2">{children}</ol>,
+    bullet: ({ children }) => (
+      <ul className="mb-3 ml-4 list-disc space-y-1 leading-relaxed marker:text-markus-red last:mb-0">
+        {children}
+      </ul>
+    ),
+    number: ({ children }) => (
+      <ol className="mb-3 ml-4 list-decimal space-y-1 leading-relaxed marker:text-gray-400 last:mb-0">
+        {children}
+      </ol>
+    ),
   },
   listItem: {
-    bullet: ({ children }) => <li>{children}</li>,
-    number: ({ children }) => <li>{children}</li>,
+    bullet: ({ children }) => <li className="pl-1">{children}</li>,
+    number: ({ children }) => <li className="pl-1">{children}</li>,
   },
 }
 

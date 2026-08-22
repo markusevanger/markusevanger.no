@@ -1,24 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import type { Locale } from "@/i18n/config";
 
 interface CopyEmailProps {
   email: string;
-  contactText_en: string;
-  contactText_no: string;
-  locale: Locale;
 }
 
-export default function CopyEmail({
-  email,
-  contactText_en,
-  contactText_no,
-  locale,
-}: CopyEmailProps) {
+export default function CopyEmail({ email }: CopyEmailProps) {
   const [copied, setCopied] = useState(false);
   const [fading, setFading] = useState(false);
-  const contactText = locale === "en" ? contactText_en : contactText_no;
 
   const copyMail = () => {
     navigator.clipboard.writeText(email);
@@ -34,22 +24,20 @@ export default function CopyEmail({
   };
 
   return (
-    <div>
-      <p className="text-white text-sm mb-2">{contactText}</p>
+    <div className="flex items-center gap-2">
+      <a
+        href={`mailto:${email}`}
+        aria-label={`Send email to ${email}`}
+        className="font-bold hover:opacity-80 transition-opacity duration-200"
+      >
+        {email}
+      </a>
 
-      <div className="flex items-center gap-2">
-        <a
-          href={`mailto:${email}`}
-          className="bg-white/30 px-4 py-2.5 rounded-lg font-medium hover:bg-white/40 transition-all duration-200"
-        >
-          {email}
-        </a>
-
-        <button
-          onClick={copyMail}
-          className="group p-2.5 rounded-lg transition-all duration-200 cursor-pointer bg-white/30 hover:bg-white/40"
-          aria-label="Copy email"
-        >
+      <button
+        onClick={copyMail}
+        className="group p-1 -m-1 transition-all duration-200 cursor-pointer"
+        aria-label="Copy email"
+      >
           {copied ? (
             <svg
               width="16"
@@ -95,7 +83,6 @@ export default function CopyEmail({
             </svg>
           )}
         </button>
-      </div>
     </div>
   );
 }

@@ -1,24 +1,55 @@
+'use client'
+
+import { useState } from 'react'
 import { Cloud1 } from './assets/Cloud1'
 import { Cloud2 } from './assets/Cloud2'
 import { Wing } from './assets/Wing'
 
 export default function WindowAnimation() {
+  // Pointer offset from the window's center, normalized to roughly -0.5..0.5.
+  const [pointer, setPointer] = useState({ x: 0, y: 0 })
+
+  // Parallax: each layer drifts opposite to the cursor (nearer layers travel
+  // more). `depth` is the px travel at the window's edge.
+  const layer = (depth: number) => ({
+    transform: `translate3d(${-pointer.x * depth}px, ${-pointer.y * depth}px, 0)`,
+  })
+
   return (
-    <div className="grid grid-rows-1 grid-cols-1 w-[206px] h-[347px] rounded-b-[33px] rounded-t-[100px] shadow-xl hover:shadow-2xl overflow-hidden outline outline-red-600 outline-8 hover:scale-105 transition-all cursor-pointer">
-      <div className="row-start-1 grid grid-rows-3 h-full w-full">
-        <div className="">
+    <div
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect()
+        setPointer({
+          x: (e.clientX - rect.left) / rect.width - 0.5,
+          y: (e.clientY - rect.top) / rect.height - 0.5,
+        })
+      }}
+      onMouseLeave={() => setPointer({ x: 0, y: 0 })}
+      className="grid grid-rows-1 grid-cols-1 w-[206px] h-[347px] rounded-b-[33px] rounded-t-[100px] overflow-hidden outline outline-red-600 outline-8 cursor-pointer"
+    >
+      <div className="row-start-1 grid grid-rows-3 h-full w-full scale-90">
+        <div
+          className="transition-transform duration-300 ease-out will-change-transform"
+          style={layer(14)}
+        >
           <div className="animate-cloud-slow">
             <Cloud1 className="scale-50 stroke-markus-red fill-white stroke-[8px]" />
           </div>
         </div>
 
-        <div className="">
+        <div
+          className="transition-transform duration-300 ease-out will-change-transform"
+          style={layer(26)}
+        >
           <div className="animate-cloud-medium">
             <Cloud2 className="scale-75 fill-white stroke-markus-red stroke-[8px]" />
           </div>
         </div>
 
-        <div className="row-start-3">
+        <div
+          className="row-start-3 transition-transform duration-300 ease-out will-change-transform"
+          style={layer(38)}
+        >
           <div className="animate-cloud-fast">
             <Cloud2 className="fill-white stroke-markus-red stroke-[8px]" />
           </div>
@@ -39,8 +70,13 @@ export default function WindowAnimation() {
           </div>
         </div>
 
-        <div className="animate-wing-bob">
-          <Wing className="fill-white stroke-markus-red stroke-[8px]" />
+        <div
+          className="transition-transform duration-300 ease-out will-change-transform"
+          style={layer(52)}
+        >
+          <div className="animate-wing-bob">
+            <Wing className="fill-white stroke-markus-red stroke-[8px]" />
+          </div>
         </div>
       </div>
     </div>

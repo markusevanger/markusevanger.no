@@ -103,21 +103,6 @@ body {
   @apply h-12 md:h-8 w-full md:w-fit cursor-pointer px-4 py-1 text-center rounded-md flex justify-center items-center gap-1 hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-200 transition-all;
 }
 
-/* Infinite scroll animation */
-@keyframes scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-scroll {
-  animation: scroll 30s linear infinite;
-  width: max-content;
-}
-
 /* Language toggle fade-in animation */
 @keyframes fade-in-left {
   from {
@@ -211,6 +196,26 @@ body {
 .button-primary:hover .arrow-icon-right,
 .button-ghost:hover .arrow-icon-right {
   transform: translateX(3px);
+}
+
+/* Footer red dome + matching grain mask. Mobile drops the 70%-width radius for
+   a fixed 1100px so the dome stays flat instead of collapsing into a tall blob. */
+.footer-dome {
+  background-color: #ffffff;
+  background-image: radial-gradient(70% 460px at 50% 100%, #dc2626 90%, transparent 100%);
+}
+.footer-grain-mask {
+  -webkit-mask-image: radial-gradient(70% 460px at 50% 100%, #000 90%, transparent 100%);
+  mask-image: radial-gradient(70% 460px at 50% 100%, #000 90%, transparent 100%);
+}
+@media (max-width: 767.98px) {
+  .footer-dome {
+    background-image: radial-gradient(1100px 460px at 50% 100%, #dc2626 90%, transparent 100%);
+  }
+  .footer-grain-mask {
+    -webkit-mask-image: radial-gradient(1100px 460px at 50% 100%, #000 90%, transparent 100%);
+    mask-image: radial-gradient(1100px 460px at 50% 100%, #000 90%, transparent 100%);
+  }
 }
 
 @theme inline {

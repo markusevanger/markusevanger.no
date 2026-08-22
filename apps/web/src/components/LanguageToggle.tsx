@@ -92,33 +92,33 @@ export default function LanguageToggle({
 
   const variantStyles = {
     default: {
-      container: "bg-white/30",
-      button: "hover:bg-white/35 focus:bg-white/35 focus:ring-white/60",
+      container: "",
+      button: "hover:opacity-80 focus:ring-white/60",
       icon: "opacity-100",
-      text: "text-current",
-      optionActive: "bg-white/90 text-markus-red",
+      text: "text-current font-bold",
+      optionActive: "font-bold text-white underline underline-offset-4",
       optionInactive:
-        "bg-transparent hover:bg-white/35 focus:bg-white/40 text-white",
+        "font-bold text-white/70 hover:text-white focus:text-white",
       focusRing: "focus:ring-white/70",
     },
     light: {
       container: "bg-white border border-black",
       button: "hover:bg-black/5 focus:bg-black/5 focus:ring-markus-red",
       icon: "opacity-80 group-hover:opacity-100",
-      text: "text-black",
-      optionActive: "bg-markus-red text-white",
+      text: "text-black font-medium",
+      optionActive: "bg-markus-red text-white font-medium",
       optionInactive:
-        "bg-transparent hover:bg-black/5 focus:bg-black/10 text-black",
+        "bg-transparent hover:bg-black/5 focus:bg-black/10 text-black font-medium",
       focusRing: "focus:ring-markus-red",
     },
     dark: {
-      container: "bg-white/30",
-      button: "hover:bg-white/35 focus:bg-white/35 focus:ring-white/60",
+      container: "",
+      button: "hover:opacity-80 focus:ring-white/60",
       icon: "opacity-100",
-      text: "text-white",
-      optionActive: "bg-white/90 text-markus-red",
+      text: "text-white font-bold",
+      optionActive: "font-bold text-white underline underline-offset-4",
       optionInactive:
-        "bg-transparent hover:bg-white/35 focus:bg-white/40 text-white",
+        "font-bold text-white/70 hover:text-white focus:text-white",
       focusRing: "focus:ring-white/70",
     },
   };
@@ -157,7 +157,7 @@ export default function LanguageToggle({
         />
         {showText && (
           <>
-            <span className={`font-medium ${styles.text}`}>
+            <span className={styles.text}>
               {locale === "en" ? "English" : "Norsk"}
             </span>
             <svg
@@ -200,7 +200,7 @@ export default function LanguageToggle({
               aria-current={locale === "no" ? "page" : undefined}
               tabIndex={isOpen ? 0 : -1}
               hrefLang="no"
-              className={`px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset ${
+              className={`px-3 py-2 rounded-lg text-sm whitespace-nowrap transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset ${
                 styles.focusRing
               } ${
                 locale === "no" ? styles.optionActive : styles.optionInactive
@@ -217,7 +217,7 @@ export default function LanguageToggle({
               aria-current={locale === "en" ? "page" : undefined}
               tabIndex={isOpen ? 0 : -1}
               hrefLang="en"
-              className={`px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset ${
+              className={`px-3 py-2 rounded-lg text-sm whitespace-nowrap transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset ${
                 styles.focusRing
               } ${
                 locale === "en" ? styles.optionActive : styles.optionInactive
