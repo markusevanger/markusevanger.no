@@ -21,7 +21,6 @@ export default function LanguageToggle({
 }: LanguageToggleProps) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const toggleBtnRef = useRef<HTMLButtonElement>(null);
   const norskLinkRef = useRef<HTMLAnchorElement>(null);
@@ -30,7 +29,6 @@ export default function LanguageToggle({
 
   const closeDropdown = useCallback(() => {
     setIsOpen(false);
-    setFocusedIndex(null);
     toggleBtnRef.current?.focus();
   }, []);
 
@@ -41,7 +39,6 @@ export default function LanguageToggle({
         !dropdownRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
-        setFocusedIndex(null);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -56,12 +53,10 @@ export default function LanguageToggle({
       switch (event.key) {
         case "ArrowLeft":
           event.preventDefault();
-          setFocusedIndex(0);
           norskLinkRef.current?.focus();
           break;
         case "ArrowRight":
           event.preventDefault();
-          setFocusedIndex(1);
           englishLinkRef.current?.focus();
           break;
         case "Escape":
@@ -79,7 +74,6 @@ export default function LanguageToggle({
   useEffect(() => {
     if (isOpen) {
       const initialIndex = locale === "no" ? 0 : 1;
-      setFocusedIndex(initialIndex);
       setTimeout(() => {
         if (initialIndex === 0) {
           norskLinkRef.current?.focus();
@@ -198,7 +192,6 @@ export default function LanguageToggle({
               ref={norskLinkRef}
               href={pathname}
               locale="no"
-              onFocus={() => setFocusedIndex(0)}
               role="menuitem"
               aria-current={locale === "no" ? "page" : undefined}
               tabIndex={isOpen ? 0 : -1}
@@ -215,7 +208,6 @@ export default function LanguageToggle({
               ref={englishLinkRef}
               href={pathname}
               locale="en"
-              onFocus={() => setFocusedIndex(1)}
               role="menuitem"
               aria-current={locale === "en" ? "page" : undefined}
               tabIndex={isOpen ? 0 : -1}

@@ -422,13 +422,18 @@ export default function TopographicField({
   const frameRef = useRef(frame)
   const nestCenterRef = useRef(nestCenter)
   const colorRef = useRef({ primary: primaryColor, secondary: secondaryColor })
-  morphMsRef.current = morphMs
-  mirrorRef.current = mirror
-  interactiveRef.current = interactive
-  radiusScaleRef.current = radiusScale
-  frameRef.current = frame
-  nestCenterRef.current = nestCenter
-  colorRef.current = { primary: primaryColor, secondary: secondaryColor }
+  // Mirror the latest props into refs after every commit so the rAF loop and
+  // event handlers read fresh values without re-subscribing. Declared before
+  // the path effect below so frameRef is current when it runs.
+  useEffect(() => {
+    morphMsRef.current = morphMs
+    mirrorRef.current = mirror
+    interactiveRef.current = interactive
+    radiusScaleRef.current = radiusScale
+    frameRef.current = frame
+    nestCenterRef.current = nestCenter
+    colorRef.current = { primary: primaryColor, secondary: secondaryColor }
+  })
 
   // Lets the path effect wake the rAF loop if it's idle (reduced-motion case).
   const kickRef = useRef<(() => void) | null>(null)
@@ -459,7 +464,6 @@ export default function TopographicField({
     }
     needsRebuildRef.current = true
     kickRef.current?.()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path, frame?.cx, frame?.cy, frame?.half])
 
   // A nestCenter change moves the ring summit; repaint when idle.

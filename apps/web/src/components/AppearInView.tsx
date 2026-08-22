@@ -1,6 +1,15 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
+
+function subscribeReducedMotion(callback: () => void) {
+  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+  mediaQuery.addEventListener('change', callback)
+  return () => mediaQuery.removeEventListener('change', callback)
+}
+
+const getReducedMotion = () =>
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 interface AppearInViewProps {
   children: React.ReactNode
@@ -19,25 +28,15 @@ export default function AppearInView({
 }: AppearInViewProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const prefersReducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotion,
+    () => false
+  )
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setPrefersReducedMotion(mediaQuery.matches)
-
-    const handleChange = (e: MediaQueryListEvent) => {
-      setPrefersReducedMotion(e.matches)
-    }
-
-    mediaQuery.addEventListener('change', handleChange)
-    return () => mediaQuery.removeEventListener('change', handleChange)
-  }, [])
-
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      setIsVisible(true)
-      return
-    }
+    // Reduced motion renders the plain, always-visible div below — no observer needed.
+    if (prefersReducedMotion) return
 
     const element = ref.current
     if (!element) return
