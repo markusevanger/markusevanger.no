@@ -48,7 +48,7 @@ export default function Footer({ siteSettings, locale }: FooterProps) {
           {/* Left — contact + social/language/scroll controls */}
           <div className="order-2 flex flex-col items-center gap-3 md:order-none md:flex-1 md:items-start">
             <CopyEmail email={siteSettings.email || ""} />
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-5">
               <SocialLinks
                 githubUrl={siteSettings.githubUrl}
                 linkedinUrl={siteSettings.linkedinUrl}

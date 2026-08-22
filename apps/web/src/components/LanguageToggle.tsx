@@ -94,6 +94,7 @@ export default function LanguageToggle({
     default: {
       container: "",
       button: "hover:opacity-80 focus:ring-white/60",
+      padding: "py-1",
       icon: "opacity-100",
       text: "text-current font-bold",
       optionActive: "font-bold text-white underline underline-offset-4",
@@ -104,6 +105,7 @@ export default function LanguageToggle({
     light: {
       container: "bg-white border border-black",
       button: "hover:bg-black/5 focus:bg-black/5 focus:ring-markus-red",
+      padding: "px-3 py-2",
       icon: "opacity-80 group-hover:opacity-100",
       text: "text-black font-medium",
       optionActive: "bg-markus-red text-white font-medium",
@@ -114,6 +116,7 @@ export default function LanguageToggle({
     dark: {
       container: "",
       button: "hover:opacity-80 focus:ring-white/60",
+      padding: "py-1",
       icon: "opacity-100",
       text: "text-white font-bold",
       optionActive: "font-bold text-white underline underline-offset-4",
@@ -148,7 +151,7 @@ export default function LanguageToggle({
         aria-label={`Language: ${
           locale === "en" ? "English" : "Norsk"
         }. Press arrow keys to change.`}
-        className="flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-markus-red px-3 py-2 rounded-lg cursor-pointer"
+        className={`flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-markus-red ${styles.padding} rounded-lg cursor-pointer`}
       >
         <LanguagesIcon
           ref={languagesIconRef}
