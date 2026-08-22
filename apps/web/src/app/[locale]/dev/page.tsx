@@ -22,6 +22,11 @@ export const metadata: Metadata = {
 }
 
 export default async function Page({ params }: Props) {
+  // Local playground only — 404s in production builds.
+  if (process.env.NODE_ENV === 'production') {
+    notFound()
+  }
+
   const { locale } = await params
 
   if (!hasLocale(routing.locales, locale)) {
