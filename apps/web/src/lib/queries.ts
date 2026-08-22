@@ -13,7 +13,13 @@ export const siteSettingsQuery = defineQuery(`
     contactText_en,
     contactText_no,
     madeByText_en,
-    madeByText_no
+    madeByText_no,
+    silhouetteAnchors[] {
+      corner,
+      "skillId": skill->_id,
+      "skillName": skill->name,
+      "category": *[_type == "skillCategory" && references(^.skill->_id)][0].name_en
+    }
   }
 `)
 
@@ -54,6 +60,13 @@ export const frontpageQuery = defineQuery(`
       imageAlt_en,
       imageAlt_no,
       silhouette,
+      "technologies": technologies[]-> {
+        _id,
+        name,
+        url,
+        icon,
+        "category": *[_type == "skillCategory" && references(^._id)][0].name_en
+      },
       buttons[] {
         text_en,
         text_no,

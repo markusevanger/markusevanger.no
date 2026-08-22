@@ -1,6 +1,23 @@
 import { defineField, defineType } from 'sanity'
 import { Settings } from 'lucide-react'
 
+// The 8 silhouette-anchor positions (4 corners + 4 edge midpoints), single
+// source for both the dropdown options and the array-item preview label.
+const ANCHOR_POSITIONS = [
+  { title: '↖ Top-left', value: 'tl' },
+  { title: '↑ Top', value: 't' },
+  { title: '↗ Top-right', value: 'tr' },
+  { title: '← Left', value: 'l' },
+  { title: '→ Right', value: 'r' },
+  { title: '↙ Bottom-left', value: 'bl' },
+  { title: '↓ Bottom', value: 'b' },
+  { title: '↘ Bottom-right', value: 'br' },
+] as const
+
+const ANCHOR_LABELS: Record<string, string> = Object.fromEntries(
+  ANCHOR_POSITIONS.map((p) => [p.value, p.title]),
+)
+
 export default defineType({
   name: 'siteSettings',
   title: 'Site Settings',
@@ -23,6 +40,10 @@ export default defineType({
     {
       name: 'media',
       title: 'Media',
+    },
+    {
+      name: 'homepage',
+      title: 'Homepage',
     },
   ],
   fields: [
@@ -94,6 +115,48 @@ export default defineType({
       title: 'Made By Text (Norwegian)',
       type: 'string',
       group: 'footer',
+    }),
+    defineField({
+      name: 'silhouetteAnchors',
+      title: 'Project Blob Anchors',
+      type: 'array',
+      group: 'homepage',
+      description:
+        'Pin up to 8 skills around the blob (4 corners + 4 edge midpoints). On the homepage, each project’s blob leans toward the position(s) of the skills it uses — a skill pulls toward the anchor that shares its category. Keep technical disciplines on the left, design on the right.',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'skill',
+              title: 'Anchor Skill',
+              type: 'reference',
+              to: [{ type: 'skill' }],
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'corner',
+              title: 'Position',
+              type: 'string',
+              options: {
+                list: [...ANCHOR_POSITIONS],
+                layout: 'dropdown',
+              },
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+          preview: {
+            select: { title: 'skill.name', corner: 'corner' },
+            prepare({ title, corner }) {
+              return {
+                title: title || 'No skill selected',
+                subtitle: ANCHOR_LABELS[corner as string] || 'No position',
+              }
+            },
+          },
+        },
+      ],
+      validation: (Rule) => Rule.max(8),
     }),
   ],
   preview: {

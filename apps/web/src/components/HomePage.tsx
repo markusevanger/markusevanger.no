@@ -5,6 +5,7 @@ import HomePageText from "./HomePageText";
 import HeroButtons from "./HeroButtons";
 import AppearInView from "./AppearInView";
 import { t } from "@/lib/types";
+import type { SilhouetteAnchor } from "@/lib/silhouette";
 import type {
   FrontpageQueryResult,
   SiteSettingsQueryResult,
@@ -50,6 +51,7 @@ export default function HomePage({ frontpage, siteSettings, locale }: HomePagePr
               projects={frontpage.projects ?? []}
               locale={locale}
               title={t(frontpage, "portfolioTitle", locale)}
+              anchors={(siteSettings.silhouetteAnchors as SilhouetteAnchor[] | null) ?? undefined}
             />
           </AppearInView>
 

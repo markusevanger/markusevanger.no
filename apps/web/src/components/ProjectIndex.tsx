@@ -3,7 +3,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { ArrowUpRight, ChevronDown } from 'lucide-react'
+import { ArrowLeft, ArrowRight, ArrowUpRight, ChevronDown } from 'lucide-react'
 import type { SanityImageSource } from '@sanity/image-url'
 import type { PortfolioProject, BlockContent } from '@/lib/types'
 import { t, tPortableText } from '@/lib/types'
@@ -12,13 +12,22 @@ import { urlFor } from '@/lib/sanity'
 import type { Locale } from '@/i18n/config'
 import Button, { type ButtonData } from './Button'
 import PortableTextRenderer from './PortableTextRenderer'
-import TopographicField from './TopographicField'
-import { silhouetteForTitle } from '@/lib/silhouette'
+import SilhouettePreview from './SilhouettePreview'
+import AnimatedSkills from './AnimatedSkills'
+import {
+  radarForProject,
+  radarPath,
+  radarNest,
+  type SilhouetteAnchor,
+  type ProjectTech,
+} from '@/lib/silhouette'
 
 interface ProjectIndexProps {
   projects: PortfolioProject[]
   locale: Locale
   title: string
+  // Corner anchors from site settings; drive how each blob leans by discipline.
+  anchors?: SilhouetteAnchor[]
 }
 
 interface IndexProject {
@@ -33,7 +42,7 @@ interface IndexProject {
   description: BlockContent | null
   buttons: ButtonData[] | null
   link: string | null
-  silhouette: string | null
+  technologies: ProjectTech[]
 }
 
 function normalize(project: PortfolioProject, locale: Locale): IndexProject {
@@ -41,6 +50,7 @@ function normalize(project: PortfolioProject, locale: Locale): IndexProject {
   const buttons = project.buttons ?? null
   const link = project.link ?? null
   const dims = image?.dimensions ?? null
+  const technologies = project.technologies ?? []
   return {
     id: project._id,
     kind: project.projectType === 'featured' ? 'featured' : 'small',
@@ -54,22 +64,29 @@ function normalize(project: PortfolioProject, locale: Locale): IndexProject {
     description: tPortableText(project, 'description', locale),
     buttons: buttons as ButtonData[] | null,
     link,
-    silhouette: (project as { silhouette?: string | null }).silhouette ?? null,
+    technologies,
   }
 }
 
-export default function ProjectIndex({ projects: input, locale, title }: ProjectIndexProps) {
+export default function ProjectIndex({
+  projects: input,
+  locale,
+  title,
+  anchors,
+}: ProjectIndexProps) {
   const reduce = useReducedMotion()
   const projects = useMemo(
     () => input.map((p) => normalize(p, locale)),
     [input, locale]
   )
 
-  // `previewId` tracks the hovered/focused row instantly (drives the blob and
-  // the row highlight). `committedId` lags behind by a beat so the heavier
-  // aside — which swaps a full card and fires an image request — only updates
-  // once the pointer settles on a row, not for every row swept past.
-  const [previewId, setPreviewId] = useState(projects[0]?.id)
+  // `previewId` tracks the hovered/focused row instantly (drives the arrows and
+  // the row highlight) and is null when the pointer/focus is off the list — no
+  // row is marked active just because the page loaded. `committedId` lags
+  // behind by a beat so the heavier aside — which swaps a full card and fires
+  // an image request — only updates once the pointer settles on a row, not for
+  // every row swept past, and it stays put once the pointer leaves.
+  const [previewId, setPreviewId] = useState<string | null>(null)
   const [committedId, setCommittedId] = useState(projects[0]?.id)
   // First project starts expanded in the mobile accordion.
   const [openId, setOpenId] = useState<string | null>(projects[0]?.id ?? null)
@@ -113,37 +130,21 @@ export default function ProjectIndex({ projects: input, locale, title }: Project
     []
   )
 
-  // Instant: blob + row highlight. Committed (debounced): the aside card.
-  const active = projects.find((p) => p.id === previewId) ?? projects[0]
-  const committed = projects.find((p) => p.id === committedId) ?? active
+  // Instant: row highlight (null when nothing is hovered or focused).
+  // Committed (debounced): the aside card + its blob, which always shows one.
+  const active = projects.find((p) => p.id === previewId) ?? null
+  const committed = projects.find((p) => p.id === committedId) ?? projects[0]
 
   if (projects.length === 0) return null
 
   return (
     <div className="flex flex-col gap-8">
-      {/* Section header: the title with one morphing emblem beside it. The
-          emblem changes shape as the active project changes (hover on desktop,
-          tap on mobile), giving the section a single signature. Stacks below
-          the title on small screens. */}
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+      <div className="flex flex-col gap-2">
         <h2 className="min-w-0 px-2 font-[Mogi] text-3xl font-bold text-markus-red">{title}</h2>
-        {active && (
-          <div className="mx-auto w-full max-w-[240px] sm:mx-0 sm:shrink-0">
-            <TopographicField
-              path={active.silhouette || silhouetteForTitle(active.title, active.kind === 'featured')}
-              // Pointer-interactive only on desktop. On touch, an interactive
-              // field sets `touch-action: none`, which would swallow vertical
-              // scroll that starts on the blob.
-              interactive={isDesktop}
-              secondaryColor="#dc2626"
-              height="clamp(110px, 15vh, 150px)"
-            />
-          </div>
-        )}
       </div>
 
       <div className="grid min-w-0 gap-x-12 md:grid-cols-[1fr_340px]">
-      <ul className="flex min-w-0 flex-col">
+      <ul className="flex min-w-0 flex-col" onMouseLeave={() => setPreviewId(null)}>
         {projects.map((project) => {
           const isOpen = openId === project.id
           const isActive = active?.id === project.id
@@ -162,6 +163,11 @@ export default function ProjectIndex({ projects: input, locale, title }: Project
                   setPreviewId(project.id)
                   commitNow(project.id)
                 }}
+                onBlur={() => {
+                  // Only drop the highlight if it is still ours — a pointer may
+                  // already have moved it to another row.
+                  setPreviewId((current) => (current === project.id ? null : current))
+                }}
                 onClick={(e) => {
                   setPreviewId(project.id)
                   commitNow(project.id)
@@ -175,42 +181,51 @@ export default function ProjectIndex({ projects: input, locale, title }: Project
                     asideRef.current.focus()
                   }
                 }}
-                className={`group relative flex w-full items-baseline justify-between gap-4 border-b py-3 text-left transition-colors hover:text-markus-red focus:outline-none focus-visible:rounded-sm focus-visible:text-markus-red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-markus-red ${
+                className={`group relative flex w-full items-center justify-between gap-4 py-3 text-left transition-colors hover:text-markus-red focus:outline-none focus-visible:rounded-sm focus-visible:text-markus-red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-markus-red ${
                   isActive ? 'md:text-markus-red' : ''
                 }`}
               >
-                {/* Red underline that glides between rows as the active project changes */}
-                {isActive && (
-                  <motion.span
-                    layoutId="projectUnderline"
-                    className="absolute -bottom-px left-0 right-0 h-0.5 bg-markus-red"
-                    transition={
-                      reduce ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 32 }
-                    }
-                  />
-                )}
+                {/* Fixed-width slots on both sides so the arrows can appear
+                    without nudging the title; desktop only. */}
+                <span className="hidden w-7 shrink-0 md:block">
+                  {isActive && (
+                    <motion.span
+                      layoutId="projectMarkerLeft"
+                      className="block text-markus-red"
+                      transition={
+                        reduce ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 32 }
+                      }
+                    >
+                      <ArrowRight size={26} strokeWidth={2.25} aria-hidden />
+                    </motion.span>
+                  )}
+                </span>
 
-                <span className="min-w-0 transition-transform duration-300 ease-out group-hover:translate-x-1">
-                  <span className="flex items-center gap-2 font-bold">
-                    {project.kind === 'featured' && (
-                      <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-markus-red" />
-                    )}
-                    <span className="truncate">{project.title}</span>
+                <span className="min-w-0 flex-1 transition-transform duration-300 ease-out group-hover:translate-x-1">
+                  <span className="flex items-baseline gap-2 font-bold">
+                    <span>{project.title}</span>
                   </span>
-                  {project.subtitle && (
-                    <span className="mt-0.5 block truncate text-sm text-gray-500">
-                      {project.subtitle}
+                  {project.period && (
+                    <span className="mt-0.5 block text-sm text-gray-500 tabular-nums">
+                      {project.period}
                     </span>
                   )}
                 </span>
                 <span className="flex shrink-0 items-center gap-2">
-                  {project.period && (
-                    <span className="text-sm text-gray-500 tabular-nums">
-                      {project.period}
-                    </span>
-                  )}
-                  {/* Mobile-only affordance: rows expand/collapse on tap. On
-                      desktop the detail lives in the aside instead. */}
+                  <span className="hidden w-7 md:block">
+                    {isActive && (
+                      <motion.span
+                        layoutId="projectMarkerRight"
+                        className="block text-markus-red"
+                        transition={
+                          reduce ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 32 }
+                        }
+                      >
+                        <ArrowLeft size={26} strokeWidth={2.25} aria-hidden />
+                      </motion.span>
+                    )}
+                  </span>
+                  {/* Mobile-only: rows expand on tap; desktop uses the aside. */}
                   <ChevronDown
                     size={16}
                     aria-hidden
@@ -221,9 +236,6 @@ export default function ProjectIndex({ projects: input, locale, title }: Project
                 </span>
               </button>
 
-              {/* Mobile only: tap a row to expand its detail inline. The title
-                  already sits in the row above, so the panel omits it (no
-                  duplicate heading). On desktop the detail lives in the aside. */}
               <AnimatePresence initial={false}>
                 {isOpen && (
                   <motion.div
@@ -240,7 +252,7 @@ export default function ProjectIndex({ projects: input, locale, title }: Project
                     }
                   >
                     <div className="pb-6 pt-4">
-                      <ProjectDetail project={project} locale={locale} />
+                      <ProjectDetail project={project} locale={locale} anchors={anchors} />
                     </div>
                   </motion.div>
                 )}
@@ -250,10 +262,8 @@ export default function ProjectIndex({ projects: input, locale, title }: Project
         })}
       </ul>
 
-      {/* Desktop: the detail panel for the hovered/focused project, with its
-          working links. It's focusable (tabIndex -1) so keyboard activation of
-          a row can move focus here — that's what makes every project's links
-          reachable without the list becoming a keyboard trap. */}
+      {/* Desktop detail panel. Focusable (tabIndex -1) so keyboard row
+          activation can move focus here, keeping every project's links reachable. */}
       <aside className="hidden md:block">
         {committed && (
           <div
@@ -270,7 +280,13 @@ export default function ProjectIndex({ projects: input, locale, title }: Project
               animate={{ opacity: 1, y: 0 }}
               transition={reduce ? { duration: 0 } : { duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
-              <ProjectMeta project={committed} locale={locale} priority />
+              <ProjectMeta
+                project={committed}
+                locale={locale}
+                anchors={anchors}
+                interactive={isDesktop}
+                priority
+              />
             </motion.div>
           </div>
         )}
@@ -282,8 +298,16 @@ export default function ProjectIndex({ projects: input, locale, title }: Project
 
 // Mobile-only: the expanded row's detail. The header is omitted because the row
 // directly above already shows the title, subtitle and period.
-function ProjectDetail({ project, locale }: { project: IndexProject; locale: Locale }) {
-  return <ProjectMeta project={project} locale={locale} showHeader={false} />
+function ProjectDetail({
+  project,
+  locale,
+  anchors,
+}: {
+  project: IndexProject
+  locale: Locale
+  anchors?: SilhouetteAnchor[]
+}) {
+  return <ProjectMeta project={project} locale={locale} anchors={anchors} showHeader={false} />
 }
 
 // Meta block shared by the desktop pane and the mobile expanded row. Title
@@ -291,17 +315,29 @@ function ProjectDetail({ project, locale }: { project: IndexProject; locale: Loc
 function ProjectMeta({
   project,
   locale,
+  anchors,
+  interactive = false,
   priority = false,
   showHeader = true,
 }: {
   project: IndexProject
   locale: Locale
+  anchors?: SilhouetteAnchor[]
+  // Pointer-interactive blob (cursor swirl). Desktop aside only — on touch an
+  // interactive field sets `touch-action: none` and swallows vertical scroll.
+  interactive?: boolean
   priority?: boolean
   // The mobile accordion sets this false: the row above already shows the
   // title/subtitle/period, so repeating them in the panel reads as duplicated.
   showHeader?: boolean
 }) {
   const { image, dimensions, title, subtitle, period, description, buttons, link } = project
+
+  // A discipline radar over the configured anchors. The skill names themselves
+  // are exposed textually by <AnimatedSkills> below, so the blob is decorative.
+  const axes = radarForProject(project.technologies, anchors)
+  const path = radarPath(axes)
+  const nest = radarNest(axes)
 
   return (
     <div className="flex flex-col gap-3">
@@ -332,7 +368,10 @@ function ProjectMeta({
       )}
 
       {description && (
-        <PortableTextRenderer value={description} className="break-words text-sm" />
+        <PortableTextRenderer
+          value={description}
+          className="break-words text-sm text-pretty text-gray-700"
+        />
       )}
 
       {buttons && buttons.length > 0 ? (
@@ -354,6 +393,32 @@ function ProjectMeta({
           </a>
         )
       )}
+
+      {/* The blob is a radar of the technologies, so it sits with the tag
+          list as one unit — a small glyph beside the tags, not a second hero. */}
+      <div className="mt-2 flex items-center gap-4">
+        {project.technologies.length > 0 && (
+          <div className="min-w-0 flex-1">
+            <AnimatedSkills
+              skills={project.technologies.map((tech) => ({
+                _id: tech._id,
+                name: tech.name ?? null,
+                url: tech.url,
+                icon: tech.icon,
+              }))}
+            />
+          </div>
+        )}
+        <div className="ml-auto w-24 shrink-0">
+          <SilhouettePreview
+            path={path}
+            nest={nest}
+            interactive={interactive}
+            height="96px"
+            radiusScale={0.46}
+          />
+        </div>
+      </div>
     </div>
   )
 }

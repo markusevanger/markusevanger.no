@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { extractPathD } from '@/lib/pathUtils'
 
 const RED = '#dc2626'
 const RED_SECONDARY = '#991b1b'
@@ -25,14 +26,6 @@ function fbm(x: number, y: number, t: number) {
 }
 
 // --- SVG path → dense point list -------------------------------------------
-
-// Pull a `d` string out of pasted SVG markup, or accept a bare path string.
-function extractPathD(input: string): string | null {
-  const m = input.match(/\bd\s*=\s*"([^"]+)"/) || input.match(/\bd\s*=\s*'([^']+)'/)
-  if (m) return m[1]
-  if (/[MmZzLlHhVvCcSsQqTtAa]/.test(input) && /\d/.test(input)) return input.trim()
-  return null
-}
 
 function flattenCubic(
   out: Pt[],
@@ -223,9 +216,20 @@ function parsePath(d: string): Pt[] {
   return pts
 }
 
-// Center a point list on its bounding box and scale the longer axis to [-1, 1],
-// preserving aspect ratio.
-function normalize(pts: Pt[]): Pt[] {
+// A fixed mapping frame: map the path's own coordinate box (centre `cx,cy`,
+// half-extent `half`) to unit space, preserving absolute position. Use this for
+// shapes whose location carries meaning (e.g. a radar chart) — bbox-normalising
+// them would re-centre the lobe and erase the direction.
+export type Frame = { cx: number; cy: number; half: number }
+
+// Center a point list and scale to roughly [-1, 1]. With a `frame`, the centre
+// and scale are fixed (position preserved); otherwise they're taken from the
+// point list's bounding box, scaling the longer axis to fill.
+function normalize(pts: Pt[], frame?: Frame | null): Pt[] {
+  if (frame) {
+    const half = frame.half || 1
+    return pts.map((p) => ({ x: (p.x - frame.cx) / half, y: (p.y - frame.cy) / half }))
+  }
   let minX = Infinity
   let minY = Infinity
   let maxX = -Infinity
@@ -273,10 +277,10 @@ function resampleUnit(src: Pt[], n: number): UnitPt[] {
 
 // Parse + normalize + resample a path string into a unit outline. Returns an
 // empty array if the input has no usable path (caller draws nothing).
-function unitOutline(input: string, segments: number): UnitPt[] {
+function unitOutline(input: string, segments: number, frame?: Frame | null): UnitPt[] {
   const d = extractPathD(input)
   if (!d) return []
-  const pts = normalize(parsePath(d))
+  const pts = normalize(parsePath(d), frame)
   if (pts.length < 3) return []
   return resampleUnit(pts, segments)
 }
@@ -340,8 +344,7 @@ function maxPointDelta(a: UnitPt[], b: UnitPt[]): number {
 }
 
 type Props = {
-  /** SVG `d` string or full SVG markup. Re-parsed when it changes; the outline
-   *  morphs from the previous shape to the new one (snaps under reduced motion). */
+  /** SVG `d` string or full SVG markup. Morphs from the previous shape on change. */
   path?: string
   /** Morph duration in ms when `path` changes. Default 380. */
   morphMs?: number
@@ -351,6 +354,14 @@ type Props = {
   interactive?: boolean
   /** CSS height for the canvas box. Default `min(80vh, 680px)`. */
   height?: string
+  /** Field radius as a fraction of the box's shorter side. Default 0.42. */
+  radiusScale?: number
+  /** Map with a fixed centre/scale instead of bbox-normalising, preserving the
+   *  shape's absolute position (e.g. a radar chart). Default null = fill the box. */
+  frame?: Frame | null
+  /** Unit-space point the contour rings nest toward (+x right, +y down). Default
+   *  centre; a radar chart points it at the dominant discipline's summit. */
+  nestCenter?: { x: number; y: number }
   /** Outer contour color. */
   primaryColor?: string
   /** Inner contour + solid frame color. */
@@ -359,8 +370,7 @@ type Props = {
 }
 
 // Ring count and line weights scale with the field's radius so a small field
-// (e.g. the section-header emblem) doesn't crowd the same 15 thick rings into a
-// tiny box. Large fields cap out at MAX_RINGS and stay visually unchanged.
+// doesn't crowd 15 thick rings into a tiny box. Large fields cap at MAX_RINGS.
 const MAX_RINGS = 15
 const RING_SPACING_PX = 16 // target gap between contour rings
 const SEGMENTS = 200
@@ -379,6 +389,9 @@ export default function TopographicField({
   mirror = true,
   interactive = true,
   height = 'min(80vh, 680px)',
+  radiusScale = 0.42,
+  frame = null,
+  nestCenter = { x: 0, y: 0 },
   primaryColor = RED,
   secondaryColor = RED_SECONDARY,
   className,
@@ -405,10 +418,16 @@ export default function TopographicField({
   const morphMsRef = useRef(morphMs)
   const mirrorRef = useRef(mirror)
   const interactiveRef = useRef(interactive)
+  const radiusScaleRef = useRef(radiusScale)
+  const frameRef = useRef(frame)
+  const nestCenterRef = useRef(nestCenter)
   const colorRef = useRef({ primary: primaryColor, secondary: secondaryColor })
   morphMsRef.current = morphMs
   mirrorRef.current = mirror
   interactiveRef.current = interactive
+  radiusScaleRef.current = radiusScale
+  frameRef.current = frame
+  nestCenterRef.current = nestCenter
   colorRef.current = { primary: primaryColor, secondary: secondaryColor }
 
   // Lets the path effect wake the rAF loop if it's idle (reduced-motion case).
@@ -418,7 +437,7 @@ export default function TopographicField({
   // kick off a morph from whatever is currently displayed.
   const needsRebuildRef = useRef(true)
   useEffect(() => {
-    const next = unitOutline(path, SEGMENTS)
+    const next = unitOutline(path, SEGMENTS, frameRef.current)
     const prev = displayUnitRef.current
     const reduced =
       typeof window !== 'undefined' &&
@@ -440,7 +459,14 @@ export default function TopographicField({
     }
     needsRebuildRef.current = true
     kickRef.current?.()
-  }, [path])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [path, frame?.cx, frame?.cy, frame?.half])
+
+  // A nestCenter change moves the ring summit; repaint when idle.
+  useEffect(() => {
+    needsRebuildRef.current = true
+    kickRef.current?.()
+  }, [nestCenter.x, nestCenter.y])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -500,7 +526,7 @@ export default function TopographicField({
       canvas.height = Math.round(height * dpr)
       cx = width / 2
       cy = height / 2
-      R = Math.min(width, height) * 0.42
+      R = Math.min(width, height) * radiusScaleRef.current
       rebuild()
     }
 
@@ -612,6 +638,13 @@ export default function TopographicField({
 
       const { primary, secondary } = colorRef.current
 
+      // Where the contour rings nest (the topographic summit), in px relative to
+      // the field centre. Default {0,0} nests toward the centre; a radar chart
+      // points it at the dominant discipline.
+      const nc = nestCenterRef.current
+      const ncx = (nc?.x || 0) * R
+      const ncy = (nc?.y || 0) * R
+
       // Outer transform: tilt the whole field around its center during a morph.
       ctx.save()
       if (spinAngle !== 0) {
@@ -647,8 +680,10 @@ export default function TopographicField({
           const nx = bp.nx
           const ny = bp.ny
           const n = fbm(nx * 2.0 + i * 0.18, ny * 2.0 - i * 0.18, t * 0.6)
-          const px = bp.x * ringT + nx * n * waveAmp
-          const py = bp.y * ringT + ny * n * waveAmp
+          // Nest each ring from the full outline (ringT=1) toward the summit
+          // (ringT→0), then ripple it along the normal with the noise.
+          const px = ncx + (bp.x - ncx) * ringT + nx * n * waveAmp
+          const py = ncy + (bp.y - ncy) * ringT + ny * n * waveAmp
 
           let x = cx + px
           let y = cy + py

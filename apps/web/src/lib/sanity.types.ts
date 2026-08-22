@@ -125,20 +125,6 @@ export type Slug = {
   source?: string;
 };
 
-export type Skill = {
-  _id: string;
-  _type: "skill";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name?: string;
-  slug?: Slug;
-  url?: string;
-  icon?: LucideIcon;
-};
-
-export type LucideIcon = string;
-
 export type WorkExperience = {
   _id: string;
   _type: "workExperience";
@@ -355,6 +341,8 @@ export type Frontpage = {
   >;
 };
 
+export type LucideIcon = string;
+
 export type SiteSettings = {
   _id: string;
   _type: "siteSettings";
@@ -377,6 +365,23 @@ export type SiteSettings = {
   contactText_no?: string;
   madeByText_en?: string;
   madeByText_no?: string;
+  silhouetteAnchors?: Array<{
+    skill?: SkillReference;
+    corner?: "tl" | "t" | "tr" | "l" | "r" | "bl" | "b" | "br";
+    _key: string;
+  }>;
+};
+
+export type Skill = {
+  _id: string;
+  _type: "skill";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  url?: string;
+  icon?: LucideIcon;
 };
 
 export type MediaTag = {
@@ -494,8 +499,6 @@ export type AllSanitySchemaTypes =
   | SkillReference
   | SkillCategory
   | Slug
-  | Skill
-  | LucideIcon
   | WorkExperience
   | Education
   | SanityImageAssetReference
@@ -508,7 +511,9 @@ export type AllSanitySchemaTypes =
   | SkillCategoryReference
   | Cv
   | Frontpage
+  | LucideIcon
   | SiteSettings
+  | Skill
   | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -523,7 +528,7 @@ export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: ../web/src/lib/queries.ts
 // Variable: siteSettingsQuery
-// Query: *[_type == "siteSettings"][0] {    name,    email,    birthDate,    githubUrl,    linkedinUrl,    profileImage,    cvProfileImage,    logoImage,    contactText_en,    contactText_no,    madeByText_en,    madeByText_no  }
+// Query: *[_type == "siteSettings"][0] {    name,    email,    birthDate,    githubUrl,    linkedinUrl,    profileImage,    cvProfileImage,    logoImage,    contactText_en,    contactText_no,    madeByText_en,    madeByText_no,    silhouetteAnchors[] {      corner,      "skillId": skill->_id,      "skillName": skill->name,      "category": *[_type == "skillCategory" && references(^.skill->_id)][0].name_en    }  }
 export type SiteSettingsQueryResult = {
   name: string | null;
   email: string | null;
@@ -543,11 +548,17 @@ export type SiteSettingsQueryResult = {
   contactText_no: string | null;
   madeByText_en: string | null;
   madeByText_no: string | null;
+  silhouetteAnchors: Array<{
+    corner: "b" | "bl" | "br" | "l" | "r" | "t" | "tl" | "tr" | null;
+    skillId: string | null;
+    skillName: string | null;
+    category: string | null;
+  }> | null;
 } | null;
 
 // Source: ../web/src/lib/queries.ts
 // Variable: frontpageQuery
-// Query: *[_type == "frontpage"][0] {    heroTitle_en,    heroTitle_no,    heroDescription_en,    heroDescription_no,    heroButtons[] {      text_en,      text_no,      link,      "internalLink": internalLink->_type,      linkType,      type,      icon,      "downloadUrl": downloadFile.asset->url    },    portfolioTitle_en,    portfolioTitle_no,    projects[]-> {      _id,      projectType,      title_en,      title_no,      subtitle_en,      subtitle_no,      description_en,      description_no,      startDate,      endDate,      ongoing,      image {        ...,        "dimensions": asset->metadata.dimensions      },      imageAlt_en,      imageAlt_no,      silhouette,      buttons[] {        text_en,        text_no,        link,        linkType,        type,        icon,        "downloadUrl": downloadFile.asset->url      },      link    }  }
+// Query: *[_type == "frontpage"][0] {    heroTitle_en,    heroTitle_no,    heroDescription_en,    heroDescription_no,    heroButtons[] {      text_en,      text_no,      link,      "internalLink": internalLink->_type,      linkType,      type,      icon,      "downloadUrl": downloadFile.asset->url    },    portfolioTitle_en,    portfolioTitle_no,    projects[]-> {      _id,      projectType,      title_en,      title_no,      subtitle_en,      subtitle_no,      description_en,      description_no,      startDate,      endDate,      ongoing,      image {        ...,        "dimensions": asset->metadata.dimensions      },      imageAlt_en,      imageAlt_no,      silhouette,      "technologies": technologies[]-> {        _id,        name,        url,        icon,        "category": *[_type == "skillCategory" && references(^._id)][0].name_en      },      buttons[] {        text_en,        text_no,        link,        linkType,        type,        icon,        "downloadUrl": downloadFile.asset->url      },      link    }  }
 export type FrontpageQueryResult = {
   heroTitle_en: string | null;
   heroTitle_no: string | null;
@@ -588,6 +599,13 @@ export type FrontpageQueryResult = {
     imageAlt_en: string | null;
     imageAlt_no: string | null;
     silhouette: string | null;
+    technologies: Array<{
+      _id: string;
+      name: string | null;
+      url: string | null;
+      icon: LucideIcon | null;
+      category: string | null;
+    }> | null;
     buttons: Array<{
       text_en: string | null;
       text_no: string | null;
@@ -698,8 +716,8 @@ export type CvPageQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "siteSettings"][0] {\n    name,\n    email,\n    birthDate,\n    githubUrl,\n    linkedinUrl,\n    profileImage,\n    cvProfileImage,\n    logoImage,\n    contactText_en,\n    contactText_no,\n    madeByText_en,\n    madeByText_no\n  }\n': SiteSettingsQueryResult;
-    '\n  *[_type == "frontpage"][0] {\n    heroTitle_en,\n    heroTitle_no,\n    heroDescription_en,\n    heroDescription_no,\n    heroButtons[] {\n      text_en,\n      text_no,\n      link,\n      "internalLink": internalLink->_type,\n      linkType,\n      type,\n      icon,\n      "downloadUrl": downloadFile.asset->url\n    },\n    portfolioTitle_en,\n    portfolioTitle_no,\n    projects[]-> {\n      _id,\n      projectType,\n      title_en,\n      title_no,\n      subtitle_en,\n      subtitle_no,\n      description_en,\n      description_no,\n      startDate,\n      endDate,\n      ongoing,\n      image {\n        ...,\n        "dimensions": asset->metadata.dimensions\n      },\n      imageAlt_en,\n      imageAlt_no,\n      silhouette,\n      buttons[] {\n        text_en,\n        text_no,\n        link,\n        linkType,\n        type,\n        icon,\n        "downloadUrl": downloadFile.asset->url\n      },\n      link\n    }\n  }\n': FrontpageQueryResult;
+    '\n  *[_type == "siteSettings"][0] {\n    name,\n    email,\n    birthDate,\n    githubUrl,\n    linkedinUrl,\n    profileImage,\n    cvProfileImage,\n    logoImage,\n    contactText_en,\n    contactText_no,\n    madeByText_en,\n    madeByText_no,\n    silhouetteAnchors[] {\n      corner,\n      "skillId": skill->_id,\n      "skillName": skill->name,\n      "category": *[_type == "skillCategory" && references(^.skill->_id)][0].name_en\n    }\n  }\n': SiteSettingsQueryResult;
+    '\n  *[_type == "frontpage"][0] {\n    heroTitle_en,\n    heroTitle_no,\n    heroDescription_en,\n    heroDescription_no,\n    heroButtons[] {\n      text_en,\n      text_no,\n      link,\n      "internalLink": internalLink->_type,\n      linkType,\n      type,\n      icon,\n      "downloadUrl": downloadFile.asset->url\n    },\n    portfolioTitle_en,\n    portfolioTitle_no,\n    projects[]-> {\n      _id,\n      projectType,\n      title_en,\n      title_no,\n      subtitle_en,\n      subtitle_no,\n      description_en,\n      description_no,\n      startDate,\n      endDate,\n      ongoing,\n      image {\n        ...,\n        "dimensions": asset->metadata.dimensions\n      },\n      imageAlt_en,\n      imageAlt_no,\n      silhouette,\n      "technologies": technologies[]-> {\n        _id,\n        name,\n        url,\n        icon,\n        "category": *[_type == "skillCategory" && references(^._id)][0].name_en\n      },\n      buttons[] {\n        text_en,\n        text_no,\n        link,\n        linkType,\n        type,\n        icon,\n        "downloadUrl": downloadFile.asset->url\n      },\n      link\n    }\n  }\n': FrontpageQueryResult;
     '\n  *[_type == "cv"][0] {\n    pageTitle_en,\n    pageTitle_no,\n    backButtonText_en,\n    backButtonText_no,\n    projectsSectionTitle_en,\n    projectsSectionTitle_no,\n    educationSectionTitle_en,\n    educationSectionTitle_no,\n    workSectionTitle_en,\n    workSectionTitle_no,\n    skillsSectionTitle_en,\n    skillsSectionTitle_no,\n    featuredProjects[]-> {\n      _id,\n      title_en,\n      title_no,\n      description_en,\n      description_no,\n      startDate,\n      endDate,\n      ongoing,\n      buttons[] {\n        text_en,\n        text_no,\n        link,\n        linkType,\n        type,\n        icon,\n        "downloadUrl": downloadFile.asset->url\n      },\n      "reportUrl": reportDocument.asset->url\n    },\n    education[]-> {\n      _id,\n      institution_en,\n      institution_no,\n      degree_en,\n      degree_no,\n      location_en,\n      location_no,\n      description_en,\n      description_no,\n      period_en,\n      period_no,\n      buttons[] {\n        text_en,\n        text_no,\n        link,\n        linkType,\n        type,\n        icon,\n        "downloadUrl": downloadFile.asset->url\n      }\n    },\n    workExperience[]-> {\n      _id,\n      company_en,\n      company_no,\n      position_en,\n      position_no,\n      description_en,\n      description_no,\n      period_en,\n      period_no,\n      buttons[] {\n        text_en,\n        text_no,\n        link,\n        linkType,\n        type,\n        icon,\n        "downloadUrl": downloadFile.asset->url\n      }\n    },\n    skillCategories[]-> {\n      _id,\n      name_en,\n      name_no,\n      "skills": skills[]-> {\n        _id,\n        name,\n        url,\n        icon\n      } | order(\n        select(\n          defined(url) => 0,\n          defined(icon) => 1,\n          2\n        )\n      )\n    },\n    contactText_en,\n    contactText_no\n  }\n': CvPageQueryResult;
   }
 }

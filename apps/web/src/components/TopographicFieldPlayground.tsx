@@ -2,14 +2,7 @@
 
 import { useState } from 'react'
 import TopographicField, { BADGE_D } from '@/components/TopographicField'
-
-// Pull a `d` string out of pasted SVG markup, or accept a bare path string.
-function extractPathD(input: string): string | null {
-  const m = input.match(/\bd\s*=\s*"([^"]+)"/) || input.match(/\bd\s*=\s*'([^']+)'/)
-  if (m) return m[1]
-  if (/[MmZzLlHhVvCcSsQqTtAa]/.test(input) && /\d/.test(input)) return input.trim()
-  return null
-}
+import { extractPathD } from '@/lib/pathUtils'
 
 // Dev-only harness for the production <TopographicField>: paste arbitrary SVGs
 // and toggle mirror to preview before wiring a path into the page builder.
