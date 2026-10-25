@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-instrument-serif);
+}
+
+body {
+  background: #000;
+  color: #fff;
+}
+
+/* menu-style grid drifting diagonally over the scene; moves exactly one cell per loop */
+.grid-overlay {
+  --cell: 48px;
+  background-image:
+    linear-gradient(#fff3 1px, transparent 1px),
+    linear-gradient(90deg, #fff3 1px, transparent 1px);
+  background-size: var(--cell) var(--cell);
+  mix-blend-mode: screen;
+  animation: grid-drift 3s linear infinite;
+}
+@keyframes grid-drift {
+  to { background-position: var(--cell) var(--cell); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .grid-overlay { animation: none; }
+}
+
+/* UI waits for the forest's boot sequence (forest-scene sets html[data-ready]); the long
+   default delay is a fallback in case WebGL never starts. A separate keyframes name for the
+   ready state makes the animation restart from that moment rather than from page load. */
+.boot-fade {
+  opacity: 0;
+  animation: boot-fallback 0.8s ease 8s forwards;
+}
+:root[data-ready] .boot-fade {
+  animation: boot-show 0.8s ease 1.4s forwards;
+}
+@keyframes boot-fallback {
+  to { opacity: 1; }
+}
+@keyframes boot-show {
+  to { opacity: 1; }
+}
+
+/* ---- Menu panels (about, blog) ---- */
+
+/* the live forest canvas must never be snapshotted and crossfaded: only named parts animate */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+::view-transition {
+  pointer-events: none;
+}
+
+/* open: a line grows across, then the window opens vertically (on mount, so direct loads too) */
+.menu-panel {
+  animation: panel-open 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes panel-open {
+  0% { clip-path: inset(50% 50% 50% 50%); }
+  35% { clip-path: inset(calc(50% - 1px) 0 calc(50% - 1px) 0); }
+  100% { clip-path: inset(0); }
+}
+/* close: the reverse, faster (view-transition exit) */
+::view-transition-old(.panel-close) {
+  animation: panel-shut 0.28s cubic-bezier(0.6, 0, 0.8, 0.2) both;
+}
+@keyframes panel-shut {
+  0% { clip-path: inset(0); }
+  65% { clip-path: inset(calc(50% - 1px) 0 calc(50% - 1px) 0); }
+  100% { clip-path: inset(50% 50% 50% 50%); }
+}
+
+/* switching menus: the old content glitches out, the new glitches in */
+::view-transition-old(.menu-swap) {
+  animation: glitch-out 0.16s steps(4) both;
+}
+::view-transition-new(.menu-swap) {
+  animation: glitch-in 0.24s steps(5) 0.1s both;
+}
+@keyframes glitch-out {
+  0% { opacity: 1; transform: none; clip-path: inset(0); }
+  40% { transform: translateX(-8px); clip-path: inset(0 0 55% 0); }
+  70% { transform: translateX(5px); clip-path: inset(45% 0 0 0); }
+  100% { opacity: 0; transform: none; clip-path: inset(50% 0 50% 0); }
+}
+@keyframes glitch-in {
+  0% { opacity: 0; transform: translateX(8px); clip-path: inset(0 0 70% 0); }
+  50% { opacity: 1; transform: translateX(-4px); clip-path: inset(30% 0 0 0); }
+  100% { opacity: 1; transform: none; clip-path: inset(0); }
+}
+
+/* body lines type in one after another */
+.menu-body > * > *,
+.menu-body > .menu-prose > * {
+  animation: line-in 0.3s steps(3) both;
+  animation-delay: 0.3s;
+}
+.menu-body > * > :nth-child(2) { animation-delay: 0.35s; }
+.menu-body > * > :nth-child(3) { animation-delay: 0.4s; }
+.menu-body > * > :nth-child(4) { animation-delay: 0.45s; }
+.menu-body > * > :nth-child(5) { animation-delay: 0.5s; }
+.menu-body > * > :nth-child(6) { animation-delay: 0.55s; }
+.menu-body > * > :nth-child(7) { animation-delay: 0.6s; }
+.menu-body > * > :nth-child(n + 8) { animation-delay: 0.65s; }
+@keyframes line-in {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* markdown inside menus */
+.menu-prose h1,
+.menu-prose h2 {
+  font-family: var(--font-serif);
+  color: #fff;
+  line-height: 1.1;
+}
+.menu-prose h1 { font-size: 2.5rem; margin: 0.25rem 0 1rem; }
+.menu-prose h2 { font-size: 1.75rem; margin: 1.5rem 0 0.5rem; }
+.menu-prose > :first-child { margin-top: 0; }
+.menu-prose p { margin: 0.5rem 0; }
+.menu-prose a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.menu-prose ul { margin: 0.5rem 0; padding-left: 1.25rem; list-style: square; }
+.menu-prose code { background: #ffffff1a; padding: 0 0.25em; }
+.menu-list li + li { border-top: 1px solid #ffffff1a; }
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-panel,
+  .menu-body * { animation: none; }
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
