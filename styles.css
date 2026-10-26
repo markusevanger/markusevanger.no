@@ -1,0 +1,105 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: #fff;
+  color: #000;
+  overflow: hidden;
+  cursor: url(/assets/cursor.svg) 1 0, auto;
+}
+
+
+.grid {
+  --cell: 48px;
+
+  position: fixed;
+  inset: calc(-1 * var(--cell)) 0 0 calc(-1 * var(--cell));
+
+  background-image:
+    linear-gradient(#0002 1px, transparent 1px),
+    linear-gradient(90deg, #0002 1px, transparent 1px);
+  background-size: var(--cell) var(--cell);
+
+  animation: drift 3s linear infinite;
+  will-change: transform;
+}
+
+@keyframes drift {
+  to {
+    transform: translate(var(--cell), var(--cell));
+  }
+}
+
+
+main {
+  position: relative;
+  min-height: 100dvh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+
+  animation: fade-in 0.8s ease 0.2s both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+
+.guy {
+  width: 320px;
+  height: 320px;
+
+  background: url(/assets/floor.webp) 0 0 / 9600px auto;
+  image-rendering: pixelated;
+}
+
+
+.brb {
+  margin: 0;
+  font: 2.25rem/1.1 "Coral Pixels", ui-monospace, monospace;
+  cursor: url(/assets/cursor-text.svg) 8 14, text;
+}
+
+.brb.typing span:not(.on, .caret) {
+  visibility: hidden;
+}
+
+
+.caret {
+  display: inline-block;
+  width: 0.08em;
+  height: 0.9em;
+  margin-left: 0.1em;
+  vertical-align: -0.1em;
+
+  background: currentColor;
+  box-shadow:
+    -0.05em 0 rgb(255 130 0),
+    0.05em 0 rgb(0 130 255);
+
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .grid,
+  main,
+  .caret {
+    animation: none;
+  }
+}
