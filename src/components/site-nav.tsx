@@ -10,10 +10,10 @@ export default function SiteNav() {
   return (
     <nav className="boot-fade fixed bottom-6 left-6 z-30 flex flex-col items-start gap-3">
       <MenuButton href="/blog" label="Blog" current={path.startsWith("/blog")}>
-        <span className="tracking-[-1.6px]">13</span>L0G
+        Blog
       </MenuButton>
       <MenuButton href="/about" label="About" current={path.startsWith("/about")}>
-        A130UT
+        About
         {/* slot opens on hover; closes after he's ducked out of sight */}
         <WaveGuy
           size={99}
