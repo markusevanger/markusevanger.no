@@ -96,6 +96,23 @@ main {
 }
 
 
+
+.contact {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  font: 1rem/1.2 "Coral Pixels", ui-monospace, monospace;
+}
+
+.contact a {
+  color: inherit;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .grid,
   main,
