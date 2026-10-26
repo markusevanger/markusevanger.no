@@ -37,6 +37,8 @@ body {
 main {
   position: relative;
   min-height: 100dvh;
+  max-width: 1440px;
+  margin: 0 auto;
 
   display: flex;
   flex-direction: column;
@@ -112,6 +114,34 @@ main {
 .contact a {
   color: inherit;
 }
+
+
+@media (max-width: 600px) {
+  main {
+    box-sizing: border-box;
+    padding-bottom: 56px;
+    gap: 16px;
+  }
+
+  .guy {
+    zoom: 0.75;
+  }
+
+  .brb {
+    font-size: 1.75rem;
+  }
+
+  .contact {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 16px;
+  }
+}
+
 
 @media (prefers-reduced-motion: reduce) {
   .grid,
