@@ -8,7 +8,7 @@ const TYPING = {
 }
 
 const line = document.querySelector('.brb')
-const words = [...line.querySelectorAll('span')]
+const words = [...line.querySelectorAll('span[aria-hidden]')]
 
 const caret = document.createElement('span')
 caret.className = 'caret'

@@ -60,18 +60,19 @@ main {
   width: 320px;
   height: 320px;
 
-  background: url(/assets/floor.webp) 0 0 / 9600px auto;
+  background: url(/assets/floor.png) 0 0 / 9600px auto;
   image-rendering: pixelated;
 }
 
 
 .brb {
   margin: 0;
+  position: relative;
   font: 2.25rem/1.1 "Coral Pixels", ui-monospace, monospace;
   cursor: url(/assets/cursor-text.svg) 8 14, text;
 }
 
-.brb.typing span:not(.on, .caret) {
+.brb.typing span[aria-hidden]:not(.on, .caret) {
   visibility: hidden;
 }
 
@@ -113,6 +114,16 @@ main {
 
 .contact a {
   color: inherit;
+  padding: 6px 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 
